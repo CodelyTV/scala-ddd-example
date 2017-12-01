@@ -1,23 +1,26 @@
 package tv.codely.scala_http_api
 
-import org.scalatest._
-import org.scalatest.Matchers._
+import akka.http.scaladsl.model._
+import akka.http.scaladsl.testkit.ScalatestRouteTest
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.{ Matchers, WordSpec }
+import akka.http.scaladsl.server.Directives._
 
-final class ScalaHttpApiTest extends WordSpec with GivenWhenThen {
+final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
+  private val routes =
+    get {
+      path("status") {
+        complete("""{"status":"ok"}""")
+      }
+    }
+
   "ScalaHttpApi" should {
-    "greet" in {
-      Given("a ScalaHttpApi")
-
-      val scalaHttpApi = new ScalaHttpApi
-
-      When("we ask him to greet someone")
-
-      val nameToGreet = "CodelyTV"
-      val greeting = scalaHttpApi.greet(nameToGreet)
-
-      Then("it should say hello to someone")
-
-      greeting shouldBe "Hello " + nameToGreet
+    "respond successfully while requesting its status" in {
+      Get("/status") ~> routes ~> check {
+        status shouldBe StatusCodes.OK
+//        contentType shouldBe ContentTypes.`application/json`
+        entityAs[String] shouldBe """{"status":"ok"}"""
+      }
     }
   }
 }
