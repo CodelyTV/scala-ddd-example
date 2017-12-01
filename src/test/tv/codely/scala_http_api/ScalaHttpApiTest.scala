@@ -10,7 +10,7 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
   private val routes =
     get {
       path("status") {
-        complete("""{"status":"ok"}""")
+        complete(HttpEntity(ContentTypes.`application/json`, """{"status":"ok"}"""))
       }
     }
 
@@ -18,7 +18,7 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
     "respond successfully while requesting its status" in {
       Get("/status") ~> routes ~> check {
         status shouldBe StatusCodes.OK
-//        contentType shouldBe ContentTypes.`application/json`
+        contentType shouldBe ContentTypes.`application/json`
         entityAs[String] shouldBe """{"status":"ok"}"""
       }
     }
