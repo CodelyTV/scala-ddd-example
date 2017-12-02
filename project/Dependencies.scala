@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
   object Versions {
     val akka     = "2.5.7"
-    val akkaHttp = "10.0.10"
+    val akkaHttp = "10.0.11"
   }
 
   val production = Seq(
