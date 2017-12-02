@@ -1,5 +1,7 @@
 package tv.codely.scala_http_api
 
-final class ScalaHttpApi {
-  def greet(name: String): String = "Hello " + name
+object ScalaHttpApi {
+  def main(args: Array[String]): Unit = {
+    println("Hello!")
+  }
 }
