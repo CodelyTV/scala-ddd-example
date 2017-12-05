@@ -1,6 +1,5 @@
 package tv.codely.scala_http_api
 
-import akka.http.scaladsl.model
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
