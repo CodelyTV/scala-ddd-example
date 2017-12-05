@@ -7,6 +7,16 @@ import spray.json.{DefaultJsonProtocol, DeserializationException, JsString, JsVa
 import tv.codely.scala_http_api.domain.{User, UserId, UserName}
 
 object UserMarshaller extends SprayJsonSupport with DefaultJsonProtocol {
+
+  implicit object UserNameMarshaller extends JsonFormat[UserName] {
+    def write(value: UserName): JsValue = JsString(value.value)
+
+    def read(value: JsValue): UserName = value match {
+      case JsString(name) => UserName(name)
+      case _              => throw DeserializationException("Expected 1 string for UserName")
+    }
+  }
+
   implicit object UuidMarshaller extends JsonFormat[UUID] {
     def write(value: UUID): JsValue = JsString(value.toString)
 
@@ -16,7 +26,14 @@ object UserMarshaller extends SprayJsonSupport with DefaultJsonProtocol {
     }
   }
 
-  implicit val userIdFormat: RootJsonFormat[UserId]     = jsonFormat1(UserId.apply(_: UUID))
-  implicit val userNameFormat: RootJsonFormat[UserName] = jsonFormat1(UserName.apply)
-  implicit val userFormat: RootJsonFormat[User]         = jsonFormat2(User.apply(_: UserId, _: UserName))
+  implicit object UserIdMarshaller extends JsonFormat[UserId] {
+    def write(value: UserId): JsValue = JsString(value.value.toString)
+
+    def read(value: JsValue): UserId = value match {
+      case JsString(id) => UserId(id)
+      case _            => throw DeserializationException("Expected 1 string for UserId")
+    }
+  }
+
+  implicit val userFormat: RootJsonFormat[User] = jsonFormat2(User.apply(_: UserId, _: UserName))
 }
