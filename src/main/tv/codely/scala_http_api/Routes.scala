@@ -12,7 +12,7 @@ import tv.codely.scala_http_api.video.infrastructure.VideoMarshaller._
 
 import scala.concurrent.duration._
 
-object Routes extends SprayJsonSupport with DefaultJsonProtocol{
+object Routes extends SprayJsonSupport with DefaultJsonProtocol {
   private val systemUsers = Seq(
     User(id = "deacd129-d419-4552-9bfc-0723c3c4f56a", name = "Edufasio"),
     User(id = "b62f767f-7160-4405-a4af-39ebb3635c17", name = "Edonisio")
