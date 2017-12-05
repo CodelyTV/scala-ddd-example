@@ -25,19 +25,7 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
 
     "return all the system users" in {
       Get("/users") ~> Routes.all ~> check {
-        val expectedSystemUsers =
-          """{
-            |    "data":[
-            |        {
-            |            "id":"123",
-            |            "name":"Edufasio"
-            |        },
-            |        {
-            |            "id":"456",
-            |            "name":"Edonisio"
-            |        }
-            |    ]
-            |}""".stripMargin
+        val expectedSystemUsers = """[{"id":"123","name":"Edufasio"},{"id":"456","name":"Edonisio"}]"""
 
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
