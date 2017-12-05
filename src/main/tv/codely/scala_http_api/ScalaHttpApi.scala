@@ -23,6 +23,11 @@ object ScalaHttpApi {
 
     val bindingFuture = Http().bindAndHandle(Routes.all, host, port)
 
+    bindingFuture.failed.foreach { t =>
+      println(s"Failed to bind to http://$host:$port/:")
+      pprint.log(t)
+    }
+
     // let it run until user presses return
     println(s"Server online at http://$host:$port/\nPress RETURN to stop...")
     StdIn.readLine()
