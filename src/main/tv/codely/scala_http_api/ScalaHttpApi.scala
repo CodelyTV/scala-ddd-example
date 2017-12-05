@@ -2,7 +2,6 @@ package tv.codely.scala_http_api
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.io.StdIn
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer

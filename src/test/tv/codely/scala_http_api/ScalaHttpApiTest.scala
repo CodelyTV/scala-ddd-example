@@ -5,8 +5,8 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 import spray.json._
-import tv.codely.scala_http_api.infrastructure.marshaller.UserMarshaller
-import tv.codely.scala_http_api.infrastructure.stubs.UserStub
+import tv.codely.scala_http_api.user.infrastructure.marshaller.UserMarshaller
+import tv.codely.scala_http_api.user.infrastructure.stubs.UserStub
 
 final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
   "ScalaHttpApi" should {

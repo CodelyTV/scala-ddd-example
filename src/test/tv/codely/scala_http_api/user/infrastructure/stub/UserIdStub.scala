@@ -1,8 +1,9 @@
-package tv.codely.scala_http_api.infrastructure.stubs
+package tv.codely.scala_http_api.user.infrastructure.stubs
 
 import java.util.UUID
 
-import tv.codely.scala_http_api.domain.UserId
+import tv.codely.scala_http_api.user.domain.UserId
+import tv.codely.scala_http_api.shared.infrastructure.stub.StringStub
 
 object UserIdStub {
   private val userIdLength = 3

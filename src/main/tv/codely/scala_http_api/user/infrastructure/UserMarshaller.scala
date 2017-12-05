@@ -1,10 +1,10 @@
-package tv.codely.scala_http_api.infrastructure
+package tv.codely.scala_http_api.user.infrastructure
 
 import java.util.UUID
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import spray.json.{DefaultJsonProtocol, DeserializationException, JsString, JsValue, JsonFormat, RootJsonFormat}
-import tv.codely.scala_http_api.domain.{User, UserId, UserName}
+import tv.codely.scala_http_api.user.domain.{User, UserId, UserName}
 
 object UserMarshaller extends SprayJsonSupport with DefaultJsonProtocol {
 
