@@ -8,8 +8,8 @@ import tv.codely.scala_http_api.infrastructure.UserMarshaller._
 
 object Routes {
   private val systemUsers = Seq(
-    User("123", "Edufasio"),
-    User("456", "Edonisio"),
+    User(id = "deacd129-d419-4552-9bfc-0723c3c4f56a", name = "Edufasio"),
+    User(id = "b62f767f-7160-4405-a4af-39ebb3635c17", name = "Edonisio")
   )
 
   val all: Route = get {

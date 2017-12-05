@@ -6,7 +6,7 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 import spray.json._
 import tv.codely.scala_http_api.infrastructure.marshaller.UserMarshaller
-import tv.codely.scala_http_api.infrastructure.stubs.{UserIdStub, UserNameStub, UserStub}
+import tv.codely.scala_http_api.infrastructure.stubs.UserStub
 
 final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
   "ScalaHttpApi" should {
@@ -29,8 +29,8 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
     "return all the system users" in {
       Get("/users") ~> Routes.all ~> check {
         val expectedUsers = Seq(
-          UserStub(UserIdStub("123"), UserNameStub("Edufasio")),
-          UserStub(UserIdStub("456"), UserNameStub("Edonisio"))
+          UserStub(id = "deacd129-d419-4552-9bfc-0723c3c4f56a", name = "Edufasio"),
+          UserStub(id = "b62f767f-7160-4405-a4af-39ebb3635c17", name = "Edonisio")
         )
 
         status shouldBe StatusCodes.OK
