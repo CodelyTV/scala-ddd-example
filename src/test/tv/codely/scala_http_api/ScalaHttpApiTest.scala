@@ -4,9 +4,9 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
-import spray.json.{JsArray, JsObject, JsString}
-import tv.codely.scala_http_api.domain.User
 import spray.json._
+import tv.codely.scala_http_api.infrastructure.marshaller.UserMarshaller
+import tv.codely.scala_http_api.infrastructure.stubs.{UserIdStub, UserNameStub, UserStub}
 
 final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
   "ScalaHttpApi" should {
@@ -28,24 +28,14 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
 
     "return all the system users" in {
       Get("/users") ~> Routes.all ~> check {
-        val expectedSystemUsers = Seq(
-          User("123", "Edufasio"),
-          User("456", "Edonisio")
-        )
-
-        val marshalledUsers =
-          JsArray(
-            expectedSystemUsers.map(u =>
-              JsObject(
-                  "id" -> JsString(u.id),
-                  "name" -> JsString(u.name)
-              )
-            ).toVector
+        val expectedUsers = Seq(
+          UserStub(UserIdStub("123"), UserNameStub("Edufasio")),
+          UserStub(UserIdStub("456"), UserNameStub("Edonisio"))
         )
 
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
-        entityAs[String].parseJson shouldBe marshalledUsers
+        entityAs[String].parseJson shouldBe UserMarshaller.marshall(expectedUsers)
       }
     }
   }
