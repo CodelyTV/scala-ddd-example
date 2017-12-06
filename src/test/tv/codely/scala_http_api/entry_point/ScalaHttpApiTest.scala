@@ -10,13 +10,15 @@ import spray.json._
 import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserJsValueMarshaller
 import tv.codely.scala_http_api.module.user.infrastructure.stub.UserStub
-import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoMarshaller
+import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
+import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoJsValueMarshaller
 import tv.codely.scala_http_api.module.video.infrastructure.stub.VideoStub
 
 final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
   private val routes = new Routes(
     new EntryPointDependencyContainer(
-      new UserModuleDependencyContainer
+      new UserModuleDependencyContainer,
+      new VideoModuleDependencyContainer
     )
   )
 
@@ -61,7 +63,7 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
 
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
-        entityAs[String].parseJson shouldBe VideoMarshaller.marshall(expectedVideos)
+        entityAs[String].parseJson shouldBe VideoJsValueMarshaller.marshall(expectedVideos)
       }
     }
   }

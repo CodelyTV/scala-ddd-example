@@ -8,6 +8,7 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
+import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
 
 object ScalaHttpApi {
   def main(args: Array[String]): Unit = {
@@ -23,7 +24,8 @@ object ScalaHttpApi {
     implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
     val container = new EntryPointDependencyContainer(
-      new UserModuleDependencyContainer
+      new UserModuleDependencyContainer,
+      new VideoModuleDependencyContainer
     )
 
     val routes = new Routes(container)

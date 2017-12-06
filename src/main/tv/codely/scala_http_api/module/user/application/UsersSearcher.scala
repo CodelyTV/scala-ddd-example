@@ -8,5 +8,5 @@ final class UsersSearcher {
     User(id = "b62f767f-7160-4405-a4af-39ebb3635c17", name = "Edonisio")
   )
 
-  def searchAll(): Seq[User] = users
+  def all(): Seq[User] = users
 }

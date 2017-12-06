@@ -1,12 +1,12 @@
-package tv.codely.scala_http_api.module.video.infrastructure
+package tv.codely.scala_http_api.module.video.infrastructure.marshaller
 
 import java.util.UUID
 
-import spray.json.{DeserializationException, JsNumber, JsString, JsValue, JsonFormat, RootJsonFormat}
+import spray.json.{DeserializationException, JsNumber, JsonFormat, JsString, JsValue, RootJsonFormat}
 import spray.json.DefaultJsonProtocol._
 import tv.codely.scala_http_api.module.video.domain._
 
-object VideoMarshaller {
+object VideoJsonFormatMarshaller {
   implicit object UuidMarshaller extends JsonFormat[UUID] {
     def write(value: UUID): JsValue = JsString(value.toString)
 

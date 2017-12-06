@@ -4,6 +4,6 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.StandardRoute
 import akka.http.scaladsl.server.Directives.complete
 
-object StatusGetController {
-  def apply(): StandardRoute = complete(HttpEntity(ContentTypes.`application/json`, """{"status":"ok"}"""))
+final class StatusGetController {
+  def get(): StandardRoute = complete(HttpEntity(ContentTypes.`application/json`, """{"status":"ok"}"""))
 }
