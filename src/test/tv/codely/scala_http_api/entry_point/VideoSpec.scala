@@ -2,24 +2,32 @@ package tv.codely.scala_http_api.entry_point
 
 import scala.concurrent.duration._
 
-import akka.http.scaladsl.model._
+import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
 import spray.json._
 import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoJsValueMarshaller
 import tv.codely.scala_http_api.module.video.infrastructure.stub.VideoStub
 
 final class VideoSpec extends AcceptanceSpec {
+  "save a video" in post(
+    "/videos",
+    """
+      |{
+      |  "id": "a11098af-d352-4cce-8372-2b48b97e6942",
+      |  "title": "🎥 Entrevista a SergiGP, de troll a developer!",
+      |  "duration_in_seconds": 15,
+      |  "category": "Interview"
+      |}
+    """.stripMargin
+  ) {
+    status shouldBe StatusCodes.NoContent
+  }
+
   "return all the system videos" in get("/videos") {
     val expectedVideos = Seq(
       VideoStub(
-        id = "3dfb19ee-260b-420a-b08c-ed58a7a07aee",
-        title = "🎥 Scala FTW vol. 1",
-        duration = 1.minute,
-        category = "Screencast"
-      ),
-      VideoStub(
-        id = "7341b1fc-3d80-4f6a-bcde-4fef86b01f97",
-        title = "🔝 Interview with Odersky",
-        duration = 30.minutes,
+        id = "a11098af-d352-4cce-8372-2b48b97e6942",
+        title = "🎥 Entrevista a SergiGP, de troll a developer!",
+        duration = 15.seconds,
         category = "Interview"
       )
     )

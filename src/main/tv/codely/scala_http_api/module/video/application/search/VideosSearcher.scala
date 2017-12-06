@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.module.video.application
+package tv.codely.scala_http_api.module.video.application.search
 
 import tv.codely.scala_http_api.module.video.domain.{Video, VideoRepository}
 
