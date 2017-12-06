@@ -16,16 +16,17 @@ final class Routes(container: EntryPointDependencyContainer) {
     } ~
     post {
       path("videos") {
-        entity(as[JsValue]) { json =>
-          val bodyParams = json.asJsObject.fields
-
+        jsonBody { body =>
           container.videoPostController.post(
-            bodyParams("id").convertTo[String],
-            bodyParams("title").convertTo[String],
-            bodyParams("duration_in_seconds").convertTo[Int].seconds,
-            bodyParams("category").convertTo[String]
+            body("id").convertTo[String],
+            body("title").convertTo[String],
+            body("duration_in_seconds").convertTo[Int].seconds,
+            body("category").convertTo[String]
           )
         }
       }
     }
+
+  private def jsonBody[T](handler: Map[String, JsValue] => Route): Route =
+    entity(as[JsValue])(json => handler(json.asJsObject.fields))
 }
