@@ -1,21 +1,28 @@
 package tv.codely.scala_http_api.entry_point
 
+import scala.concurrent.duration._
+
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.concurrent.ScalaFutures
 import spray.json._
-import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserMarshaller
+import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
+import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserJsValueMarshaller
 import tv.codely.scala_http_api.module.user.infrastructure.stub.UserStub
 import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoMarshaller
 import tv.codely.scala_http_api.module.video.infrastructure.stub.VideoStub
-import scala.concurrent.duration._
-
-import org.scalatest.concurrent.ScalaFutures
 
 final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
+  private val routes = new Routes(
+    new EntryPointDependencyContainer(
+      new UserModuleDependencyContainer
+    )
+  )
+
   "ScalaHttpApi" should {
     "respond successfully while requesting its status" in {
-      Get("/status") ~> Routes.all ~> check {
+      Get("/status") ~> routes.all ~> check {
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
         entityAs[String] shouldBe """{"status":"ok"}"""
@@ -23,7 +30,7 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
     }
 
     "return all the system users" in {
-      Get("/users") ~> Routes.all ~> check {
+      Get("/users") ~> routes.all ~> check {
         val expectedUsers = Seq(
           UserStub(id = "deacd129-d419-4552-9bfc-0723c3c4f56a", name = "Edufasio"),
           UserStub(id = "b62f767f-7160-4405-a4af-39ebb3635c17", name = "Edonisio")
@@ -31,12 +38,12 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
 
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
-        entityAs[String].parseJson shouldBe UserMarshaller.marshall(expectedUsers)
+        entityAs[String].parseJson shouldBe UserJsValueMarshaller.marshall(expectedUsers)
       }
     }
 
     "return all the system videos" in {
-      Get("/videos") ~> Routes.all ~> check {
+      Get("/videos") ~> routes.all ~> check {
         val expectedVideos = Seq(
           VideoStub(
             id = "3dfb19ee-260b-420a-b08c-ed58a7a07aee",

@@ -1,12 +1,12 @@
-package tv.codely.scala_http_api.module.user.infrastructure
+package tv.codely.scala_http_api.module.user.infrastructure.marshaller
 
 import java.util.UUID
 
+import spray.json.{DeserializationException, JsonFormat, JsString, JsValue, RootJsonFormat}
 import spray.json.DefaultJsonProtocol._
-import spray.json.{DeserializationException, JsString, JsValue, JsonFormat, RootJsonFormat}
 import tv.codely.scala_http_api.module.user.domain.{User, UserId, UserName}
 
-object UserMarshaller {
+object UserJsonFormatMarshaller {
 
   implicit object UserNameMarshaller extends JsonFormat[UserName] {
     def write(value: UserName): JsValue = JsString(value.value)

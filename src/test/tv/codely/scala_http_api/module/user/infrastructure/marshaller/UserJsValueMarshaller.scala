@@ -3,7 +3,7 @@ package tv.codely.scala_http_api.module.user.infrastructure.marshaller
 import spray.json.{JsArray, JsObject, JsString}
 import tv.codely.scala_http_api.module.user.domain.User
 
-object UserMarshaller {
+object UserJsValueMarshaller {
   def marshall(users: Seq[User]): JsArray = JsArray(
     users
       .map(
