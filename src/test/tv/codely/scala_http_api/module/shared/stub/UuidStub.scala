@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.module.stub
+package tv.codely.scala_http_api.module.shared.stub
 
 import java.util.UUID
 

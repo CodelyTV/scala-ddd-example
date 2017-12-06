@@ -1,16 +1,16 @@
-package tv.codely.scala_http_api
+package tv.codely.scala_http_api.entry_point
+
+import scala.concurrent.duration._
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
-import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.server.Directives._
 import spray.json.DefaultJsonProtocol
 import tv.codely.scala_http_api.module.user.domain.User
 import tv.codely.scala_http_api.module.user.infrastructure.UserMarshaller._
 import tv.codely.scala_http_api.module.video.domain.Video
 import tv.codely.scala_http_api.module.video.infrastructure.VideoMarshaller._
-
-import scala.concurrent.duration._
 
 object Routes extends SprayJsonSupport with DefaultJsonProtocol {
   private val systemUsers = Seq(

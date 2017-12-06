@@ -1,16 +1,16 @@
-package tv.codely.scala_http_api
+package tv.codely.scala_http_api.entry_point
 
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 import spray.json._
 import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserMarshaller
 import tv.codely.scala_http_api.module.user.infrastructure.stub.UserStub
 import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoMarshaller
 import tv.codely.scala_http_api.module.video.infrastructure.stub.VideoStub
-
 import scala.concurrent.duration._
+
+import org.scalatest.concurrent.ScalaFutures
 
 final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
   "ScalaHttpApi" should {
