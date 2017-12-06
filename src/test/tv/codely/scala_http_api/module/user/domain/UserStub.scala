@@ -1,6 +1,4 @@
-package tv.codely.scala_http_api.module.user.infrastructure.stub
-
-import tv.codely.scala_http_api.module.user.domain.User
+package tv.codely.scala_http_api.module.user.domain
 
 object UserStub {
   def apply(

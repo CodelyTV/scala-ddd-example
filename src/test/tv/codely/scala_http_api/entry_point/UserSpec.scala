@@ -2,8 +2,8 @@ package tv.codely.scala_http_api.entry_point
 
 import akka.http.scaladsl.model._
 import spray.json._
+import tv.codely.scala_http_api.module.user.domain.UserStub
 import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserJsValueMarshaller
-import tv.codely.scala_http_api.module.user.infrastructure.stub.UserStub
 
 final class UserSpec extends AcceptanceSpec {
   "return all the system users" in get("/users") {

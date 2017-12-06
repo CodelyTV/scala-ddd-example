@@ -4,8 +4,8 @@ import scala.concurrent.duration._
 
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
 import spray.json._
+import tv.codely.scala_http_api.module.video.domain.VideoStub
 import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoJsValueMarshaller
-import tv.codely.scala_http_api.module.video.infrastructure.stub.VideoStub
 
 final class VideoSpec extends AcceptanceSpec {
   "save a video" in post(

@@ -27,6 +27,6 @@ final class Routes(container: EntryPointDependencyContainer) {
       }
     }
 
-  private def jsonBody[T](handler: Map[String, JsValue] => Route): Route =
+  private def jsonBody(handler: Map[String, JsValue] => Route): Route =
     entity(as[JsValue])(json => handler(json.asJsObject.fields))
 }
