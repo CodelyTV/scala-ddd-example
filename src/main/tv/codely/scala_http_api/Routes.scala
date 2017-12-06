@@ -5,10 +5,10 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import spray.json.DefaultJsonProtocol
-import tv.codely.scala_http_api.user.domain.User
-import tv.codely.scala_http_api.user.infrastructure.UserMarshaller._
-import tv.codely.scala_http_api.video.domain.Video
-import tv.codely.scala_http_api.video.infrastructure.VideoMarshaller._
+import tv.codely.scala_http_api.module.user.domain.User
+import tv.codely.scala_http_api.module.user.infrastructure.UserMarshaller._
+import tv.codely.scala_http_api.module.video.domain.Video
+import tv.codely.scala_http_api.module.video.infrastructure.VideoMarshaller._
 
 import scala.concurrent.duration._
 
