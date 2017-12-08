@@ -14,7 +14,7 @@ final class UsersSearcherTest extends UserUnitTestCase {
 
       shouldSearchAllUsers(existingUsers)
 
-      searcher.all() should be(existingUsers)
+      searcher.all().futureValue should be(existingUsers)
     }
   }
 }

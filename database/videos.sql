@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE videos (
   id                  BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   video_id            CHAR(36)            NOT NULL,
   title               VARCHAR(255)        NOT NULL,
