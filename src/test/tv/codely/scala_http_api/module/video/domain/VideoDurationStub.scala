@@ -1,9 +1,8 @@
-package tv.codely.scala_http_api.module.video.infrastructure.stub
-
-import tv.codely.scala_http_api.module.shared.stub.DurationStub
-import tv.codely.scala_http_api.module.video.domain.VideoDuration
+package tv.codely.scala_http_api.module.video.domain
 
 import scala.concurrent.duration.Duration
+
+import tv.codely.scala_http_api.module.shared.domain.DurationStub
 
 object VideoDurationStub {
   def apply(value: Duration): VideoDuration = VideoDuration(value)

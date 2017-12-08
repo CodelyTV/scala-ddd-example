@@ -25,7 +25,7 @@ protected[entry_point] abstract class AcceptanceSpec
   def post[T](path: String, request: String)(body: ⇒ T): T =
     HttpRequest(
       method = HttpMethods.POST,
-      uri    = path,
+      uri = path,
       entity = HttpEntity(
         MediaTypes.`application/json`,
         ByteString(request)

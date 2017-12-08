@@ -1,6 +1,4 @@
-package tv.codely.scala_http_api.module.video.infrastructure.stub
-
-import tv.codely.scala_http_api.module.video.domain.Video
+package tv.codely.scala_http_api.module.video.domain
 
 import scala.concurrent.duration.Duration
 
