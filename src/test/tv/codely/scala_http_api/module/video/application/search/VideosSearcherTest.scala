@@ -12,7 +12,7 @@ final class VideosSearcherTest extends VideoUnitTestCase {
       val anotherExistingVideo = VideoStub.random
       val existingVideos       = Seq(existingVideo, anotherExistingVideo)
 
-      shouldSearchAllVideos(existingVideos)
+      repositoryShouldSearchAll(existingVideos)
 
       searcher.all() should be(existingVideos)
     }
