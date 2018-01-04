@@ -17,21 +17,19 @@ protected[entry_point] abstract class AcceptanceSpec
     with Matchers
     with ScalaFutures
     with ScalatestRouteTest {
-  private val appConfig = ConfigFactory.load("application")
-  private val dbConfig  = DbConfig(appConfig.getConfig("database"))
+  private val appConfig       = ConfigFactory.load("application")
+  private val dbConfig        = DbConfig(appConfig.getConfig("database"))
+  private val actorSystemName = "scala-http-api-acceptance-test"
 
-  private val sharedDependencies = new SharedModuleDependencyContainer(dbConfig)
+  private val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig)
 
-  private val routes = new Routes(
-    new EntryPointDependencyContainer(
-      new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection),
-      new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection)
-    )
-  )
+  private val userDependencies = new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection)
+  protected val videoDependencies =
+    new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection)(sharedDependencies.executionContext)
+
+  private val routes = new Routes(new EntryPointDependencyContainer(userDependencies, videoDependencies))
 
   protected val doobieDbConnection: DoobieDbConnection = sharedDependencies.doobieDbConnection
-
-  protected def getting[T](path: String)(body: ⇒ T): T = Get(path) ~> routes.all ~> check(body)
 
   protected def posting[T](path: String, request: String)(body: ⇒ T): T =
     HttpRequest(
@@ -41,7 +39,7 @@ protected[entry_point] abstract class AcceptanceSpec
         MediaTypes.`application/json`,
         ByteString(request)
       )
-    ) ~> routes.all ~> check(
-      body
-    )
+    ) ~> routes.all ~> check(body)
+
+  protected def getting[T](path: String)(body: ⇒ T): T = Get(path) ~> routes.all ~> check(body)
 }

@@ -1,7 +1,9 @@
 package tv.codely.scala_http_api.module.video.domain
 
-trait VideoRepository {
-  def all(): Seq[Video]
+import scala.concurrent.Future
 
-  def save(video: Video): Unit
+trait VideoRepository {
+  def all(): Future[Seq[Video]]
+
+  def save(video: Video): Future[Unit]
 }

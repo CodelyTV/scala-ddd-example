@@ -1,6 +1,6 @@
 package tv.codely.scala_http_api.module.user.domain
 
-import tv.codely.scala_http_api.module.shared.domain.IntStub
+import tv.codely.scala_http_api.module.video.domain.SeqStub
 
 object UserStub {
   def apply(
@@ -10,5 +10,5 @@ object UserStub {
 
   def random: User = apply()
 
-  def randomSeq: Seq[User] = (0 to IntStub.randomBetween(1, 20)).map(_ => apply())
+  def randomSeq: Seq[User] = SeqStub.randomOf(apply())
 }

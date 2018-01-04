@@ -2,9 +2,6 @@ package tv.codely.scala_http_api.module.user.infrastructure.repository
 
 import tv.codely.scala_http_api.module.user.UserIntegrationTestCase
 import tv.codely.scala_http_api.module.user.domain.{User, UserStub}
-import doobie._
-import doobie.implicits._
-import cats.implicits._
 import doobie.util.update.Update
 import tv.codely.scala_http_api.module.shared.infrastructure.persistence.doobie.TypesConversions._
 import doobie.implicits._

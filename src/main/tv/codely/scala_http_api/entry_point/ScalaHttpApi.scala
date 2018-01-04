@@ -9,7 +9,7 @@ import tv.codely.scala_http_api.module.shared.infrastructure.dependency_injectio
 import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
 
-import scala.concurrent.ExecutionContextExecutor
+import scala.concurrent.ExecutionContext
 import scala.io.StdIn
 
 object ScalaHttpApi {
@@ -23,11 +23,11 @@ object ScalaHttpApi {
 
     val dbConfig = DbConfig(appConfig.getConfig("database"))
 
-    implicit val system: ActorSystem                        = ActorSystem(actorSystemName)
-    implicit val materializer: ActorMaterializer            = ActorMaterializer()
-    implicit val executionContext: ExecutionContextExecutor = system.dispatcher
+    val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig)
 
-    val sharedDependencies = new SharedModuleDependencyContainer(dbConfig)
+    implicit val system: ActorSystem                = sharedDependencies.actorSystem
+    implicit val materializer: ActorMaterializer    = sharedDependencies.materializer
+    implicit val executionContext: ExecutionContext = sharedDependencies.executionContext
 
     val container = new EntryPointDependencyContainer(
       new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection),
@@ -49,6 +49,6 @@ object ScalaHttpApi {
 
     bindingFuture
       .flatMap(_.unbind())
-      .onComplete(_ => system.terminate())
+      .onComplete(_ => sharedDependencies.actorSystem.terminate())
   }
 }

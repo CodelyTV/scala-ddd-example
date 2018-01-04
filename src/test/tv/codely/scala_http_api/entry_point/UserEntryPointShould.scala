@@ -1,15 +1,15 @@
 package tv.codely.scala_http_api.entry_point
 
 import akka.http.scaladsl.model._
+import cats.implicits._
+import doobie.implicits._
 import doobie.util.update.Update
 import spray.json._
+import tv.codely.scala_http_api.module.shared.infrastructure.persistence.doobie.TypesConversions._
 import tv.codely.scala_http_api.module.user.domain.{User, UserStub}
 import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserJsValueMarshaller
-import tv.codely.scala_http_api.module.shared.infrastructure.persistence.doobie.TypesConversions._
-import doobie.implicits._
-import cats.implicits._
 
-final class UserSpec extends AcceptanceSpec {
+final class UserEntryPointShould extends AcceptanceSpec {
   private val expectedUsers = UserStub.randomSeq
 
   override def beforeAll(): Unit = {
