@@ -15,7 +15,17 @@ final class Routes(container: EntryPointDependencyContainer) {
 
   private val user = get {
     path("users")(container.userGetController.get())
-  }
+  } ~
+    post {
+      path("users") {
+        jsonBody { body =>
+          container.userPostController.post(
+            body("id").convertTo[String],
+            body("name").convertTo[String]
+          )
+        }
+      }
+    }
 
   private val video = get {
     path("videos")(container.videoGetController.get())
