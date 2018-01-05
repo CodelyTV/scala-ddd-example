@@ -27,8 +27,6 @@ before_install:
   - sbt createDbTables
 
 script:
-  - docker --version
-
   ## Execute the tests
   - sbt -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M test
 
