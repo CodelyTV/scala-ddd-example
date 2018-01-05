@@ -24,7 +24,7 @@ before_install:
   - cp .env.dist .env
   - docker-compose up -d
   - cd ..
-  - sbt runMain tv.codely.scala_http_api.entry_point.cli.DbTablesCreator
+  - sbt createDbTables
 
 script:
   - docker --version
