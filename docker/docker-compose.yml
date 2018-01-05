@@ -12,3 +12,13 @@ services:
       MYSQL_PASSWORD: c0d3ly
     ports:
       - ${CODELYTV_SCALA_API_DB_PORT}:3306
+
+  broker:
+    image: 'rabbitmq:3.7-management'
+    container_name: codelytv-scala-api-broker
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: codelytv
+      RABBITMQ_DEFAULT_PASS: c0d3ly
+    ports:
+      - ${CODELYTV_SCALA_API_BROKER_PORT}:15672
