@@ -20,8 +20,10 @@ cache:
     - $HOME/.sbt/boot/
 
 before_install:
-  - cp docker/.env.dist docker/.env
-  - cd docker/; docker-compose up -d
+  - cd docker/
+  - cp .env.dist .env
+  - docker-compose up -d
+  - cd ..
   - sbt runMain tv.codely.scala_http_api.entry_point.cli.DbTablesCreator
 
 script:
