@@ -13,13 +13,24 @@ Libraries used:
 
 ## How To Start
 
-1. Take a look at the course outline just in case you're interested into it!
-2. Clone this repository: `git clone https://github.com/CodelyTV/scala-http-api.git scala-http-api`
-3. [Download and install SBT](http://www.scala-sbt.org/download.html)
-4. Go into the SBT console `cd scala-http-api; sbt` 
-5. Run the tests `t`
-6. Start the local server (TBD)
-7. Request for the server status (TBD) `curl`
+### Install the needed tools
+1. Clone this repository: `git clone https://github.com/CodelyTV/scala-http-api.git scala-http-api`
+2. Download and install [Docker compose](https://docs.docker.com/compose/install/). We'll need it in order to run all the project infrastructure.
+3. Download and install [SBT](http://www.scala-sbt.org/download.html)
+
+### Prepare the application environment
+1. Copy [the Docker environment variables config file](docker/.env.dist) and tune it with your desired values: `cp docker/.env.dist docker/.env`
+2. Start Docker and bring up the project needed containers: `cd docker/; docker-compose up -d`
+3. Create the database tables in your Docker MySQL container: `sbt runMain tv.codely.scala_http_api.entry_point.cli.DbTablesCreator`
+
+### Enjoy!
+1. Go into the SBT console `sbt` 
+2. Run the tests `t`
+3. Start the local server (TBD)
+4. Request for the server status (TBD) `curl`
+5. Take a look at the courses related to this repository (Spanish) just in case you're interested into them!
+    * [Introducción a Scala](https://pro.codely.tv/library/introduccion-a-scala/63278/about/)
+    * [API HTTP con Scala y Akka](https://pro.codely.tv/library/api-http-con-scala-y-akka/66747/about/)
 
 ## Pre-push Git hook
 
@@ -33,7 +44,7 @@ If you want to install this hook, just `cd doc/hooks` and run `./install-hooks.s
 
 ## About
 
-This hopefully helpful utility has been developed by [CodelyTV][link-author] and [contributors][link-contributors].
+This hopefully helpful utility has been developed by [CodelyTV](https://github.com/CodelyTV) and [contributors](https://github.com/CodelyTV/scala-http-api/graphs/contributors).
 
 We'll try to maintain this project as simple as possible, but Pull Requests are welcome!
 
@@ -46,6 +57,4 @@ The MIT License (MIT). Please see [License File][link-license] for more informat
 
 [link-license]: LICENSE
 [link-travis]: https://travis-ci.org/CodelyTV/scala-http-api
-[link-author]: https://github.com/CodelyTV
-[link-contributors]: https://github.com/CodelyTV/scala-http-api/graphs/contributors
 

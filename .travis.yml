@@ -4,6 +4,9 @@ notifications:
 
 language: scala
 
+services:
+  - docker
+
 scala:
   - 2.12.4
 
@@ -16,7 +19,14 @@ cache:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot/
 
+before_install:
+  - cp docker/.env.dist docker/.env
+  - cd docker/; docker-compose up -d
+  - sbt runMain tv.codely.scala_http_api.entry_point.cli.DbTablesCreator
+
 script:
+  - docker --version
+
   ## Execute the tests
   - sbt -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M test
 
