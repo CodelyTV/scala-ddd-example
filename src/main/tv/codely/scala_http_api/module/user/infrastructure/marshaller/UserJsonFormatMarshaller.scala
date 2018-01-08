@@ -2,36 +2,24 @@ package tv.codely.scala_http_api.module.user.infrastructure.marshaller
 
 import java.util.UUID
 
-import spray.json.{DeserializationException, JsonFormat, JsString, JsValue, RootJsonFormat}
-import spray.json.DefaultJsonProtocol._
+import spray.json.{DeserializationException, JsString, JsValue, JsonFormat, RootJsonFormat}
 import tv.codely.scala_http_api.module.user.domain.{User, UserId, UserName}
+import tv.codely.scala_http_api.module.shared.infrastructure.marshaller.UuidJsonFormatMarshaller._
+import spray.json._
 
-object UserJsonFormatMarshaller {
+object UserJsonFormatMarshaller extends DefaultJsonProtocol {
+  implicit object UserIdMarshaller extends JsonFormat[UserId] {
+    override def write(value: UserId): JsValue = value.value.toJson
+
+    override def read(value: JsValue): UserId = UserId(value.convertTo[UUID])
+  }
 
   implicit object UserNameMarshaller extends JsonFormat[UserName] {
-    def write(value: UserName): JsValue = JsString(value.value)
+    override def write(value: UserName): JsValue = JsString(value.value)
 
-    def read(value: JsValue): UserName = value match {
+    override def read(value: JsValue): UserName = value match {
       case JsString(name) => UserName(name)
       case _              => throw DeserializationException("Expected 1 string for UserName")
-    }
-  }
-
-  implicit object UuidMarshaller extends JsonFormat[UUID] {
-    def write(value: UUID): JsValue = JsString(value.toString)
-
-    def read(value: JsValue): UUID = value match {
-      case JsString(uuid) => UUID.fromString(uuid)
-      case _              => throw DeserializationException("Expected hexadecimal UUID string")
-    }
-  }
-
-  implicit object UserIdMarshaller extends JsonFormat[UserId] {
-    def write(value: UserId): JsValue = JsString(value.value.toString)
-
-    def read(value: JsValue): UserId = value match {
-      case JsString(id) => UserId(id)
-      case _            => throw DeserializationException("Expected 1 string for UserId")
     }
   }
 

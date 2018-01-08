@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
-import tv.codely.scala_http_api.module.shared.infrastructure.config.DbConfig
+import tv.codely.scala_http_api.module.shared.infrastructure.config.{DbConfig, MessageBrokerConfig}
 import tv.codely.scala_http_api.module.shared.infrastructure.dependency_injection.SharedModuleDependencyContainer
 import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
@@ -21,9 +21,10 @@ object ScalaHttpApi {
     val host            = serverConfig.getString("http-server.host")
     val port            = serverConfig.getInt("http-server.port")
 
-    val dbConfig = DbConfig(appConfig.getConfig("database"))
+    val dbConfig        = DbConfig(appConfig.getConfig("database"))
+    val publisherConfig = MessageBrokerConfig(appConfig.getConfig("message-publisher"))
 
-    val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig)
+    val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig, publisherConfig)
 
     implicit val system: ActorSystem                = sharedDependencies.actorSystem
     implicit val materializer: ActorMaterializer    = sharedDependencies.materializer
@@ -31,7 +32,7 @@ object ScalaHttpApi {
 
     val container = new EntryPointDependencyContainer(
       new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection),
-      new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection)
+      new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection, sharedDependencies.messagePublisher)
     )
 
     val routes = new Routes(container)
