@@ -1,13 +1,14 @@
-package tv.codely.scala_http_api.module.video
+package tv.codely.scala_http_api.module.video.infrastructure.repository
 
+import org.scalamock.scalatest.MockFactory
 import tv.codely.scala_http_api.module.UnitTestCase
 import tv.codely.scala_http_api.module.video.domain.{Video, VideoRepository}
 
 import scala.concurrent.Future
 
-protected[video] trait VideoUnitTestCase extends UnitTestCase {
-  // @ToDo: Use multiple inheritance in test suites extending from UnitTestCase and this VideoUnitTestCase
-  // in order to make more explicit what we have and avoid making the UnitTestCase extending from MockFactory
+protected[video] trait VideoRepositoryMock extends MockFactory {
+  this: UnitTestCase => // Make mandatory to also extend UnitTestCase in order to avoid using mocks in any other kind of test.
+
   protected val repository: VideoRepository = mock[VideoRepository]
 
   protected def repositoryShouldSave(video: Video): Unit =
