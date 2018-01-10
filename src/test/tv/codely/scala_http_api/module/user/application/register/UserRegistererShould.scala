@@ -8,7 +8,7 @@ final class UserRegistererShould extends UserUnitTestCase with MessagePublisherM
   private val registerer = new UserRegisterer(repository, messagePublisher)
 
   "register a user" in {
-    val user = UserStub.random
+    val user           = UserStub.random
     val userRegistered = UserRegisteredStub(user)
 
     repositoryShouldSave(user)

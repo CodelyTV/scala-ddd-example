@@ -38,5 +38,5 @@ final class RabbitMqMessageConsumer(brokerConfig: MessageBrokerConfig)(queueName
     channel.basicConsume(queueName, autoAckAfterConsume, consumer).map(_ => ())
   }
 
-  override def hasMessages: Boolean = channel.messageCount(queueName) > 0
+  override def hasMessagesToConsume: Boolean = channel.messageCount(queueName) > 0
 }
