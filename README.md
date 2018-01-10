@@ -42,6 +42,17 @@ You can define what this task does modifying the `prep` task in the `build.sbt` 
  
 If you want to install this hook, just `cd doc/hooks` and run `./install-hooks.sh`.
 
+## Logs
+
+We've added a logging mechanism thanks to [logback](https://github.com/qos-ch/logback) and [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder/) in order to output the log records through the standard output channel (usually, your terminal :P), and also store them in a log file.
+
+This log file will be available at `/var/log/codelytv_scala_api/app_log.json` but firstly, you'll need to create this directory with proper permissions 🙂
+
+`sudo mkdir /var/log/codelytv_scala_api/`
+`sudo chown $(whoami):$(id -gn) /var/log/codelytv_scala_api/`
+
+We've added a rolling policy in order to only keep the last 10 days of logs. If you want more information on the logging policies and appenders, [take a look at the logback.xml](conf/logback.xml).  
+
 ## About
 
 This hopefully helpful utility has been developed by [CodelyTV](https://github.com/CodelyTV) and [contributors](https://github.com/CodelyTV/scala-http-api/graphs/contributors).
