@@ -11,9 +11,10 @@ import scala.concurrent.duration._
 final class RabbitMqMessagePublisherShould extends IntegrationTestCase with Eventually {
   override implicit val patienceConfig: PatienceConfig = PatienceConfig(timeout = 1.second, interval = 50.millis)
 
-  private val queueName                                  = "codelytv_scala_api.video_created"
-  private val videoCreatedQueuePurger: MessagePurger     = new RabbitMqMessagePurger(publisherConfig)(queueName)
-  private val videoCreatedQueueConsumer: MessageConsumer = new RabbitMqMessageConsumer(publisherConfig)(queueName)
+  private val queueName                              = "codelytv_scala_api.video_created"
+  private val videoCreatedQueuePurger: MessagePurger = new RabbitMqMessagePurger(rabbitMqChannelFactory)(queueName)
+  private val videoCreatedQueueConsumer: MessageConsumer =
+    new RabbitMqMessageConsumer(rabbitMqChannelFactory)(queueName)
 
   private val consumedMessages: mutable.Buffer[Message] = mutable.Buffer.empty
 
