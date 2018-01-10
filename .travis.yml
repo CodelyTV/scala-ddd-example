@@ -25,6 +25,7 @@ before_install:
   - cp .env.dist .env
   - docker-compose up -d
   - cd ..
+  - mkdir /var/log/codelytv_scala_api/
   - sbt createDbTables
 
 script:
