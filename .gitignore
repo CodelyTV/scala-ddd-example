@@ -4,5 +4,9 @@ lib_managed/
 src_managed/
 project/plugins/project/
 
-# Ignore the environment variables file intended for customize the Docker containers parameters letting each developer has its own values.
+# Environment variables file intended for customize the Docker containers parameters letting each developer has its own values.
 docker/.env
+
+# Application log file and compressed previous logs (see conf/logback.xml)
+var/log/app_log.json
+var/log/app_log-*.gz

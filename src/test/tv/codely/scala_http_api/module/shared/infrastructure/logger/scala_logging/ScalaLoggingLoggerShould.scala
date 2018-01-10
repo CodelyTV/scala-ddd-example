@@ -8,12 +8,12 @@ import tv.codely.scala_http_api.module.IntegrationTestCase
 import scala.io.Source
 
 final class ScalaLoggingLoggerShould extends IntegrationTestCase {
-  private val appLogFilePath = "/var/log/codelytv_scala_api/app_log.json"
+  private val appLogFilePath = "var/log/app_log.json"
 
   "log info messages in the app log file in a JSON format" in {
     cleanAppLogFileContents()
 
-    val logText = "This is a dummy message"
+    val logText = "This is a dummy message to log from the integration test"
 
     logger.info(logText)
 
@@ -37,6 +37,11 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
 
     (actualLog - "@timestamp") shouldBe (expectedLog - "@timestamp")
   }
+
+  "log warn messages in the app log file in a JSON format" in pending
+  "log error messages in the app log file in a JSON format" in pending
+  "compress historical logs" in pending
+  "delete historical logs older than 10 days ago" in pending
 
   private def cleanAppLogFileContents(): Unit = {
     val appLogFileWriter = new PrintWriter(new File(appLogFilePath), "UTF-8")

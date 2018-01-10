@@ -44,14 +44,13 @@ If you want to install this hook, just `cd doc/hooks` and run `./install-hooks.s
 
 ## Logs
 
-We've added a logging mechanism thanks to [logback](https://github.com/qos-ch/logback) and [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder/) in order to output the log records through the standard output channel (usually, your terminal :P), and also store them in a log file.
+We've added a logging mechanism thanks to [logback](https://github.com/qos-ch/logback) and [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder/) in order to:
+* Output the log records through the standard output channel (usually, your terminal :P)
+* Store the log records in JSON format in a log file available at `var/log/app_log.json`
+* Compress the historical log files into `var/log/app_log-%d{yyyy-MM-dd}.gz` files
+* Delete compressed historical logs older than 10 days 
 
-This log file will be available at `/var/log/codelytv_scala_api/app_log.json` but firstly, you'll need to create this directory with proper permissions 🙂
-
-`sudo mkdir /var/log/codelytv_scala_api/`
-`sudo chown $(whoami):$(id -gn) /var/log/codelytv_scala_api/`
-
-We've added a rolling policy in order to only keep the last 10 days of logs. If you want more information on the logging policies and appenders, [take a look at the logback.xml](conf/logback.xml).  
+If you want more information on the logging policies and appenders, [take a look at the logback.xml](conf/logback.xml).  
 
 ## About
 

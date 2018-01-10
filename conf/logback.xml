@@ -9,9 +9,9 @@
     </appender>
 
     <appender name="jsonFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/var/log/codelytv_scala_api/app_log.json</file>
+        <file>var/log/app_log.json</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/var/log/codelytv_scala_api/app_log-%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>var/log/app_log-%d{yyyy-MM-dd}.gz</fileNamePattern>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
