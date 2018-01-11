@@ -13,7 +13,7 @@ final class EntryPointDependencyContainer(
   val statusGetController = new StatusGetController
 
   val userGetController  = new UserGetController(userDependencies.usersSearcher)
-  val userPostController = new UserPostController(userDependencies.userRegisterer)
+  val userPostController = new UserPostController(userDependencies.userRegistrar)
 
   val videoGetController  = new VideoGetController(videoDependencies.videosSearcher)
   val videoPostController = new VideoPostController(videoDependencies.videoCreator)

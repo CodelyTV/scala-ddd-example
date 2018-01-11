@@ -5,8 +5,8 @@ import tv.codely.scala_http_api.module.shared.infrastructure.MessagePublisherMoc
 import tv.codely.scala_http_api.module.user.domain.{UserRegisteredStub, UserStub}
 import tv.codely.scala_http_api.module.user.infrastructure.repository.UserRepositoryMock
 
-final class UserRegistererShould extends UnitTestCase with UserRepositoryMock with MessagePublisherMock {
-  private val registerer = new UserRegisterer(repository, messagePublisher)
+final class UserRegistrarShould extends UnitTestCase with UserRepositoryMock with MessagePublisherMock {
+  private val registrar = new UserRegistrar(repository, messagePublisher)
 
   "register a user" in {
     val user           = UserStub.random
@@ -16,6 +16,6 @@ final class UserRegistererShould extends UnitTestCase with UserRepositoryMock wi
 
     publisherShouldPublish(userRegistered)
 
-    registerer.register(user.id, user.name).shouldBe(())
+    registrar.register(user.id, user.name).shouldBe(())
   }
 }
