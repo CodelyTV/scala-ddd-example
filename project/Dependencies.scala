@@ -15,7 +15,8 @@ object Dependencies {
     "com.typesafe.akka"      %% "akka-http-spray-json" % Versions.akkaHttp,
     "org.tpolecat"           %% "doobie-core"          % "0.5.0-M9",
     "mysql"                  % "mysql-connector-java"  % "5.1.45",
-    "com.github.scopt"       %% "scopt"                % "3.7.0" // Command Line Commands such as de DbTablesCreator
+    "com.github.scopt"       %% "scopt"                % "3.7.0", // Command Line Commands such as de DbTablesCreator
+    "com.newmotion"          %% "akka-rabbitmq"        % "5.0.0"
   )
 
   val test = Seq(

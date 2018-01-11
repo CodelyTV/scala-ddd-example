@@ -2,12 +2,13 @@ package tv.codely.scala_http_api.entry_point.cli
 
 import java.io.File
 import java.sql.{Connection, DriverManager}
-import scala.util.matching.Regex
+
 import com.typesafe.config.ConfigFactory
 import tv.codely.scala_http_api.module.shared.infrastructure.config.DbConfig
 
 import scala.io.Source._
 import scala.util.Try
+import scala.util.matching.Regex
 
 /**
   * View usage: runMain tv.codely.scala_http_api.entry_point.cli.DbTablesCreator --usage
