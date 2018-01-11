@@ -6,11 +6,12 @@ object Configuration {
     organization := "tv.codely",
     scalaVersion := "2.12.4",
     // Custom folders path (/src/main/scala and /src/test/scala by default)
-    mainClass in Compile := Some("tv.codely.scala_http_api.ScalaHttpApi"),
-    scalaSource in Compile := baseDirectory.value / "/src/main",
-    scalaSource in Test := baseDirectory.value / "/src/test",
-    resourceDirectory in Compile := baseDirectory.value / "conf",
+    Compile / mainClass := Some("tv.codely.scala_http_api.ScalaHttpApi"),
+    Compile / scalaSource := baseDirectory.value / "/src/main",
+    Test / scalaSource := baseDirectory.value / "/src/test",
+    Compile / resourceDirectory := baseDirectory.value / "conf",
     // Compiler options. More information: https://tpolecat.github.io/2017/04/25/scalac-flags.html
+    javaOptions += "-Duser.timezone=UTC",
     scalacOptions ++= Seq(
       "-deprecation", // Emit warning and location for usages of deprecated APIs.
       "-encoding",
@@ -59,15 +60,14 @@ object Configuration {
       "-Ywarn-unused:privates", // Warn if a private member is unused.
       "-Ywarn-value-discard" // Warn when non-Unit expression results are unused.
     ),
-    scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"), // Leave the console REPL usable :P
-    scalacOptions in (Compile, run) -= "-Xcheckinit", // Expensive to run in prod
-    scalacOptions in (Test, compile) --= Seq("-Xfatal-warnings"), // Due to deprecated ETA expansion used with ScalaMock
-    javaOptions += "-Duser.timezone=UTC",
+    Compile / console / scalacOptions --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"), // Leave the console REPL usable :P
+    Compile / run / scalacOptions -= "-Xcheckinit",             // Expensive to run in prod
+    Test / compile / scalacOptions --= Seq("-Xfatal-warnings"), // Due to deprecated ETA expansion used with ScalaMock
     // Test options
-    parallelExecution in Test := false,
-    testForkedParallel in Test := false,
-    fork in Test := true,
-    testOptions in Test ++= Seq(
+    Test / parallelExecution := false,
+    Test / testForkedParallel := false,
+    Test / fork := true,
+    Test / testOptions ++= Seq(
       Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports"), // Save test reports
       Tests.Argument("-oDF") // Show full stack traces and time spent in each test
     )

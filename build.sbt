@@ -1,10 +1,12 @@
-name := "Scala HTTP API"
+name := "CodelyTV Scala HTTP API"
 version := "1.0"
 
 Configuration.settings
 
 libraryDependencies ++= Dependencies.production
 libraryDependencies ++= Dependencies.test
+
+enablePlugins(JavaAppPackaging) // App packaging. More info: https://github.com/sbt/sbt-native-packager
 
 addCommandAlias("t", "test")
 addCommandAlias("to", "testOnly")
