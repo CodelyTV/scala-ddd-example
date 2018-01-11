@@ -4,6 +4,9 @@ notifications:
 
 language: scala
 
+services:
+  - docker
+
 scala:
   - 2.12.4
 
@@ -15,6 +18,13 @@ cache:
   directories:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot/
+
+before_install:
+  - cd docker/
+  - cp .env.dist .env
+  - docker-compose up -d
+  - cd ..
+  - sbt createDbTables
 
 script:
   ## Execute the tests

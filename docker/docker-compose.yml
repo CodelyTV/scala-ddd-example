@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  db:
+    image: 'mysql:5.7'
+    container_name: codelytv-scala-api-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: codelytv_scala_api
+      MYSQL_USER: codelytv
+      MYSQL_PASSWORD: c0d3ly
+    ports:
+      - ${CODELYTV_SCALA_API_DB_PORT}:3306
