@@ -2,16 +2,22 @@ package tv.codely.scala_http_api.entry_point
 
 import doobie.implicits._
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
+import org.scalatest.BeforeAndAfterEach
 import spray.json._
 import tv.codely.scala_http_api.module.video.domain.VideoStub
 import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoJsValueMarshaller
 
-final class VideoEntryPointShould extends AcceptanceSpec {
+final class VideoEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach {
   private def cleanVideosTable() =
     sql"TRUNCATE TABLE videos".update.run
       .transact(doobieDbConnection.transactor)
       .unsafeToFuture()
       .futureValue
+
+  override protected def beforeEach(): Unit = {
+    super.beforeEach()
+    cleanVideosTable()
+  }
 
   "save a video" in posting(
     "/videos",
@@ -28,8 +34,6 @@ final class VideoEntryPointShould extends AcceptanceSpec {
   }
 
   "return all the videos" in {
-    cleanVideosTable()
-
     val videos = VideoStub.randomSeq
 
     videos.foreach(v => videoDependencies.repository.save(v).futureValue)

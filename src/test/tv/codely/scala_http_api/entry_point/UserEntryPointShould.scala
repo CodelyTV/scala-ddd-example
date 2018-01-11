@@ -2,16 +2,22 @@ package tv.codely.scala_http_api.entry_point
 
 import akka.http.scaladsl.model._
 import doobie.implicits._
+import org.scalatest.BeforeAndAfterEach
 import spray.json._
 import tv.codely.scala_http_api.module.user.domain.UserStub
 import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserJsValueMarshaller
 
-final class UserEntryPointShould extends AcceptanceSpec {
+final class UserEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach {
   private def cleanUsersTable() =
     sql"TRUNCATE TABLE users".update.run
       .transact(doobieDbConnection.transactor)
       .unsafeToFuture()
       .futureValue
+
+  override protected def beforeEach(): Unit = {
+    super.beforeEach()
+    cleanUsersTable()
+  }
 
   "save a user" in posting(
     "/users",
@@ -26,8 +32,6 @@ final class UserEntryPointShould extends AcceptanceSpec {
   }
 
   "return all the users" in {
-    cleanUsersTable()
-
     val users = UserStub.randomSeq
 
     users.foreach(u => userDependencies.repository.save(u).futureValue)
