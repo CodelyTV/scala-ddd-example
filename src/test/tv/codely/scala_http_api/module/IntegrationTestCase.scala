@@ -1,7 +1,7 @@
 package tv.codely.scala_http_api.module
 
 import com.typesafe.config.ConfigFactory
-import tv.codely.scala_http_api.module.shared.domain.MessagePublisher
+import tv.codely.scala_http_api.module.shared.domain.{Logger, MessagePublisher}
 import tv.codely.scala_http_api.module.shared.infrastructure.config.{DbConfig, MessageBrokerConfig}
 import tv.codely.scala_http_api.module.shared.infrastructure.dependency_injection.SharedModuleDependencyContainer
 import tv.codely.scala_http_api.module.shared.infrastructure.message_broker.rabbitmq.RabbitMqChannelFactory
@@ -23,4 +23,5 @@ protected[scala_http_api] trait IntegrationTestCase extends UnitTestCase {
   protected val doobieDbConnection: DoobieDbConnection         = sharedDependencies.doobieDbConnection
   protected val rabbitMqChannelFactory: RabbitMqChannelFactory = new RabbitMqChannelFactory(publisherConfig)
   protected val messagePublisher: MessagePublisher             = sharedDependencies.messagePublisher
+  protected val logger: Logger                                 = sharedDependencies.logger
 }

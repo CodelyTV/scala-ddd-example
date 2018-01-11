@@ -42,6 +42,16 @@ You can define what this task does modifying the `prep` task in the `build.sbt` 
  
 If you want to install this hook, just `cd doc/hooks` and run `./install-hooks.sh`.
 
+## Logs
+
+We've added a logging mechanism thanks to [logback](https://github.com/qos-ch/logback) and [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder/) in order to:
+* Output the log records through the standard output channel (usually, your terminal :P)
+* Store the log records in JSON format in a log file available at `var/log/app_log.json`
+* Compress the historical log files into `var/log/app_log-%d{yyyy-MM-dd}.gz` files
+* Delete compressed historical logs older than 10 days 
+
+If you want more information on the logging policies and appenders, [take a look at the logback.xml](conf/logback.xml).  
+
 ## About
 
 This hopefully helpful utility has been developed by [CodelyTV](https://github.com/CodelyTV) and [contributors](https://github.com/CodelyTV/scala-http-api/graphs/contributors).

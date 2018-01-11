@@ -14,7 +14,7 @@ final class RabbitMqMessageConsumer(channelFactory: RabbitMqChannelFactory)(queu
           envelope: Envelope,
           properties: BasicProperties,
           body: Array[Byte]
-      ) {
+      ): Unit = {
         val stringBody                 = new String(body)
         val message                    = stringBody.parseJson.convertTo[Message]
         val hasBeenHandledSuccessfully = handler(message)
