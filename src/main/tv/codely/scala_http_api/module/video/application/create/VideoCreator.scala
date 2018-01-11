@@ -7,8 +7,8 @@ final class VideoCreator(repository: VideoRepository, publisher: MessagePublishe
   def create(id: VideoId, title: VideoTitle, duration: VideoDuration, category: VideoCategory): Unit = {
     val video = Video(id, title, duration, category)
 
-    publisher.publish(VideoCreated(video))
-
     repository.save(video)
+
+    publisher.publish(VideoCreated(video))
   }
 }

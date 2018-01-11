@@ -4,7 +4,7 @@ import com.typesafe.config.ConfigFactory
 import tv.codely.scala_http_api.module.shared.domain.MessagePublisher
 import tv.codely.scala_http_api.module.shared.infrastructure.config.{DbConfig, MessageBrokerConfig}
 import tv.codely.scala_http_api.module.shared.infrastructure.dependency_injection.SharedModuleDependencyContainer
-import tv.codely.scala_http_api.module.shared.infrastructure.message_broker.rabbitmq.{MessageConsumer, RabbitMqMessageConsumer}
+import tv.codely.scala_http_api.module.shared.infrastructure.message_broker.rabbitmq.RabbitMqChannelFactory
 import tv.codely.scala_http_api.module.shared.infrastructure.persistence.doobie.DoobieDbConnection
 
 import scala.concurrent.ExecutionContext
@@ -20,9 +20,7 @@ protected[scala_http_api] trait IntegrationTestCase extends UnitTestCase {
 
   implicit protected val executionContext: ExecutionContext = sharedDependencies.executionContext
 
-  protected val doobieDbConnection: DoobieDbConnection = sharedDependencies.doobieDbConnection
-  protected val messagePublisher: MessagePublisher     = sharedDependencies.messagePublisher
-
-  protected val videoCreatedQueueConsumer: MessageConsumer =
-    new RabbitMqMessageConsumer(publisherConfig)("codelytv_scala_api.video_created")
+  protected val doobieDbConnection: DoobieDbConnection         = sharedDependencies.doobieDbConnection
+  protected val rabbitMqChannelFactory: RabbitMqChannelFactory = new RabbitMqChannelFactory(publisherConfig)
+  protected val messagePublisher: MessagePublisher             = sharedDependencies.messagePublisher
 }

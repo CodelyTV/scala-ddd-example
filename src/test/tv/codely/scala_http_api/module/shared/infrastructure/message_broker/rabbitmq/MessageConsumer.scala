@@ -4,6 +4,6 @@ import tv.codely.scala_http_api.module.shared.domain.Message
 
 trait MessageConsumer {
   def startConsuming(handler: Message => Boolean): Unit
-  def hasMessages: Boolean
-  def isEmpty: Boolean = !hasMessages
+  def hasMessagesToConsume: Boolean
+  def isEmpty: Boolean = !hasMessagesToConsume
 }
