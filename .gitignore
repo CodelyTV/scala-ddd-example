@@ -3,3 +3,6 @@ boot/
 lib_managed/
 src_managed/
 project/plugins/project/
+
+# Ignore the environment variables file intended for customize the Docker containers parameters letting each developer has its own values.
+docker/.env
