@@ -1,10 +1,10 @@
 package tv.codely.scala_http_api.module.shared.infrastructure.logger.scala_logging
 
-import com.typesafe.scalalogging.Logger
-import tv.codely.scala_http_api.module.shared.domain.{Logger => LoggerContract}
+import com.typesafe.scalalogging.{Logger => ScalaLogging}
+import tv.codely.scala_http_api.module.shared.domain.Logger
 
-final class ScalaLoggingLogger extends LoggerContract {
-  private val logger = Logger(name = "codelytv_scala_api")
+final class ScalaLoggingLogger extends Logger {
+  private val logger = ScalaLogging(name = "codelytv_scala_api")
 
   override def info(message: String): Unit = logger.info(message)
 

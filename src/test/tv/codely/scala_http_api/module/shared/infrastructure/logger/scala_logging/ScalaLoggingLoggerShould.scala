@@ -13,10 +13,40 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
   "log info messages in the app log file in a JSON format" in {
     cleanAppLogFileContents()
 
-    val logText = "This is a dummy message to log from the integration test"
+    val message = "This is a dummy info message from the integration test"
 
-    logger.info(logText)
+    logger.info(message)
 
+    appLogFileShouldContain(message, level = "INFO", levelValue = 20000)
+  }
+
+  "log warn messages in the app log file in a JSON format" in {
+    cleanAppLogFileContents()
+
+    val message = "This is a dummy warn message from the integration test"
+
+    logger.warn(message)
+
+    appLogFileShouldContain(message, level = "WARN", levelValue = 30000)
+  }
+
+  "log error messages in the app log file in a JSON format" in {
+    cleanAppLogFileContents()
+
+    val message = "This is a dummy error message from the integration test"
+
+    logger.error(message)
+
+    appLogFileShouldContain(message, level = "ERROR", levelValue = 40000)
+  }
+
+  private def cleanAppLogFileContents(): Unit = {
+    val appLogFileWriter = new PrintWriter(new File(appLogFilePath), "UTF-8")
+    appLogFileWriter.write("")
+    appLogFileWriter.close()
+  }
+
+  private def appLogFileShouldContain(message: String, level: String, levelValue: Int): Unit = {
     val fileContents = Source.fromFile(appLogFilePath).getLines.mkString
 
     val currentThreadName = Thread.currentThread().getName
@@ -24,11 +54,11 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
     val expectedLog = Map(
       "@timestamp"  -> JsString("We'll not be able to compare this value"),
       "@version"    -> JsNumber(1),
-      "message"     -> JsString(logText),
+      "message"     -> JsString(message),
       "logger_name" -> JsString("codelytv_scala_api"),
       "thread_name" -> JsString(currentThreadName),
-      "level"       -> JsString("INFO"),
-      "level_value" -> JsNumber(20000)
+      "level"       -> JsString(level),
+      "level_value" -> JsNumber(levelValue)
     )
 
     val actualLog = fileContents.parseJson.asJsObject.fields
@@ -36,16 +66,5 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
     actualLog.keys shouldBe expectedLog.keys
 
     (actualLog - "@timestamp") shouldBe (expectedLog - "@timestamp")
-  }
-
-  "log warn messages in the app log file in a JSON format" in pending
-  "log error messages in the app log file in a JSON format" in pending
-  "compress historical logs" in pending
-  "delete historical logs older than 10 days ago" in pending
-
-  private def cleanAppLogFileContents(): Unit = {
-    val appLogFileWriter = new PrintWriter(new File(appLogFilePath), "UTF-8")
-    appLogFileWriter.write("")
-    appLogFileWriter.close()
   }
 }
