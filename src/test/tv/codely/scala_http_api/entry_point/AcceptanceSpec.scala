@@ -23,7 +23,7 @@ protected[entry_point] abstract class AcceptanceSpec
 
   private val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig)
 
-  private val userDependencies = new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection)
+  protected val userDependencies = new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection)
   protected val videoDependencies =
     new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection)(sharedDependencies.executionContext)
 

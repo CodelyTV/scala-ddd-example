@@ -15,7 +15,7 @@ protected[video] trait VideoUnitTestCase extends UnitTestCase {
       .expects(video)
       .returning(Future.unit)
 
-  protected def repositoryShouldSearchAll(videos: Seq[Video]): Unit =
+  protected def repositoryShouldFind(videos: Seq[Video]): Unit =
     (repository.all _)
       .expects()
       .returning(Future.successful(videos))
