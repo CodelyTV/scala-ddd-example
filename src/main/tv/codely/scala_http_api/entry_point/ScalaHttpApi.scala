@@ -1,14 +1,16 @@
 package tv.codely.scala_http_api.entry_point
 
-import scala.concurrent.ExecutionContextExecutor
-import scala.io.StdIn
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
+import tv.codely.scala_http_api.module.shared.infrastructure.config.DbConfig
+import tv.codely.scala_http_api.module.shared.infrastructure.dependency_injection.SharedModuleDependencyContainer
 import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
+
+import scala.concurrent.ExecutionContext
+import scala.io.StdIn
 
 object ScalaHttpApi {
   def main(args: Array[String]): Unit = {
@@ -19,13 +21,17 @@ object ScalaHttpApi {
     val host            = serverConfig.getString("http-server.host")
     val port            = serverConfig.getInt("http-server.port")
 
-    implicit val system: ActorSystem                        = ActorSystem(actorSystemName)
-    implicit val materializer: ActorMaterializer            = ActorMaterializer()
-    implicit val executionContext: ExecutionContextExecutor = system.dispatcher
+    val dbConfig = DbConfig(appConfig.getConfig("database"))
+
+    val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig)
+
+    implicit val system: ActorSystem                = sharedDependencies.actorSystem
+    implicit val materializer: ActorMaterializer    = sharedDependencies.materializer
+    implicit val executionContext: ExecutionContext = sharedDependencies.executionContext
 
     val container = new EntryPointDependencyContainer(
-      new UserModuleDependencyContainer,
-      new VideoModuleDependencyContainer
+      new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection),
+      new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection)
     )
 
     val routes = new Routes(container)
@@ -43,6 +49,6 @@ object ScalaHttpApi {
 
     bindingFuture
       .flatMap(_.unbind())
-      .onComplete(_ => system.terminate())
+      .onComplete(_ => sharedDependencies.actorSystem.terminate())
   }
 }

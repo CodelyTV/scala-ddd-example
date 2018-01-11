@@ -14,7 +14,7 @@ final class VideosSearcherTest extends VideoUnitTestCase {
 
       repositoryShouldSearchAll(existingVideos)
 
-      searcher.all() should be(existingVideos)
+      searcher.all().futureValue should be(existingVideos)
     }
   }
 }
