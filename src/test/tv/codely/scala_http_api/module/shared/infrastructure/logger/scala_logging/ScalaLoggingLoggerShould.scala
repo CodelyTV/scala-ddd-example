@@ -1,6 +1,6 @@
 package tv.codely.scala_http_api.module.shared.infrastructure.logger.scala_logging
 
-import java.io.{File, PrintWriter}
+import java.io.{File, PrintWriter, StringWriter}
 
 import spray.json._
 import tv.codely.scala_http_api.module.IntegrationTestCase
@@ -40,11 +40,10 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
     appLogFileShouldContain(message, level = "ERROR", levelValue = 40000)
   }
 
-  "log info messages including context parameters" in {
+  "log messages including context parameters" in {
     cleanAppLogFileContents()
 
-    val message = "This is a dummy info message with context parameters from the integration test"
-
+    val message     = "This is a dummy info message with context parameters from the integration test"
     val context     = Map("some_context_parameter" -> "some_value")
     val contextJson = Map("some_context_parameter" -> JsString("some_value"))
 
@@ -53,30 +52,32 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
     appLogFileShouldContain(message, level = "INFO", levelValue = 20000, contextJson)
   }
 
-  "log warn messages including context parameters" in {
+  "log messages including the Throwable cause" in {
     cleanAppLogFileContents()
 
-    val message = "This is a dummy warn message with context parameters from the integration test"
+    val message   = "This is a dummy info message with a throwable from the integration test"
+    val cause     = new Throwable("This is a dummy Throwable for the integration test")
+    val causeJson = Map("stack_trace" -> JsString(stackTraceString(cause)))
 
-    val context     = Map("some_context_parameter" -> "some_value")
-    val contextJson = Map("some_context_parameter" -> JsString("some_value"))
+    logger.info(message, cause)
 
-    logger.warn(message, context)
-
-    appLogFileShouldContain(message, level = "WARN", levelValue = 30000, contextJson)
+    appLogFileShouldContain(message, level = "INFO", levelValue = 20000, causeJson)
   }
 
-  "log error messages including context parameters" in {
+  "log messages including the Throwable cause and context parameters" in {
     cleanAppLogFileContents()
 
-    val message = "This is a dummy error message with context parameters from the integration test"
+    val message = "This is a dummy info message with a throwable from the integration test"
+
+    val cause     = new Throwable("This is a dummy Throwable for the integration test")
+    val causeJson = Map("stack_trace" -> JsString(stackTraceString(cause)))
 
     val context     = Map("some_context_parameter" -> "some_value")
     val contextJson = Map("some_context_parameter" -> JsString("some_value"))
 
-    logger.error(message, context)
+    logger.info(message, cause, context)
 
-    appLogFileShouldContain(message, level = "ERROR", levelValue = 40000, contextJson)
+    appLogFileShouldContain(message, level = "INFO", levelValue = 20000, causeJson ++ contextJson)
   }
 
   private def cleanAppLogFileContents(): Unit = {
@@ -109,5 +110,11 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
 
     actualLog.keys shouldBe expectedLog.keys
     (actualLog - "@timestamp") shouldBe (expectedLog - "@timestamp")
+  }
+
+  private def stackTraceString(throwable: Throwable) = {
+    val writer = new StringWriter
+    throwable.printStackTrace(new PrintWriter(writer))
+    writer.toString
   }
 }
