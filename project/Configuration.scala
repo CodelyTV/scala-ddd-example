@@ -6,7 +6,7 @@ object Configuration {
     organization := "tv.codely",
     scalaVersion := "2.12.4",
     // Custom folders path (/src/main/scala and /src/test/scala by default)
-    Compile / mainClass := Some("tv.codely.scala_http_api.ScalaHttpApi"),
+    Compile / mainClass := Some("tv.codely.scala_http_api.entry_point.ScalaHttpApi"),
     Compile / scalaSource := baseDirectory.value / "/src/main",
     Test / scalaSource := baseDirectory.value / "/src/test",
     Compile / resourceDirectory := baseDirectory.value / "conf",
