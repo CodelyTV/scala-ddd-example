@@ -17,7 +17,7 @@ This is the first iteration of the project where you will find a very Object Ori
 * [Environment setup](#environment-setup)
     * [Install the needed tools](#install-the-needed-tools)
     * [Prepare the application environment](#prepare-the-application-environment)
-    * [Run the test and start the HTTP server](#run-the-test-and-start-the-HTTP-server)
+    * [Run the tests and start the HTTP server](#run-the-tests-and-start-the-http-server)
     * [Pre-push Git hook](#pre-push-git-hook)
 * [Logs](#logs)
 * [Deploy](#deploy)
@@ -39,7 +39,6 @@ One of the goals of this project is to serve as an example for the [course on Sc
 | ------------------------- | ----------------------------------------------------------- | -------------------------- |
 | Build tool                | [SBT](https://www.scala-sbt.org/)                           | [Dependencies](project/Dependencies.scala), [configuration](project/Configuration.scala) & [build.sbt](build.sbt) |
 | Style formatting          | [ScalaFmt](http://scalameta.org/scalafmt/)                  | [Rules](.scalafmt.conf) |
-| Continuous Integration    | [Travis CI](https://travis-ci.org/)                         | [Travis definition](.travis.yml) |
 | HTTP server               | [Akka HTTP](https://doc.akka.io/docs/akka-http/current/)    | [Routes definition](src/main/tv/codely/scala_http_api/entry_point/Routes.scala), [server implementation](src/main/tv/codely/scala_http_api/entry_point/ScalaHttpApi.scala),<br> [Video POST controller](src/main/tv/codely/scala_http_api/entry_point/controller/video/VideoPostController.scala) & [its corresponding acceptance test](src/test/tv/codely/scala_http_api/entry_point/VideoEntryPointShould.scala) |
 | JSON marshalling          | [Spray JSON](https://github.com/spray/spray-json)           | [User](src/main/tv/codely/scala_http_api/module/user/infrastructure/marshaller/UserJsonFormatMarshaller.scala) & [User attributes](src/main/tv/codely/scala_http_api/module/user/infrastructure/marshaller/UserAttributesJsonFormatMarshaller.scala) marshallers |
 | Database integration      | [Doobie](http://tpolecat.github.io/doobie/)                 | [Video repository](src/main/tv/codely/scala_http_api/module/video/infrastructure/repository/DoobieMySqlVideoRepository.scala) & [its corresponding integration test](src/test/tv/codely/scala_http_api/module/video/infrastructure/repository/DoobieMySqlVideoRepositoryShould.scala) |
@@ -52,6 +51,7 @@ One of the goals of this project is to serve as an example for the [course on Sc
 | Acceptance tests          | [Akka HTTP TestKit](https://doc.akka.io/docs/akka-http/current/routing-dsl/testkit.html) | Previously specified acceptance tests |
 | Integration tests         | [ScalaTest](http://www.scalatest.org/) | Previously specified integration tests |
 | Unit tests                | [ScalaTest](http://www.scalatest.org/)<br> + [ScalaMock](http://scalamock.org/) | [Video creator use case test](src/test/tv/codely/scala_http_api/module/video/application/create/VideoCreatorShould.scala) |
+| Continuous Integration    | [Travis CI](https://travis-ci.org/)<br> + [SBT Coveralls](https://github.com/scoverage/sbt-coveralls) | [Travis definition](.travis.yml) |
 
 ## Environment setup
 
@@ -65,7 +65,7 @@ One of the goals of this project is to serve as an example for the [course on Sc
 2. Start Docker and bring up the project needed containers: `cd docker/; docker-compose up -d`
 3. Create the database tables in your Docker MySQL container: `sbt createDbTables`
 
-### Run the test and start the HTTP server
+### Run the tests and start the HTTP server
 1. Enter into the SBT console: `sbt` 
 2. Run the tests: `t`
 3. Start the local server: `run`
