@@ -5,6 +5,8 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import spray.json.DefaultJsonProtocol
+import tv.codely.scala_http_api.course.domain.Course
+import tv.codely.scala_http_api.course.infrastructure.CourseMarshaller._
 import tv.codely.scala_http_api.user.domain.User
 import tv.codely.scala_http_api.user.infrastructure.UserMarshaller._
 import tv.codely.scala_http_api.video.domain.Video
@@ -33,6 +35,17 @@ object Routes extends SprayJsonSupport with DefaultJsonProtocol {
     )
   )
 
+  private val systemCourses = Seq(
+    Course(
+      id = "0dee034b-2eb2-4f3f-b75f-90b6f785d78c",
+      title = "Introducción a Scala"
+    ),
+    Course(
+      id = "eabb585b-4527-49e7-9529-4aa877bec55d",
+      title = "API Http con Scala Akka"
+    )
+  )
+
   val all: Route = get {
     path("status") {
       complete(HttpEntity(ContentTypes.`application/json`, """{"status":"ok"}"""))
@@ -45,6 +58,9 @@ object Routes extends SprayJsonSupport with DefaultJsonProtocol {
       } ~
       path("videos") {
         complete(systemVideos)
+      } ~
+      path("courses") {
+        complete(systemCourses)
       }
   }
 }

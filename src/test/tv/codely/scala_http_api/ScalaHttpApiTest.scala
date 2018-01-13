@@ -5,6 +5,8 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 import spray.json._
+import tv.codely.scala_http_api.course.infrastructure.marshaller.CourseMarshaller
+import tv.codely.scala_http_api.course.infrastructure.stub.CourseStub
 import tv.codely.scala_http_api.user.infrastructure.marshaller.UserMarshaller
 import tv.codely.scala_http_api.user.infrastructure.stub.UserStub
 import tv.codely.scala_http_api.video.infrastructure.marshaller.VideoMarshaller
@@ -63,6 +65,24 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
         entityAs[String].parseJson shouldBe VideoMarshaller.marshall(expectedVideos)
+      }
+    }
+    "return all the system courses" in {
+      Get("/courses") ~> Routes.all ~> check {
+        val expectedCourses = Seq(
+          CourseStub(
+            id = "0dee034b-2eb2-4f3f-b75f-90b6f785d78c",
+            title = "Introducción a Scala"
+          ),
+          CourseStub(
+            id = "eabb585b-4527-49e7-9529-4aa877bec55d",
+            title = "API Http con Scala Akka"
+          )
+        )
+
+        status shouldBe StatusCodes.OK
+        contentType shouldBe ContentTypes.`application/json`
+        entityAs[String].parseJson shouldBe CourseMarshaller.marshall(expectedCourses)
       }
     }
   }
