@@ -4,7 +4,7 @@ import tv.codely.scala_http_api.shared.infrastructure.stub.IntStub
 import tv.codely.scala_http_api.video.domain.VideoCategory
 
 object VideoCategoryStub {
-  private val categories = Seq("Screencast", "Interviews")
+  private val categories = Seq("Screencast", "Interviews", "Lesson")
 
   def apply(value: String): VideoCategory = VideoCategory(value)
 

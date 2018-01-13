@@ -13,6 +13,10 @@ object VideoMarshaller {
             "title"    -> JsString(v.title.value),
             "duration" -> JsNumber(v.duration.value.toSeconds),
             "category" -> JsString(v.category.toString),
+            "course"   -> JsObject(
+              "id"    -> JsString(v.course.id.value.toString),
+              "title" -> JsString(v.course.title.value.toString)
+            )
         ))
       .toVector
   )
