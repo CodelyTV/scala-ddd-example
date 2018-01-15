@@ -63,7 +63,7 @@ One of the goals of this project is to serve as an example for the [course on Sc
 
 ### Prepare the application environment
 1. Copy [the Docker environment variables config file](docker/.env.dist) and tune it with your desired values: `cp docker/.env.dist docker/.env`
-2. Start Docker and bring up the project needed containers: `cd docker/; docker-compose up -d`
+2. Start Docker and bring up the project needed containers: `cd docker/; docker-compose up -d; cd ..`
 3. Create the database tables in your Docker MySQL container: `sbt createDbTables`
 
 ### Run the tests and start the HTTP server
@@ -104,9 +104,9 @@ We use [SBT Native Packager](http://sbt-native-packager.readthedocs.io/en/latest
     * `bin/`: All the executable binaries of our main classes in Unix and Windows (bat) format
     * `lib/`: All the project dependencies jar files.
 3. Run the main app binary:
-    * Without specifying any parameters (OK for this example app): `~/var/www/codelytv-scala-http-api-1.0/bin/scala-http-api`
-    * Specifying parameters for the JVM: `~/var/www/codelytv-scala-http-api-1.0/bin/scala-http-api -Dconfig.resource=application/$CONFIG_PATH`
-    * Specifying application parameters: `~/var/www/codelytv-scala-http-api-1.0/bin/scala-http-api -Dconfig.resource=application/$CONFIG_PATH -- -appParam`
+    * Without specifying any parameters (OK for this example app): `~/var/www/codelytv-scala-http-api-1.0/bin/codelytv-scala-http-api`
+    * Specifying parameters for the JVM: `~/var/www/codelytv-scala-http-api-1.0/bin/codelytv-scala-http-api -Dconfig.resource=application/$CONFIG_PATH`
+    * Specifying application parameters: `~/var/www/codelytv-scala-http-api-1.0/bin/codelytv-scala-http-api -Dconfig.resource=application/$CONFIG_PATH -- -appParam`
 
 ## About
 
