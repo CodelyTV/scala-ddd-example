@@ -1,6 +1,6 @@
 package tv.codely.scala_http_api.module.video.domain
 
-import tv.codely.scala_http_api.module.shared.domain.Message
+import tv.codely.scala_http_api.module.shared.bus.domain.Message
 import tv.codely.scala_http_api.module.shared.user.domain.UserId
 
 object VideoCreated {

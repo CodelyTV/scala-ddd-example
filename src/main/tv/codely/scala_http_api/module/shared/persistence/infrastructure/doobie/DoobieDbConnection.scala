@@ -1,14 +1,13 @@
-package tv.codely.scala_http_api.module.shared.infrastructure.persistence.doobie
+package tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie
 
 import cats.effect.IO
 import doobie.Transactor
 import doobie.syntax.ConnectionIOOps
 import doobie.util.transactor.Transactor.Aux
-import tv.codely.scala_http_api.module.shared.infrastructure.config.DbConfig
 
 import scala.concurrent.Future
 
-final class DoobieDbConnection(dbConfig: DbConfig) {
+final class DoobieDbConnection(dbConfig: JdbcConfig) {
   val transactor: Aux[IO, Unit] = Transactor.fromDriverManager[IO](
     dbConfig.driver,
     dbConfig.url,

@@ -1,10 +1,9 @@
-package tv.codely.scala_http_api.module.shared.infrastructure.message_broker.rabbitmq
+package tv.codely.scala_http_api.module.shared.bus.infrastructure.rabbit_mq
 
 import com.newmotion.akka.rabbitmq.ConnectionFactory
 import com.rabbitmq.client.Channel
-import tv.codely.scala_http_api.module.shared.infrastructure.config.MessageBrokerConfig
 
-final class RabbitMqChannelFactory(config: MessageBrokerConfig) {
+final class RabbitMqChannelFactory(config: RabbitMqConfig) {
   val channel: Channel = {
     val factory = new ConnectionFactory()
     factory.setHost(config.host)

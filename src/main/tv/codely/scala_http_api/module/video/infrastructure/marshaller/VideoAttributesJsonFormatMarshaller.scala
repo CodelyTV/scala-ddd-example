@@ -3,7 +3,7 @@ package tv.codely.scala_http_api.module.video.infrastructure.marshaller
 import java.util.UUID
 
 import spray.json.{DeserializationException, JsNumber, JsString, JsValue, JsonFormat, _}
-import tv.codely.scala_http_api.module.shared.infrastructure.marshaller.UuidJsonFormatMarshaller._
+import tv.codely.scala_http_api.module.shared.marshaller.infrastructure.UuidJsonFormatMarshaller._
 import tv.codely.scala_http_api.module.video.domain._
 
 object VideoAttributesJsonFormatMarshaller {

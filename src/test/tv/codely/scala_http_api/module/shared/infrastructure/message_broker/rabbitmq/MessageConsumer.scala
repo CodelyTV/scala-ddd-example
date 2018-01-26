@@ -1,6 +1,6 @@
 package tv.codely.scala_http_api.module.shared.infrastructure.message_broker.rabbitmq
 
-import tv.codely.scala_http_api.module.shared.domain.Message
+import tv.codely.scala_http_api.module.shared.bus.domain.Message
 
 trait MessageConsumer {
   def startConsuming(handler: Message => Boolean): Unit

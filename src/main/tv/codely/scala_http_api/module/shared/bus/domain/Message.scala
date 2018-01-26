@@ -1,6 +1,6 @@
-package tv.codely.scala_http_api.module.shared.domain
+package tv.codely.scala_http_api.module.shared.bus.domain
 
-import tv.codely.scala_http_api.module.shared.domain.Message.application
+import tv.codely.scala_http_api.module.shared.bus.domain.Message.application
 
 object Message {
   val application: String = "codelytv_scala_api"

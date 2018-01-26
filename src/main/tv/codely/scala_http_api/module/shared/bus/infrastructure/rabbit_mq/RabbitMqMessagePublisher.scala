@@ -1,8 +1,8 @@
-package tv.codely.scala_http_api.module.shared.infrastructure.message_broker.rabbitmq
+package tv.codely.scala_http_api.module.shared.bus.infrastructure.rabbit_mq
 
 import com.rabbitmq.client.MessageProperties
-import tv.codely.scala_http_api.module.shared.domain.{Message, MessagePublisher}
-import tv.codely.scala_http_api.module.shared.infrastructure.marshaller.MessageJsonFormatMarshaller.MessageMarshaller
+import tv.codely.scala_http_api.module.shared.bus.domain.{Message, MessagePublisher}
+import tv.codely.scala_http_api.module.shared.marshaller.infrastructure.MessageJsonFormatMarshaller.MessageMarshaller
 
 final class RabbitMqMessagePublisher(channelFactory: RabbitMqChannelFactory) extends MessagePublisher {
   private val channel = channelFactory.channel
