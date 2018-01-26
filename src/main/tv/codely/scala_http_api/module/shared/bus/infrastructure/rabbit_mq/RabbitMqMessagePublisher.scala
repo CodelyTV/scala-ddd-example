@@ -11,7 +11,7 @@ final class RabbitMqMessagePublisher(channelFactory: RabbitMqChannelFactory) ext
   // the mapping between the message routing key and the queue names.
   // Example: A message with routing key "codelytv_scala_api.video_created"
   // will be routed to the "codelytv_scala_api.video_created" queue.
-  private val exchange = ""
+  private val exchange = "domain-events"
 
   private def createQueueIfNotExists(name: String) = {
     val availableAfterRestart     = true
