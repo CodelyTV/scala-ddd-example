@@ -37,7 +37,8 @@ final class Routes(container: EntryPointDependencyContainer) {
             body("id").convertTo[String],
             body("title").convertTo[String],
             body("duration_in_seconds").convertTo[Int].seconds,
-            body("category").convertTo[String]
+            body("category").convertTo[String],
+            body("creator_id").convertTo[String]
           )
         }
       }

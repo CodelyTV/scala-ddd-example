@@ -1,11 +1,12 @@
 package tv.codely.scala_http_api.module.user.infrastructure.marshaller
 
-import spray.json.{DefaultJsonProtocol, DeserializationException, JsObject, JsString, JsValue, RootJsonFormat}
+import spray.json.{DefaultJsonProtocol, DeserializationException, JsObject, JsString, JsValue, RootJsonFormat, _}
+import tv.codely.scala_http_api.module.shared.user.infrastructure.marshaller.UserIdJsonFormatMarshaller._
 import tv.codely.scala_http_api.module.user.domain.UserRegistered
-import UserAttributesJsonFormatMarshaller._
-import spray.json._
+import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserNameJsonFormatMarshaller._
 
 object UserRegisteredJsonFormatMarshaller extends DefaultJsonProtocol {
+
   implicit object UserRegisteredJsonFormat extends RootJsonFormat[UserRegistered] {
     override def write(ur: UserRegistered): JsValue = JsObject(
       "type" -> JsString(ur.`type`),
@@ -19,4 +20,5 @@ object UserRegisteredJsonFormatMarshaller extends DefaultJsonProtocol {
         case unknown                           => throw DeserializationException(s"Error reading VideoCreated JSON <$unknown>")
       }
   }
+
 }
