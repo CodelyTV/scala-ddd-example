@@ -4,8 +4,9 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
-import tv.codely.scala_http_api.module.shared.infrastructure.config.{DbConfig, MessageBrokerConfig}
-import tv.codely.scala_http_api.module.shared.infrastructure.dependency_injection.SharedModuleDependencyContainer
+import tv.codely.scala_http_api.module.shared.bus.infrastructure.rabbit_mq.RabbitMqConfig
+import tv.codely.scala_http_api.module.shared.dependency_injection.infrastructure.SharedModuleDependencyContainer
+import tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie.JdbcConfig
 import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
 
@@ -21,8 +22,8 @@ object ScalaHttpApi {
     val host            = serverConfig.getString("http-server.host")
     val port            = serverConfig.getInt("http-server.port")
 
-    val dbConfig        = DbConfig(appConfig.getConfig("database"))
-    val publisherConfig = MessageBrokerConfig(appConfig.getConfig("message-publisher"))
+    val dbConfig        = JdbcConfig(appConfig.getConfig("database"))
+    val publisherConfig = RabbitMqConfig(appConfig.getConfig("message-publisher"))
 
     val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig, publisherConfig)
 

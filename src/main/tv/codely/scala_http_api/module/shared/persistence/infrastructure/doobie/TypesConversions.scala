@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.module.shared.infrastructure.persistence.doobie
+package tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie
 
 import java.util.UUID
 

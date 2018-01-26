@@ -26,7 +26,8 @@ final class VideoEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach
       |  "id": "c5e3774b-20bb-47d3-b9fa-9f9a6e75e280",
       |  "title": "Creando proyectos #Scala con SBT new ƛ🌈",
       |  "duration_in_seconds": 698,
-      |  "category": "Screencast"
+      |  "category": "Screencast",
+      |  "creator_id": "3f3df8d8-ad4c-4a1a-9d32-5c14663a409e"
       |}
     """.stripMargin
   ) {

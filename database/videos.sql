@@ -4,6 +4,7 @@ CREATE TABLE videos (
   title               VARCHAR(255)        NOT NULL,
   duration_in_seconds BIGINT(20) UNSIGNED NOT NULL,
   category            VARCHAR(255)        NOT NULL,
+  creator_id          CHAR(36)            NOT NULL,
   updated_at          TIMESTAMP(3)        NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
   PRIMARY KEY (id),
   UNIQUE KEY u_video_id (video_id)

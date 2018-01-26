@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.module.shared.domain
+package tv.codely.scala_http_api.module.shared.logger.domain
 
 trait Logger {
   def info(message: String, context: Map[String, Any] = Map.empty): Unit

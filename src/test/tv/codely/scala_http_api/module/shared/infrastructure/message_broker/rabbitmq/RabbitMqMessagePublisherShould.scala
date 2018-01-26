@@ -2,7 +2,7 @@ package tv.codely.scala_http_api.module.shared.infrastructure.message_broker.rab
 
 import org.scalatest.concurrent.Eventually
 import tv.codely.scala_http_api.module.IntegrationTestCase
-import tv.codely.scala_http_api.module.shared.domain.Message
+import tv.codely.scala_http_api.module.shared.bus.domain.Message
 import tv.codely.scala_http_api.module.video.domain.VideoCreatedStub
 
 import scala.collection.mutable

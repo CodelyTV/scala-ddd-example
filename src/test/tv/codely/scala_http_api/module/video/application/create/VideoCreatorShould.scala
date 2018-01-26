@@ -16,6 +16,6 @@ final class VideoCreatorShould extends UnitTestCase with VideoRepositoryMock wit
 
     publisherShouldPublish(videoCreated)
 
-    creator.create(video.id, video.title, video.duration, video.category).shouldBe(())
+    creator.create(video.id, video.title, video.duration, video.category, video.creatorId).shouldBe(())
   }
 }

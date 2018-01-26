@@ -1,12 +1,11 @@
-package tv.codely.scala_http_api.module.shared.infrastructure.marshaller
+package tv.codely.scala_http_api.module.shared.marshaller.infrastructure
 
-import spray.json._
-import spray.json.{DefaultJsonProtocol, DeserializationException, JsString, JsValue, RootJsonFormat, SerializationException}
-import tv.codely.scala_http_api.module.shared.domain.Message
+import spray.json.{DefaultJsonProtocol, DeserializationException, JsString, JsValue, RootJsonFormat, SerializationException, _}
+import tv.codely.scala_http_api.module.shared.bus.domain.Message
 import tv.codely.scala_http_api.module.user.domain.UserRegistered
+import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserRegisteredJsonFormatMarshaller._
 import tv.codely.scala_http_api.module.video.domain.VideoCreated
 import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoCreatedJsonFormatMarshaller._
-import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserRegisteredJsonFormatMarshaller._
 
 object MessageJsonFormatMarshaller extends DefaultJsonProtocol {
   implicit object MessageMarshaller extends RootJsonFormat[Message] {
