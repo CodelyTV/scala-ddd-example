@@ -6,7 +6,7 @@ import spray.json.DefaultJsonProtocol._
 import spray.json.{DeserializationException, JsString, JsValue, JsonFormat, RootJsonFormat}
 import tv.codely.scala_http_api.course.domain.{Course, CourseId, CourseTitle}
 
-object CourseMarshaller {
+object CourseJsValueMarshaller {
 
   implicit object CourseTitleMarshaller extends JsonFormat[CourseTitle] {
     def write(value: CourseTitle): JsValue = JsString(value.value)

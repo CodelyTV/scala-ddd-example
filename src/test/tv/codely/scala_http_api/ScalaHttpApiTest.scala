@@ -53,30 +53,21 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
             title = "🎥 Scala FTW vol. 1",
             duration = 1.minute,
             category = "Screencast",
-            course = CourseStub(
-              id = "0dee034b-2eb2-4f3f-b75f-90b6f785d78c",
-              title = "Introducción a Scala"
-            )
+            course = "0dee034b-2eb2-4f3f-b75f-90b6f785d78c"
           ),
           VideoStub(
             id = "7341b1fc-3d80-4f6a-bcde-4fef86b01f97",
             title = "🔝 Interview with Odersky",
             duration = 30.minutes,
             category = "Interview",
-            course = CourseStub(
-              id = "eabb585b-4527-49e7-9529-4aa877bec55d",
-              title = "API Http con Scala Akka"
-            )
+            course = "eabb585b-4527-49e7-9529-4aa877bec55d"
           ),
           VideoStub(
             id = "cf296b95-63c3-48a2-b3fd-44a2e3ced29c",
             title = "4. JSON Parsing",
             duration = 16.minutes,
             category = "Lesson",
-            course = CourseStub(
-              id = "eabb585b-4527-49e7-9529-4aa877bec55d",
-              title = "API Http con Scala Akka"
-            )
+            course = "eabb585b-4527-49e7-9529-4aa877bec55d"
           )
         )
 

@@ -1,7 +1,6 @@
 package tv.codely.scala_http_api.video.infrastructure.stub
 
-import tv.codely.scala_http_api.course.domain.Course
-import tv.codely.scala_http_api.course.infrastructure.stub.CourseStub
+import tv.codely.scala_http_api.course.infrastructure.stub.CourseIdStub
 import tv.codely.scala_http_api.video.domain.Video
 
 import scala.concurrent.duration.Duration
@@ -12,7 +11,7 @@ object VideoStub {
       title: String = VideoTitleStub.random.toString,
       duration: Duration = VideoDurationStub.random.value,
       category: String = VideoCategoryStub.random.toString,
-      course: Course = CourseStub.random
+      course: String = CourseIdStub.random.value.toString
   ): Video = Video(id, title, duration, category, course)
 
   def random: Video = apply()
