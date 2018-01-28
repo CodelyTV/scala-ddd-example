@@ -6,6 +6,7 @@ import akka.util.ByteString
 import com.typesafe.config.ConfigFactory
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.concurrent.ScalaFutures
+import tv.codely.scala_http_api.module.course.infrastructure.dependency_injection.CourseModuleDependencyContainer
 import tv.codely.scala_http_api.module.shared.bus.infrastructure.rabbit_mq.RabbitMqConfig
 import tv.codely.scala_http_api.module.shared.dependency_injection.infrastructure.SharedModuleDependencyContainer
 import tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie.{DoobieDbConnection, JdbcConfig}
@@ -34,7 +35,12 @@ protected[entry_point] abstract class AcceptanceSpec
     sharedDependencies.messagePublisher
   )(sharedDependencies.executionContext)
 
-  private val routes = new Routes(new EntryPointDependencyContainer(userDependencies, videoDependencies))
+  protected val courseDependencies = new CourseModuleDependencyContainer(
+    sharedDependencies.doobieDbConnection,
+    sharedDependencies.messagePublisher
+  )(sharedDependencies.executionContext)
+
+  private val routes = new Routes(new EntryPointDependencyContainer(userDependencies, videoDependencies, courseDependencies))
 
   protected val doobieDbConnection: DoobieDbConnection = sharedDependencies.doobieDbConnection
 
