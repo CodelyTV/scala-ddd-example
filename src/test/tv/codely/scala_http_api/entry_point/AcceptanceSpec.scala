@@ -40,7 +40,8 @@ protected[entry_point] abstract class AcceptanceSpec
     sharedDependencies.messagePublisher
   )(sharedDependencies.executionContext)
 
-  private val routes = new Routes(new EntryPointDependencyContainer(userDependencies, videoDependencies, courseDependencies))
+  private val routes = new Routes(
+    new EntryPointDependencyContainer(userDependencies, videoDependencies, courseDependencies))
 
   protected val doobieDbConnection: DoobieDbConnection = sharedDependencies.doobieDbConnection
 

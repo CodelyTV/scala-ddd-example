@@ -9,10 +9,10 @@ object CourseJsValueMarshaller {
       .map(
         c =>
           JsObject(
-            "id"                  -> JsString(c.id.value.toString),
-            "title"               -> JsString(c.title.value),
-            "lessons"             -> JsNumber(c.lessons.value),
-            "creator_id"          -> JsString(c.creatorId.value.toString)
+            "id"         -> JsString(c.id.value.toString),
+            "title"      -> JsString(c.title.value),
+            "lessons"    -> JsNumber(c.lessons.value),
+            "creator_id" -> JsString(c.creatorId.value.toString)
         )
       )
       .toVector
