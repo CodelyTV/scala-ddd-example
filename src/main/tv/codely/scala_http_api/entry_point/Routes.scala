@@ -53,7 +53,7 @@ final class Routes(container: EntryPointDependencyContainer) {
           container.coursePostController.post(
             body("id").convertTo[String],
             body("title").convertTo[String],
-            body("lessons").convertTo[BigDecimal],
+            body("total_lessons").convertTo[Int],
             body("creator_id").convertTo[String]
           )
         }

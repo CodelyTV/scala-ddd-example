@@ -3,7 +3,8 @@ package tv.codely.scala_http_api.module.course.infrastructure.marshaller
 import java.util.UUID
 
 import spray.json.{DeserializationException, JsNumber, JsString, JsValue, JsonFormat, _}
-import tv.codely.scala_http_api.module.course.domain.{CourseId, CourseLessons, CourseTitle}
+import tv.codely.scala_http_api.module.course.domain.{CourseLessons, CourseTitle}
+import tv.codely.scala_http_api.module.shared.course.domain.CourseId
 import tv.codely.scala_http_api.module.shared.marshaller.infrastructure.UuidJsonFormatMarshaller._
 
 object CourseAttributesJsonFormatMarshaller {
@@ -23,11 +24,11 @@ object CourseAttributesJsonFormatMarshaller {
   }
 
   implicit object CourseLessonsMarshaller extends JsonFormat[CourseLessons] {
-    override def write(value: CourseLessons): JsValue = JsNumber(value.value)
+    override def write(value: CourseLessons): JsValue = JsNumber.apply(value.value)
 
     override def read(value: JsValue): CourseLessons = value match {
-      case JsNumber(lessons) => CourseLessons(lessons)
-      case _                 => throw DeserializationException("Expected 1 string for CourseLessons")
+      case JsNumber(totalLessons) => CourseLessons(totalLessons.toInt)
+      case _                      => throw DeserializationException("Expected 1 string for CourseLessons")
     }
   }
 

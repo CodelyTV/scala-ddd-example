@@ -11,7 +11,7 @@ object CourseJsValueMarshaller {
           JsObject(
             "id"         -> JsString(c.id.value.toString),
             "title"      -> JsString(c.title.value),
-            "lessons"    -> JsNumber(c.lessons.value),
+            "lessons"    -> JsNumber(c.totalLessons.value),
             "creator_id" -> JsString(c.creatorId.value.toString)
         )
       )

@@ -16,6 +16,6 @@ final class CourseCreatorShould extends UnitTestCase with CourseRepositoryMock w
 
     publisherShouldPublish(courseCreated)
 
-    creator.create(course.id, course.title, course.lessons, course.creatorId).shouldBe(())
+    creator.create(course.id, course.title, course.totalLessons, course.creatorId).shouldBe(())
   }
 }

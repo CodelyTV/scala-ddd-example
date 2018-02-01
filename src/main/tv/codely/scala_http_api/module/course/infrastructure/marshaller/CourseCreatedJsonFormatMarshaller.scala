@@ -9,17 +9,17 @@ object CourseCreatedJsonFormatMarshaller extends DefaultJsonProtocol {
 
   implicit object CourseCreatedJsonFormat extends RootJsonFormat[CourseCreated] {
     override def write(c: CourseCreated): JsValue = JsObject(
-      "type"       -> JsString(c.`type`),
-      "id"         -> c.id.toJson,
-      "title"      -> c.title.toJson,
-      "lessons"    -> c.lessons.toJson,
-      "creator_id" -> c.creatorId.toJson
+      "type"          -> JsString(c.`type`),
+      "id"            -> c.id.toJson,
+      "title"         -> c.title.toJson,
+      "total_lessons" -> c.totalLessons.toJson,
+      "creator_id"    -> c.creatorId.toJson
     )
 
     override def read(value: JsValue): CourseCreated =
-      value.asJsObject.getFields("id", "title", "lessons", "creator_id") match {
-        case Seq(JsString(id), JsString(title), JsNumber(lessons), JsString(creatorId)) =>
-          CourseCreated(id, title, lessons, creatorId)
+      value.asJsObject.getFields("id", "title", "total_lessons", "creator_id") match {
+        case Seq(JsString(id), JsString(title), JsNumber(totalLessons), JsString(creatorId)) =>
+          CourseCreated(id, title, totalLessons.toInt, creatorId)
         case unknown =>
           throw DeserializationException(
             s"Error reading CourseCreated JSON <$unknown>"

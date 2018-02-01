@@ -6,9 +6,9 @@ object CourseStub {
   def apply(
       id: String = CourseIdStub.random.value.toString,
       title: String = CourseTitleStub.random.value.toString,
-      lessons: BigDecimal = CourseLessonsStub.random.value,
+      totalLessons: Int = CourseLessonsStub.random.value,
       creatorId: String = UserIdStub.random.value.toString
-  ): Course = Course(id, title, lessons, creatorId)
+  ): Course = Course(id, title, totalLessons, creatorId)
 
   def random: Course = apply()
 

@@ -25,12 +25,12 @@ final class CourseEntryPointShould extends AcceptanceSpec with BeforeAndAfterEac
       |{
       |  "id": "c5e3774b-20bb-47d3-b9fa-9f9a6e75e280",
       |  "title": "Mi primera API HTTP con #Scala y Akka ƛ🌈",
-      |  "lessons": 12,
+      |  "total_lessons": 12,
       |  "creator_id": "3f3df8d8-ad4c-4a1a-9d32-5c14663a409e"
       |}
     """.stripMargin
   ) {
-    status shouldBe StatusCodes.NoContent
+    status shouldBe StatusCodes.Created
   }
 
   "return all the courses" in {
