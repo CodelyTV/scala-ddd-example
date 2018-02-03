@@ -8,7 +8,7 @@ object CourseCreatedStub {
   def apply(
       id: CourseId = CourseIdStub.random,
       title: CourseTitle = CourseTitleStub.random,
-      lessons: CourseLessons = CourseLessonsStub.random,
+      lessons: CourseTotalLessons = CourseTotalLessonsStub.random,
       creatorId: UserId = UserIdStub.random
   ): CourseCreated = CourseCreated(id, title, lessons, creatorId)
 

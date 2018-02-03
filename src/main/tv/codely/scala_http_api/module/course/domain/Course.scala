@@ -7,9 +7,9 @@ object Course {
   def apply(id: String, title: String, totalLessons: Int, creatorId: String): Course = Course(
     CourseId(id),
     CourseTitle(title),
-    CourseLessons(totalLessons),
+    CourseTotalLessons(totalLessons),
     UserId(creatorId)
   )
 }
 
-case class Course(id: CourseId, title: CourseTitle, totalLessons: CourseLessons, creatorId: UserId)
+case class Course(id: CourseId, title: CourseTitle, totalLessons: CourseTotalLessons, creatorId: UserId)

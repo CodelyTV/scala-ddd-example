@@ -9,7 +9,7 @@ final class CourseCreator(repository: CourseRepository, publisher: MessagePublis
   def create(
       id: CourseId,
       title: CourseTitle,
-      lessons: CourseLessons,
+      lessons: CourseTotalLessons,
       creatorId: UserId
   ): Unit = {
     val course = Course(id, title, lessons, creatorId)

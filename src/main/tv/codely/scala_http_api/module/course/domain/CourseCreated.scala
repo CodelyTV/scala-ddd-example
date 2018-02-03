@@ -8,7 +8,7 @@ object CourseCreated {
   def apply(id: String, title: String, totalLessons: Int, creatorId: String): CourseCreated = apply(
     CourseId(id),
     CourseTitle(title),
-    CourseLessons(totalLessons),
+    CourseTotalLessons(totalLessons),
     UserId(creatorId)
   )
 
@@ -18,7 +18,7 @@ object CourseCreated {
 final case class CourseCreated(
     id: CourseId,
     title: CourseTitle,
-    totalLessons: CourseLessons,
+    totalLessons: CourseTotalLessons,
     creatorId: UserId
 ) extends Message {
   override val subType: String = "course_created"
