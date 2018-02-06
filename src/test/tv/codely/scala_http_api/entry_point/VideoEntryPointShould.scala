@@ -8,10 +8,11 @@ import tv.codely.scala_http_api.module.video.domain.VideoStub
 import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoJsValueMarshaller
 
 final class VideoEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach {
-  private def cleanVideosTable() =
+  private def cleanVideosTable(): Unit =
     sql"TRUNCATE TABLE videos".update.run
       .transact(doobieDbConnection.transactor)
       .unsafeToFuture()
+      .map(_ => ())
       .futureValue
 
   override protected def beforeEach(): Unit = {

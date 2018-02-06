@@ -6,10 +6,11 @@ import doobie.implicits._
 import org.scalatest.BeforeAndAfterEach
 
 final class DoobieMySqlUserRepositoryShould extends UserIntegrationTestCase with BeforeAndAfterEach {
-  private def cleanUsersTable() =
+  private def cleanUsersTable(): Unit =
     sql"TRUNCATE TABLE users".update.run
       .transact(doobieDbConnection.transactor)
       .unsafeToFuture()
+      .map(_ => ())
       .futureValue
 
   override protected def beforeEach(): Unit = {
