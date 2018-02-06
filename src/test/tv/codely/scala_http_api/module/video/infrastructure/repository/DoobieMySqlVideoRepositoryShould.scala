@@ -6,10 +6,11 @@ import doobie.implicits._
 import org.scalatest.BeforeAndAfterEach
 
 final class DoobieMySqlVideoRepositoryShould extends VideoIntegrationTestCase with BeforeAndAfterEach {
-  private def cleanVideosTable() =
+  private def cleanVideosTable(): Unit =
     sql"TRUNCATE TABLE videos".update.run
       .transact(doobieDbConnection.transactor)
       .unsafeToFuture()
+      .map(_ => ())
       .futureValue
 
   override protected def beforeEach(): Unit = {
