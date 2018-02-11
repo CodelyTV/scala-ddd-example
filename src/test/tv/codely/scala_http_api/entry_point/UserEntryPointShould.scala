@@ -8,10 +8,11 @@ import tv.codely.scala_http_api.module.user.domain.UserStub
 import tv.codely.scala_http_api.module.user.infrastructure.marshaller.UserJsValueMarshaller
 
 final class UserEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach {
-  private def cleanUsersTable() =
+  private def cleanUsersTable(): Unit =
     sql"TRUNCATE TABLE users".update.run
       .transact(doobieDbConnection.transactor)
       .unsafeToFuture()
+      .map(_ => ())
       .futureValue
 
   override protected def beforeEach(): Unit = {
