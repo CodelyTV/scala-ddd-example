@@ -3,6 +3,8 @@ version := "1.0"
 
 Configuration.settings
 
+addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.6")
+
 libraryDependencies ++= Dependencies.production
 libraryDependencies ++= Dependencies.test
 

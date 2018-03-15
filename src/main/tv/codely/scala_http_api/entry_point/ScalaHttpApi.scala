@@ -1,56 +1,47 @@
-package tv.codely.scala_http_api.entry_point
+package tv.codely
+package scala_http_api
+package entry_point
+
+import scala.concurrent.Future
+import cats.instances.future._
+import cats.effect.IO
 
 import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
-import akka.stream.ActorMaterializer
-import com.typesafe.config.ConfigFactory
-import tv.codely.scala_http_api.module.shared.bus.infrastructure.rabbit_mq.RabbitMqConfig
-import tv.codely.scala_http_api.module.shared.dependency_injection.infrastructure.SharedModuleDependencyContainer
-import tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie.JdbcConfig
-import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
-import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
 
-import scala.concurrent.ExecutionContext
-import scala.io.StdIn
+import com.typesafe.config.ConfigFactory
+
+import tv.codely.scala_http_api.effects.bus.rabbit_mq.{RabbitMqConfig, RabbitMqMessagePublisher}
+import tv.codely.scala_http_api.effects.repositories.doobie.{DoobieDbConnection, JdbcConfig}
+import tv.codely.scala_http_api.effects.repositories.doobie.DoobieMySqlUserRepository
+import tv.codely.scala_http_api.effects.repositories.doobie.DoobieMySqlVideoRepository
+import tv.codely.scala_http_api.application.repo_publisher.SystemRepoPublisher
+import tv.codely.scala_http_api.application.akkaHttp.HttpServerConfig
+import tv.codely.scala_http_api.application.akkaHttp.controller.SystemController
 
 object ScalaHttpApi {
   def main(args: Array[String]): Unit = {
+    
+    // Read configs
+
     val appConfig    = ConfigFactory.load("application")
-    val serverConfig = ConfigFactory.load("http-server")
-
-    val actorSystemName = appConfig.getString("main-actor-system.name")
-    val host            = serverConfig.getString("http-server.host")
-    val port            = serverConfig.getInt("http-server.port")
-
+    val httpServerConfig = HttpServerConfig(ConfigFactory.load("http-server"))
     val dbConfig        = JdbcConfig(appConfig.getConfig("database"))
     val publisherConfig = RabbitMqConfig(appConfig.getConfig("message-publisher"))
+    val actorSystemName = appConfig.getString("main-actor-system.name")
 
-    val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig, publisherConfig)
+    // Inject dependencies
 
-    implicit val system: ActorSystem                = sharedDependencies.actorSystem
-    implicit val materializer: ActorMaterializer    = sharedDependencies.materializer
-    implicit val executionContext: ExecutionContext = sharedDependencies.executionContext
+    implicit val actorSystem = ActorSystem(actorSystemName)
+    implicit val executionContext = actorSystem.dispatcher
+    implicit val doobieDbConnection = new DoobieDbConnection[IO](dbConfig)
+    implicit val doobieUserRepo = DoobieMySqlUserRepository[IO]
+    implicit val doobieVideoRepo = DoobieMySqlVideoRepository[IO]
+    implicit val rabbitMqPublisher = RabbitMqMessagePublisher(publisherConfig)
+    implicit val doobieRabbitMqSystem = SystemRepoPublisher[Future]
+    val akkaHttpSystem = SystemController()
 
-    val container = new EntryPointDependencyContainer(
-      new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection, sharedDependencies.messagePublisher),
-      new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection, sharedDependencies.messagePublisher)
-    )
+    // Run system
 
-    val routes = new Routes(container)
-
-    val bindingFuture = Http().bindAndHandle(routes.all, host, port)
-
-    bindingFuture.failed.foreach { t =>
-      println(s"Failed to bind to http://$host:$port/:")
-      pprint.log(t)
-    }
-
-    // let it run until user presses return
-    println(s"Server online at http://$host:$port/\nPress RETURN to stop...")
-    StdIn.readLine()
-
-    bindingFuture
-      .flatMap(_.unbind())
-      .onComplete(_ => sharedDependencies.actorSystem.terminate())
+    akkaHttpSystem.run(httpServerConfig)
   }
 }
