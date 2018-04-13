@@ -18,24 +18,25 @@ import Decoders._
 case class VideoService[P[_]: Effect: FlatMap](
   videosSearcher: VideosSearcher[P],
   videoCreator: VideoCreator[P]
-) extends Http4sDsl[P]{
+) extends Http4sDsl[P] {
 
-  val service = HttpService[P]{
+  val service = HttpService[P] {
     case GET -> Root / "videos" =>
-      videosSearcher.all().flatMap{
-        videos => Ok(videos.asJson)
+      videosSearcher.all().flatMap { videos =>
+        Ok(videos.asJson)
       }
 
-    case req@(POST -> Root / "videos") =>
+    case req @ (POST -> Root / "videos") =>
       req.as[(String, String, Duration, String, String)] >>= {
-        case (id, title, duration, category, creatorId) => 
+        case (id, title, duration, category, creatorId) =>
           videoCreator.create(
-            VideoId(id), 
-            VideoTitle(title), 
-            VideoDuration(duration), 
-            VideoCategory(category), 
-            UserId(creatorId)) *>
-          NoContent()
+            VideoId(id),
+            VideoTitle(title),
+            VideoDuration(duration),
+            VideoCategory(category),
+            UserId(creatorId)
+          ) *>
+            NoContent()
       }
   }
 }

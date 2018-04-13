@@ -7,9 +7,10 @@ import tv.codely.scala_http_api.effects.repositories.doobie.TypesConversions._
 
 import cats.Monad, cats.syntax.functor._
 
-final case class DoobieMySqlUserRepository[P[_]: Monad]()(implicit 
-  db: DoobieDbConnection[P])
-extends UserRepository[P] {
+final case class DoobieMySqlUserRepository[P[_]: Monad]()(
+  implicit
+  db: DoobieDbConnection[P]
+) extends UserRepository[P] {
 
   override def all(): P[Seq[User]] = {
     db.read(sql"SELECT user_id, name FROM users".query[User].to[Seq])

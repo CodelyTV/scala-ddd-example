@@ -7,7 +7,7 @@ import com.rabbitmq.client.Channel
 import cats.Id
 
 final class RabbitMqMessagePublisher(channel: Channel) extends MessagePublisher[Id] {
-  
+
   // Use the default nameless exchange in order to route the published messages based on
   // the mapping between the message routing key and the queue names.
   // Example: A message with routing key "codelytv_scala_api.video_created"
@@ -35,12 +35,9 @@ final class RabbitMqMessagePublisher(channel: Channel) extends MessagePublisher[
   }
 }
 
-object RabbitMqMessagePublisher{
-  
+object RabbitMqMessagePublisher {
+
   def apply(config: RabbitMqConfig): RabbitMqMessagePublisher = {
     new RabbitMqMessagePublisher(new RabbitMqChannelFactory(config).channel)
   }
 }
-
-
-

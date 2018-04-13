@@ -8,13 +8,15 @@ trait UserRepository[P[_]] {
   def save(user: User): P[Unit]
 }
 
-object UserRepository{
+object UserRepository {
   import cats.~>
 
-  implicit def toQ[P[_], Q[_]](implicit 
+  implicit def toQ[P[_], Q[_]](
+    implicit
     P: UserRepository[P],
-    nat: P ~> Q) = new UserRepository[Q]{
-      def all(): Q[Seq[User]] = nat(P.all())
-      def save(user: User): Q[Unit] = nat(P.save(user))
+    nat: P ~> Q
+  ) = new UserRepository[Q] {
+    def all(): Q[Seq[User]]       = nat(P.all())
+    def save(user: User): Q[Unit] = nat(P.save(user))
   }
 }

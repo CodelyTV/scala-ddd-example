@@ -18,9 +18,9 @@ object DbTablesCreator {
   private val databaseNameFromUrlRegex = new Regex("""\w+:\w+:\/\/\d+.\d+.\d+.\d+(?::\w+)?\/(\w+)""")
 
   case class CommandConfig(
-      tablesFolder: String = "database",
-      configFile: String = "application",
-      dbConfigKey: String = "database"
+    tablesFolder: String = "database",
+    configFile: String = "application",
+    dbConfigKey: String = "database"
   )
 
   def main(args: Array[String]): Unit = {

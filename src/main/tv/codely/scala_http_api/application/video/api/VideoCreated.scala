@@ -16,11 +16,11 @@ object VideoCreated {
 }
 
 final case class VideoCreated(
-    id: VideoId,
-    title: VideoTitle,
-    duration: VideoDuration,
-    category: VideoCategory,
-    creatorId: UserId
+  id: VideoId,
+  title: VideoTitle,
+  duration: VideoDuration,
+  category: VideoCategory,
+  creatorId: UserId
 ) extends Message {
   override val subType: String = "video_created"
 }

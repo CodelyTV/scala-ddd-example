@@ -20,25 +20,25 @@ import tv.codely.scala_http_api.application.akkaHttp.controller.SystemController
 
 object ScalaHttpApi {
   def main(args: Array[String]): Unit = {
-    
+
     // Read configs
 
-    val appConfig    = ConfigFactory.load("application")
+    val appConfig        = ConfigFactory.load("application")
     val httpServerConfig = HttpServerConfig(ConfigFactory.load("http-server"))
-    val dbConfig        = JdbcConfig(appConfig.getConfig("database"))
-    val publisherConfig = RabbitMqConfig(appConfig.getConfig("message-publisher"))
-    val actorSystemName = appConfig.getString("main-actor-system.name")
+    val dbConfig         = JdbcConfig(appConfig.getConfig("database"))
+    val publisherConfig  = RabbitMqConfig(appConfig.getConfig("message-publisher"))
+    val actorSystemName  = appConfig.getString("main-actor-system.name")
 
     // Inject dependencies
 
-    implicit val actorSystem = ActorSystem(actorSystemName)
-    implicit val executionContext = actorSystem.dispatcher
-    implicit val doobieDbConnection = new DoobieDbConnection[IO](dbConfig)
-    implicit val doobieUserRepo = DoobieMySqlUserRepository[IO]
-    implicit val doobieVideoRepo = DoobieMySqlVideoRepository[IO]
-    implicit val rabbitMqPublisher = RabbitMqMessagePublisher(publisherConfig)
+    implicit val actorSystem          = ActorSystem(actorSystemName)
+    implicit val executionContext     = actorSystem.dispatcher
+    implicit val doobieDbConnection   = new DoobieDbConnection[IO](dbConfig)
+    implicit val doobieUserRepo       = DoobieMySqlUserRepository[IO]
+    implicit val doobieVideoRepo      = DoobieMySqlVideoRepository[IO]
+    implicit val rabbitMqPublisher    = RabbitMqMessagePublisher(publisherConfig)
     implicit val doobieRabbitMqSystem = SystemRepoPublisher[Future]
-    val akkaHttpSystem = SystemController()
+    val akkaHttpSystem                = SystemController()
 
     // Run system
 
