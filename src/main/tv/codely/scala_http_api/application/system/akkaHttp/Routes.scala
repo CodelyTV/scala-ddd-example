@@ -14,10 +14,11 @@ import tv.codely.scala_http_api.application.akkaHttp.controller.status.StatusGet
 import tv.codely.scala_http_api.application.akkaHttp.controller.user.{UserGetController, UserPostController}
 import tv.codely.scala_http_api.application.akkaHttp.controller.video.{VideoGetController, VideoPostController}
 
-final class Routes(implicit 
+final class Routes(
+  implicit
   system: System[Future],
   executionContext: ExecutionContext
-){
+) {
   val statusGetController = new StatusGetController
 
   val userGetController  = new UserGetController(system.UsersSearcher)

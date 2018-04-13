@@ -12,7 +12,11 @@ import scala.concurrent.{ExecutionContext, Future}
 
 final class VideoPostController(creator: VideoCreator[Future])(implicit executionContext: ExecutionContext) {
   def post(id: String, title: String, duration: Duration, category: String, creatorId: String): Route =
-    complete(creator.create(VideoId(id), VideoTitle(title), VideoDuration(duration), VideoCategory(category), UserId(creatorId)).map{
-      _ => HttpResponse(NoContent)
-    })
+    complete(
+      creator
+        .create(VideoId(id), VideoTitle(title), VideoDuration(duration), VideoCategory(category), UserId(creatorId))
+        .map { _ =>
+          HttpResponse(NoContent)
+        }
+    )
 }

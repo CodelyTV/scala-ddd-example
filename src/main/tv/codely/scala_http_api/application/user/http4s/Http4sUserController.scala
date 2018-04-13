@@ -16,19 +16,19 @@ import Decoders._
 case class UserService[P[_]: Effect](
   usersSearcher: UsersSearcher[P],
   userRegister: UserRegister[P]
-) extends Http4sDsl[P]{
+) extends Http4sDsl[P] {
 
-  val service = HttpService[P]{
+  val service = HttpService[P] {
     case GET -> Root / "users" =>
-      usersSearcher.all().flatMap{
-        users => Ok(users.asJson)
+      usersSearcher.all().flatMap { users =>
+        Ok(users.asJson)
       }
-      
-    case req@(POST -> Root / "users") => 
+
+    case req @ (POST -> Root / "users") =>
       req.as[(String, String)] >>= {
-        case (id, name) => 
-          userRegister.register(UserId(id), UserName(name)) *> 
-          NoContent()
+        case (id, name) =>
+          userRegister.register(UserId(id), UserName(name)) *>
+            NoContent()
       }
   }
 }

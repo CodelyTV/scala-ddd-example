@@ -29,24 +29,24 @@ protected[entry_point] abstract class AcceptanceSpec
     with Matchers
     with ScalaFutures
     with ScalatestRouteTest {
-  
+
   // Read configs
 
-  val appConfig    = ConfigFactory.load("application")
+  val appConfig        = ConfigFactory.load("application")
   val httpServerConfig = HttpServerConfig(ConfigFactory.load("http-server"))
-  val dbConfig        = JdbcConfig(appConfig.getConfig("database"))
-  val publisherConfig = RabbitMqConfig(appConfig.getConfig("message-publisher"))
-  val actorSystemName = appConfig.getString("main-actor-system.name")
+  val dbConfig         = JdbcConfig(appConfig.getConfig("database"))
+  val publisherConfig  = RabbitMqConfig(appConfig.getConfig("message-publisher"))
+  val actorSystemName  = appConfig.getString("main-actor-system.name")
 
   // Inject dependencies
 
-  implicit val executionContext = system.dispatcher
-  implicit val doobieDbConnection = new DoobieDbConnection[IO](dbConfig)
-  implicit val doobieUserRepo = DoobieMySqlUserRepository[IO]
-  implicit val doobieVideoRepo = DoobieMySqlVideoRepository[IO]
-  implicit val rabbitMqPublisher = RabbitMqMessagePublisher(publisherConfig)
+  implicit val executionContext     = system.dispatcher
+  implicit val doobieDbConnection   = new DoobieDbConnection[IO](dbConfig)
+  implicit val doobieUserRepo       = DoobieMySqlUserRepository[IO]
+  implicit val doobieVideoRepo      = DoobieMySqlVideoRepository[IO]
+  implicit val rabbitMqPublisher    = RabbitMqMessagePublisher(publisherConfig)
   implicit val doobieRabbitMqSystem = SystemRepoPublisher[Future]
-  val akkaHttpSystem = SystemController()
+  val akkaHttpSystem                = SystemController()
 
   // Run configuration
 
@@ -60,6 +60,6 @@ protected[entry_point] abstract class AcceptanceSpec
       )
     ) ~> akkaHttpSystem.routes.all ~> check(body)
 
-  protected def getting[T](path: String)(body: ⇒ T): T = 
+  protected def getting[T](path: String)(body: ⇒ T): T =
     Get(path) ~> akkaHttpSystem.routes.all ~> check(body)
 }

@@ -7,7 +7,8 @@ import tv.codely.scala_http_api.application.user.api.User
 
 import scala.concurrent.Future
 
-/*protected[user]*/ trait UserRepositoryMock extends MockFactory {
+/*protected[user]*/
+trait UserRepositoryMock extends MockFactory {
   this: UnitTestCase => // Make mandatory to also extend UnitTestCase in order to avoid using mocks in any other kind of test.
 
   protected val repository: UserRepository[Future] = mock[UserRepository[Future]]

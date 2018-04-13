@@ -8,11 +8,11 @@ import scala.concurrent.duration.Duration
 
 object VideoStub {
   def apply(
-      id: String = VideoIdStub.random.value.toString,
-      title: String = VideoTitleStub.random.value.toString,
-      duration: Duration = VideoDurationStub.random.value,
-      category: String = VideoCategoryStub.random.toString,
-      creatorId: String = UserIdStub.random.value.toString
+    id: String = VideoIdStub.random.value.toString,
+    title: String = VideoTitleStub.random.value.toString,
+    duration: Duration = VideoDurationStub.random.value,
+    category: String = VideoCategoryStub.random.toString,
+    creatorId: String = UserIdStub.random.value.toString
   ): Video = Video(id, title, duration, category, creatorId)
 
   def random: Video = apply()

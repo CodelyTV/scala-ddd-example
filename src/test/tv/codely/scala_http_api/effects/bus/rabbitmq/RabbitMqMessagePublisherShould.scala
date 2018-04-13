@@ -10,11 +10,11 @@ import scala.collection.mutable
 import scala.concurrent.duration._
 
 final class RabbitMqMessagePublisherShould extends UnitTestCase with Eventually {
-  private val appConfig    = ConfigFactory.load("application")
-  private val publisherConfig = RabbitMqConfig(appConfig.getConfig("message-publisher"))
+  private val appConfig                       = ConfigFactory.load("application")
+  private val publisherConfig                 = RabbitMqConfig(appConfig.getConfig("message-publisher"))
   private implicit val rabbitMqChannelFactory = new RabbitMqChannelFactory(publisherConfig)
-  private implicit val messagePublisher = new RabbitMqMessagePublisher(rabbitMqChannelFactory.channel)
-  
+  private implicit val messagePublisher       = new RabbitMqMessagePublisher(rabbitMqChannelFactory.channel)
+
   override implicit val patienceConfig: PatienceConfig = PatienceConfig(timeout = 1.second, interval = 50.millis)
 
   private val queueName                              = "codelytv_scala_api.video_created"

@@ -6,7 +6,7 @@ import tv.codely.scala_http_api.application.mock.UnitTestCase
 import tv.codely.scala_http_api.application.stubs.video.{VideoCreatedStub, VideoStub}
 import tv.codely.scala_http_api.effects.repositories.mock.VideoRepositoryMock
 import tv.codely.scala_http_api.application.repo_publisher.video.VideoCreatorRepoPublisher
-import scala.concurrent.{Future, ExecutionContext}, ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}, ExecutionContext.Implicits.global
 import cats.instances.future._
 
 final class VideoCreatorRepoPublisherShould extends UnitTestCase with VideoRepositoryMock with MessagePublisherMock {

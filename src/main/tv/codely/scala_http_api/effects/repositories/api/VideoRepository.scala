@@ -8,13 +8,15 @@ trait VideoRepository[P[_]] {
   def save(video: Video): P[Unit]
 }
 
-object VideoRepository{
+object VideoRepository {
   import cats.~>
 
-  implicit def toQ[P[_], Q[_]](implicit 
+  implicit def toQ[P[_], Q[_]](
+    implicit
     P: VideoRepository[P],
-    nat: P ~> Q) = new VideoRepository[Q]{
-      def all(): Q[Seq[Video]] = nat(P.all())
-      def save(video: Video): Q[Unit] = nat(P.save(video))
+    nat: P ~> Q
+  ) = new VideoRepository[Q] {
+    def all(): Q[Seq[Video]]        = nat(P.all())
+    def save(video: Video): Q[Unit] = nat(P.save(video))
   }
 }
