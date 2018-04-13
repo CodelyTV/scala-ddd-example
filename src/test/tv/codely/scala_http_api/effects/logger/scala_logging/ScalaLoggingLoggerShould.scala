@@ -9,7 +9,7 @@ import tv.codely.scala_http_api.effects.logger.scala_logging.ScalaLoggingLogger
 import scala.io.Source
 
 final class ScalaLoggingLoggerShould extends UnitTestCase {
-  private val logger = new ScalaLoggingLogger
+  private val logger         = new ScalaLoggingLogger
   private val appLogFilePath = "var/log/app_log.json"
 
   "log info messages in the app log file in a JSON format" in {
@@ -89,10 +89,10 @@ final class ScalaLoggingLoggerShould extends UnitTestCase {
   }
 
   private def appLogFileShouldContain(
-      message: String,
-      level: String,
-      levelValue: Int,
-      context: Map[String, JsValue] = Map.empty
+    message: String,
+    level: String,
+    levelValue: Int,
+    context: Map[String, JsValue] = Map.empty
   ): Unit = {
     val fileContents = Source.fromFile(appLogFilePath).getLines.mkString
 

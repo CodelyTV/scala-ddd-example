@@ -12,10 +12,10 @@ final class RabbitMqMessageConsumer(channelFactory: RabbitMqChannelFactory)(queu
   override def startConsuming(handler: Message => Boolean): Unit = {
     val consumer = new DefaultConsumer(channel) {
       override def handleDelivery(
-          consumerTag: String,
-          envelope: Envelope,
-          properties: BasicProperties,
-          body: Array[Byte]
+        consumerTag: String,
+        envelope: Envelope,
+        properties: BasicProperties,
+        body: Array[Byte]
       ): Unit = {
         val stringBody                 = new String(body)
         val message                    = stringBody.parseJson.convertTo[Message]

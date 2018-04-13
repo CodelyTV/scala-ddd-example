@@ -10,7 +10,8 @@ object UserJsValueMarshaller {
           JsObject(
             "id"   -> JsString(u.id.value.toString),
             "name" -> JsString(u.name.value)
-        ))
+        )
+      )
       .toVector
   )
 }

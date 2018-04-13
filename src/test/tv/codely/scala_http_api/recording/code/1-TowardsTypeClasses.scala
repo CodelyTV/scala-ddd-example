@@ -1,20 +1,19 @@
 package tv.codely.scala_http_api
 package recording.code
 
-import application.user.api.{UserId, UserName, User}
+import application.user.api.{User, UserId, UserName}
 import effects.bus.api.Message
 
-/** 
- * 1. APIs como interfaces abstractas convencionales
- */
-object ConventionalAPIs{
+/**
+  * 1. APIs como interfaces abstractas convencionales
+  */
+object ConventionalAPIs {
 
   // Implementación asíncrona para los Futures de Scala
 
   import scala.concurrent.Future
 
-  
-  trait UserRepositoryAsyncScala{
+  trait UserRepositoryAsyncScala {
     def all(): Future[Seq[User]]
     def save(user: User): Future[Unit]
   }
@@ -25,7 +24,7 @@ object ConventionalAPIs{
 
   import cats.effect.IO
 
-  trait UserRepositoryAsyncCats{
+  trait UserRepositoryAsyncCats {
     def all(): IO[Seq[User]]
     def save(user: User): IO[Unit]
   }
@@ -34,7 +33,7 @@ object ConventionalAPIs{
 
   case class UserState(users: List[User])
 
-  trait UserRepositoryPureUnitTesting{
+  trait UserRepositoryPureUnitTesting {
     def all(): UserState => (UserState, Seq[User])
     def save(user: User): UserState => (UserState, Unit)
   }
@@ -43,28 +42,28 @@ object ConventionalAPIs{
 
   type MessagePublisher = MessagePublisherVoid
 
-  trait MessagePublisherVoid{
+  trait MessagePublisherVoid {
     def publish(message: Message): Unit
   }
 
   type UserRegister = UserRegisterAsync
 
-  trait UserRegisterAsync{
+  trait UserRegisterAsync {
     def register(id: UserId, name: UserName): Future[Unit]
   }
 }
 
-/** 
- * 2. ¡APIs como type classes!
- */
-object FunctionalAPIs{
+/**
+  * 2. ¡APIs como type classes!
+  */
+object FunctionalAPIs {
 
   // trait UserRepositoryAsyncScala{
   //   def all(): Future[Seq[User]]
   //   def save(user: User): Future[Unit]
   // }
 
-  trait UserRepository[P[_]]{
+  trait UserRepository[P[_]] {
     def all(): P[Seq[User]]
     def save(user: User): P[Unit]
   }
@@ -73,7 +72,7 @@ object FunctionalAPIs{
   //   def register(id: UserId, name: UserName): Future[Unit]
   // }
 
-  trait UserRegister[P[_]]{
+  trait UserRegister[P[_]] {
     def register(id: UserId, name: UserName): P[Unit]
   }
 
@@ -81,18 +80,17 @@ object FunctionalAPIs{
   //   def publish(message: Message): Unit
   // }
 
-  trait MessagePublisher[P[_]]{
+  trait MessagePublisher[P[_]] {
     def publish(message: Message): P[Unit]
   }
-
 
 }
 
 /**
- * 3. Probemos que, efectivamente, podemos implementar todos estos
- * tipos de instancias
- */
-object Refactoring{
+  * 3. Probemos que, efectivamente, podemos implementar todos estos
+  * tipos de instancias
+  */
+object Refactoring {
 
   import FunctionalAPIs._
 
@@ -141,11 +139,10 @@ object Refactoring{
 
 }
 
-
 /**
- * 4.¿Y qué pasa con las instancias cuando hacemos esa refactorización?
- */
-object Instances{
+  * 4.¿Y qué pasa con las instancias cuando hacemos esa refactorización?
+  */
+object Instances {
 
   import doobie.implicits._
   import effects.repositories.doobie.TypesConversions._
@@ -156,9 +153,9 @@ object Instances{
   // import ConventionalAPIs.UserRepository
 
   // final class DoobieMySqlUserRepository(
-  //   db: DoobieDbConnection)(implicit 
+  //   db: DoobieDbConnection)(implicit
   //   executionContext: ExecutionContext) extends UserRepository {
-    
+
   //   override def all(): Future[Seq[User]] = {
   //     db.read(sql"SELECT user_id, name FROM users".query[User].to[Seq])
   //   }
@@ -168,12 +165,13 @@ object Instances{
   //       .transact(db.transactor)
   //       .map(_ => ())
   // }
-  
+
   import FunctionalAPIs.UserRepository
 
-  final class DoobieMySqlUserRepository(db: DoobieDbConnection)(implicit 
-    executionContext: ExecutionContext) extends UserRepository[Future] {
-    
+  final class DoobieMySqlUserRepository(db: DoobieDbConnection)(implicit
+                                                                executionContext: ExecutionContext)
+      extends UserRepository[Future] {
+
     override def all(): Future[Seq[User]] = {
       db.read(sql"SELECT user_id, name FROM users".query[User].to[Seq])
     }
@@ -183,6 +181,5 @@ object Instances{
         .transact(db.transactor)
         .map(_ => ())
   }
-
 
 }

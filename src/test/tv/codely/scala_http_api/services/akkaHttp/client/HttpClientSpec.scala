@@ -8,17 +8,17 @@ import scala.concurrent.duration._
 import tv.codely.scala_http_api.application.stubs.user.UserStub
 import tv.codely.scala_http_api.application.stubs.video.VideoStub
 
-class HttpClientSpec extends WordSpec with Matchers with ScalaFutures{
-  
+class HttpClientSpec extends WordSpec with Matchers with ScalaFutures {
+
   // Read configs
 
   val httpServerConfig = HttpServerConfig("http://localhost", 8080)
-  
+
   // Inject dependencies
 
-  implicit val actorSystem = ActorSystem("scala-http-api-integration-test")
+  implicit val actorSystem      = ActorSystem("scala-http-api-integration-test")
   implicit val executionContext = actorSystem.dispatcher
-  val system = new SystemHttpClient()(httpServerConfig, actorSystem)
+  val system                    = new SystemHttpClient()(httpServerConfig, actorSystem)
 
   // Run configuration
 
@@ -28,7 +28,7 @@ class HttpClientSpec extends WordSpec with Matchers with ScalaFutures{
 
   "User register should work" ignore {
     val user = UserStub.random
-    assert(system.UserRegister.register(user.id,user.name).isReadyWithin(10.seconds))
+    assert(system.UserRegister.register(user.id, user.name).isReadyWithin(10.seconds))
   }
 
   "Video search should work" ignore {
@@ -36,14 +36,13 @@ class HttpClientSpec extends WordSpec with Matchers with ScalaFutures{
   }
 
   "Video creator should work" ignore {
-    val user = UserStub.random
+    val user  = UserStub.random
     val video = VideoStub.random
 
-    assert(system.VideoCreator.create(
-      video.id,
-      video.title,
-      video.duration,
-      video.category,
-      user.id).isReadyWithin(10.seconds))
+    assert(
+      system.VideoCreator
+        .create(video.id, video.title, video.duration, video.category, user.id)
+        .isReadyWithin(10.seconds)
+    )
   }
 }
