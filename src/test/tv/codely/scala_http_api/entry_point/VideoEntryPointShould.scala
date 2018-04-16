@@ -4,8 +4,8 @@ import doobie.implicits._
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
 import org.scalatest.BeforeAndAfterEach
 import spray.json._
-import tv.codely.scala_http_api.module.video.domain.VideoStub
-import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoJsValueMarshaller
+import tv.codely.scala_http_api.application.stubs.video.VideoStub
+import tv.codely.scala_http_api.application.akkaHttp.marshaller.VideoJsValueMarshaller
 
 final class VideoEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach {
   private def cleanVideosTable(): Unit =
@@ -38,7 +38,7 @@ final class VideoEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach
   "return all the videos" in {
     val videos = VideoStub.randomSeq
 
-    videos.foreach(v => videoDependencies.repository.save(v).futureValue)
+    videos.foreach(v => doobieVideoRepo.save(v).unsafeToFuture.futureValue)
 
     getting("/videos") {
       status shouldBe StatusCodes.OK

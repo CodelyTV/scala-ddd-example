@@ -4,7 +4,7 @@ import java.io.File
 import java.sql.{Connection, DriverManager}
 
 import com.typesafe.config.ConfigFactory
-import tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie.JdbcConfig
+import tv.codely.scala_http_api.effects.repositories.doobie.JdbcConfig
 
 import scala.io.Source._
 import scala.util.Try
@@ -18,9 +18,9 @@ object DbTablesCreator {
   private val databaseNameFromUrlRegex = new Regex("""\w+:\w+:\/\/\d+.\d+.\d+.\d+(?::\w+)?\/(\w+)""")
 
   case class CommandConfig(
-      tablesFolder: String = "database",
-      configFile: String = "application",
-      dbConfigKey: String = "database"
+    tablesFolder: String = "database",
+    configFile: String = "application",
+    dbConfigKey: String = "database"
   )
 
   def main(args: Array[String]): Unit = {
