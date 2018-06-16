@@ -4,6 +4,7 @@ import java.util.UUID
 
 import spray.json.{DeserializationException, JsNumber, JsString, JsValue, JsonFormat, RootJsonFormat}
 import spray.json.DefaultJsonProtocol._
+import tv.codely.scala_http_api.course.domain.CourseId
 import tv.codely.scala_http_api.video.domain._
 
 object VideoMarshaller {
@@ -22,6 +23,15 @@ object VideoMarshaller {
     def read(value: JsValue): VideoId = value match {
       case JsString(id) => VideoId(id)
       case _            => throw DeserializationException("Expected 1 string for VideoId")
+    }
+  }
+
+  implicit object CourseIdMarshaller extends JsonFormat[CourseId] {
+    override def write(value: CourseId): JsValue = JsString(value.value.toString)
+
+    override def read(value: JsValue): CourseId = value match {
+      case JsString(id) => CourseId(id)
+      case _            => throw DeserializationException("Expected 1 string for CourseId")
     }
   }
 
@@ -52,7 +62,7 @@ object VideoMarshaller {
     }
   }
 
-  implicit val videoFormat: RootJsonFormat[Video] = jsonFormat4(
-    Video.apply(_: VideoId,_: VideoTitle, _: VideoDuration, _: VideoCategory)
+  implicit val videoFormat: RootJsonFormat[Video] = jsonFormat5(
+    Video.apply(_: VideoId,_: CourseId ,_: VideoTitle, _: VideoDuration, _: VideoCategory)
   )
 }
