@@ -5,10 +5,12 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import spray.json.DefaultJsonProtocol
+import tv.codely.scala_http_api.course.domain.Course
 import tv.codely.scala_http_api.user.domain.User
-import tv.codely.scala_http_api.user.infrastructure.UserMarshaller._
 import tv.codely.scala_http_api.video.domain.Video
+import tv.codely.scala_http_api.user.infrastructure.UserMarshaller._
 import tv.codely.scala_http_api.video.infrastructure.VideoMarshaller._
+import tv.codely.scala_http_api.course.infrastructure.CourseMarshaller._
 
 import scala.concurrent.duration._
 
@@ -33,18 +35,28 @@ object Routes extends SprayJsonSupport with DefaultJsonProtocol {
     )
   )
 
+  private val systemCourses = Seq(
+    Course(
+      id = "7341b1fc-3d80-4f6a-bcde-4fef8345612",
+      name = "Unity3D"
+    )
+  )
+
   val all: Route = get {
     path("status") {
       complete(HttpEntity(ContentTypes.`application/json`, """{"status":"ok"}"""))
     } ~
-      path("ping") {
-        complete(HttpEntity(ContentTypes.`application/json`, """{"data":"pong"}"""))
-      } ~
-      path("users") {
-        complete(systemUsers)
-      } ~
-      path("videos") {
-        complete(systemVideos)
-      }
+    path("ping") {
+      complete(HttpEntity(ContentTypes.`application/json`, """{"data":"pong"}"""))
+    } ~
+    path("users") {
+      complete(systemUsers)
+    } ~
+    path("videos") {
+      complete(systemVideos)
+    } ~
+    path("courses") {
+      complete(systemCourses)
+    }
   }
 }

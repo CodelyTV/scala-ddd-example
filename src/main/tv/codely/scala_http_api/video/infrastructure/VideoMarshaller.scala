@@ -53,6 +53,6 @@ object VideoMarshaller {
   }
 
   implicit val videoFormat: RootJsonFormat[Video] = jsonFormat4(
-    Video.apply(_: VideoId, _: VideoTitle, _: VideoDuration, _: VideoCategory)
+    Video.apply(_: VideoId,_: VideoTitle, _: VideoDuration, _: VideoCategory)
   )
 }

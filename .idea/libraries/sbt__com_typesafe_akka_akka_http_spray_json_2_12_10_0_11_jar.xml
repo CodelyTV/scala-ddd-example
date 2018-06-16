@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: com.typesafe.akka:akka-http-spray-json_2.12:10.0.11:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.typesafe.akka/akka-http-spray-json_2.12/jars/akka-http-spray-json_2.12-10.0.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.typesafe.akka/akka-http-spray-json_2.12/srcs/akka-http-spray-json_2.12-10.0.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
