@@ -8,13 +8,16 @@ import tv.codely.scala_http_api.module.video.infrastructure.marshaller.VideoAttr
 object VideoCreatedJsonFormatMarshaller extends DefaultJsonProtocol {
 
   implicit object VideoCreatedJsonFormat extends RootJsonFormat[VideoCreated] {
-    override def write(c: VideoCreated): JsValue = JsObject(
-      "type"                -> JsString(c.`type`),
-      "id"                  -> c.id.toJson,
-      "title"               -> c.title.toJson,
-      "duration_in_seconds" -> c.duration.toJson,
-      "category"            -> c.category.toJson,
-      "creator_id"          -> c.creatorId.toJson
+    override def write(event: VideoCreated): JsValue = JsObject(
+      "type" -> JsString(event.`type`),
+      "id"   -> event.id.toJson,
+      "attributes" -> JsObject(
+        "id"                  -> event.id.toJson,
+        "title"               -> event.title.toJson,
+        "duration_in_seconds" -> event.duration.toJson,
+        "category"            -> event.category.toJson,
+        "creator_id"          -> event.creatorId.toJson
+      )
     )
 
     override def read(value: JsValue): VideoCreated =
