@@ -1,3 +1,31 @@
+* Primero PHP
+* `brew services start rabbitmq`
+* `brew services start mariadb`
+* `brew services list`
+* `sh start-server.sh`
+* http://localhost:15672/#/users -> guest guest
+    * add user codelytv:c0d3ly tag administrator
+    * set permissions de todo
+* http://localhost:15672/#/exchanges
+    * New exchange domain-events type topic
+* http://localhost:15672/#/queues
+    * codelytv_php_api.increase_user_total_videos_created_on_video_created
+* http://localhost:15672/#/exchanges/%2F/domain-events -> new binding
+    * codelytv_php_api.increase_user_total_videos_created_on_video_created
+    * routing key; `codelytv_scala_api.video_created`
+* http://localhost:15672/#/exchanges/%2F/domain-events -> publish message
+    * reouting key: `codelytv_scala_api.video_created`
+    * body:
+        ```json
+{
+    "id": "64cb9b44-d193-4465-bccf-893edb1bd8f2",
+    "type": "codelytv_scala_api.video_created",
+    "attributes": {
+        "creator_id": "ba8a348b-71e4-46ec-b11f-7c590537c72b"        
+    }
+}
+        ```
+
 # CodelyTV Scala HTTP API
 
 <img src="http://codely.tv/wp-content/uploads/2016/05/cropped-logo-codelyTV.png" align="left" width="192px" height="192px"/>
