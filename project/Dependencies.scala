@@ -19,6 +19,7 @@ object Dependencies {
     "ch.qos.logback"             % "logback-classic"          % "1.2.3", // Logging backend implementation
     "com.typesafe.scala-logging" %% "scala-logging"           % "3.7.2", // SLF4J Scala wrapper
     "net.logstash.logback"       % "logstash-logback-encoder" % "4.11", // Log JSON encoder
+    "com.newmotion"              %% "akka-rabbitmq"           % "5.0.0",
     // Test
     "org.scalatest"     %% "scalatest"         % "3.0.5"           % Test,
     "org.scalamock"     %% "scalamock"         % "4.0.0"           % Test,
@@ -26,9 +27,7 @@ object Dependencies {
     "com.typesafe.akka" %% "akka-http-testkit" % Versions.akkaHttp % Test
   )
 
-  val mooc = Seq(
-    "com.newmotion" %% "akka-rabbitmq" % "5.0.0"
-  )
-  
+  val mooc = Seq()
+
   val backoffice = Seq()
 }

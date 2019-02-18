@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.entry_point
+package tv.codely.mooc.api
 
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
@@ -6,11 +6,11 @@ import akka.util.ByteString
 import com.typesafe.config.ConfigFactory
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.concurrent.ScalaFutures
-import tv.codely.scala_http_api.module.shared.bus.infrastructure.rabbit_mq.RabbitMqConfig
-import tv.codely.scala_http_api.module.shared.dependency_injection.infrastructure.SharedModuleDependencyContainer
 import tv.codely.shared.infrastructure.doobie.{DoobieDbConnection, JdbcConfig}
 import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.scala_http_api.module.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
+import tv.codely.shared.infrastructure.bus.rabbitmq.RabbitMqConfig
+import tv.codely.shared.infrastructure.dependency_injection.SharedModuleDependencyContainer
 
 protected[entry_point] abstract class AcceptanceSpec
     extends WordSpec

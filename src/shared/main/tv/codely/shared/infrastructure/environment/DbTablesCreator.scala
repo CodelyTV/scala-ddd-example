@@ -11,8 +11,8 @@ import scala.util.Try
 import scala.util.matching.Regex
 
 /**
-  * View usage: runMain tv.codely.scala_http_api.entry_point.cli.DbTablesCreator --usage
-  * Execute: runMain tv.codely.scala_http_api.entry_point.cli.DbTablesCreator
+  * View usage: runMain tv.codely.mooc.api.cli.DbTablesCreator --usage
+  * Execute: runMain tv.codely.mooc.api.cli.DbTablesCreator
   */
 object DbTablesCreator {
   private val databaseNameFromUrlRegex = new Regex("""\w+:\w+:\/\/\d+.\d+.\d+.\d+(?::\w+)?\/(\w+)""")

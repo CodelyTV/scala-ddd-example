@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.entry_point
+package tv.codely.mooc.api
 
 import doobie.implicits._
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}

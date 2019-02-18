@@ -1,7 +1,9 @@
 package tv.codely
 
-import tv.codely.backoffice._
-import tv.codely.mooc._
+import tv.codely.backoffice.api.BackofficeApiApp
+import tv.codely.backoffice.consumer.BackofficeConsumerApp
+import tv.codely.mooc.api.MoocApiApp
+import tv.codely.mooc.consumer.MoocConsumerApp
 
 object Launcher {
   private val MoocApiArgument       = "mooc-api"
