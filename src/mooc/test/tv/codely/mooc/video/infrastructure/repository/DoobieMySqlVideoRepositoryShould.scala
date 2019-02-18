@@ -1,7 +1,7 @@
-package tv.codely.scala_http_api.module.video.infrastructure.repository
+package tv.codely.mooc.video.infrastructure.repository
 
-import tv.codely.scala_http_api.module.video.VideoIntegrationTestCase
-import tv.codely.scala_http_api.module.video.domain.VideoStub
+import tv.codely.mooc.video.VideoIntegrationTestCase
+import tv.codely.mooc.video.domain.VideoMother
 import doobie.implicits._
 import org.scalatest.BeforeAndAfterEach
 
@@ -23,7 +23,7 @@ final class DoobieMySqlVideoRepositoryShould extends VideoIntegrationTestCase wi
   }
 
   "search all existing videos" in {
-    val videos = VideoStub.randomSeq
+    val videos = VideoMother.randomSeq
 
     videos.foreach(v => repository.save(v).futureValue)
 

@@ -6,13 +6,14 @@ disablePlugins(AssemblyPlugin)
 lazy val root = (project in file(".")).aggregate(app, shared, mooc, backoffice)
 
 lazy val app = Project(id = "app", base = file("app/"))
-               .dependsOn(mooc)
-               .dependsOn(backoffice)
+               .dependsOn(mooc % "compile->compile;test->test")
+               .dependsOn(backoffice % "compile->compile;test->test")
+               .dependsOn(shared % "compile->compile;test->test")
 
 lazy val shared = Project(id = "shared", base = file("src/shared"))
 
 lazy val mooc = Project(id = "mooc", base = file("src/mooc")).dependsOn(shared % "compile->compile;test->test")
-lazy val backoffice = 
+lazy val backoffice =
   Project(id = "backoffice", base = file("src/backoffice")).dependsOn(shared % "compile->compile;test->test")
 
 addCommandAlias("t", "test")

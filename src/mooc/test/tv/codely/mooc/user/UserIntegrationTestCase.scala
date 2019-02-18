@@ -1,8 +1,8 @@
-package tv.codely.scala_http_api.module.user
+package tv.codely.mooc.user
 
-import tv.codely.scala_http_api.module.IntegrationTestCase
-import tv.codely.scala_http_api.module.user.domain.UserRepository
-import tv.codely.scala_http_api.module.user.infrastructure.dependency_injection.UserModuleDependencyContainer
+import tv.codely.mooc.user.domain.UserRepository
+import tv.codely.mooc.user.infrastructure.dependency_injection.UserModuleDependencyContainer
+import tv.codely.shared.infrastructure.integration.IntegrationTestCase
 
 protected[user] trait UserIntegrationTestCase extends IntegrationTestCase {
   private val container = new UserModuleDependencyContainer(doobieDbConnection, messagePublisher)

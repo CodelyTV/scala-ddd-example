@@ -1,15 +1,15 @@
-package tv.codely.scala_http_api.module.user.application.search
+package tv.codely.mooc.user.application.search
 
-import tv.codely.scala_http_api.module.UnitTestCase
-import tv.codely.scala_http_api.module.user.domain.UserStub
-import tv.codely.scala_http_api.module.user.infrastructure.repository.UserRepositoryMock
+import tv.codely.mooc.user.domain.UserMother
+import tv.codely.mooc.user.infrastructure.repository.UserRepositoryMock
+import tv.codely.shared.infrastructure.unit.UnitTestCase
 
 final class UsersSearcherShould extends UnitTestCase with UserRepositoryMock {
   private val searcher = new UsersSearcher(repository)
 
   "search all existing users" in {
-    val existingUser        = UserStub.random
-    val anotherExistingUser = UserStub.random
+    val existingUser        = UserMother.random
+    val anotherExistingUser = UserMother.random
     val existingUsers       = Seq(existingUser, anotherExistingUser)
 
     repositoryShouldFind(existingUsers)

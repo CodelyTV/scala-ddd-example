@@ -3,6 +3,8 @@ Configuration.commonSettings
 scalaSource in Compile := baseDirectory.value / "main/"
 scalaSource in Test := baseDirectory.value / "test/"
 
+libraryDependencies ++= Dependencies.shared
+
 fork in run := true
 
 // Assembly

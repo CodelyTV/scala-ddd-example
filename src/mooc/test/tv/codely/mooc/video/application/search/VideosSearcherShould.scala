@@ -1,15 +1,15 @@
-package tv.codely.scala_http_api.module.video.application.search
+package tv.codely.mooc.video.application.search
 
-import tv.codely.scala_http_api.module.UnitTestCase
-import tv.codely.scala_http_api.module.video.domain.VideoStub
-import tv.codely.scala_http_api.module.video.infrastructure.repository.VideoRepositoryMock
+import tv.codely.mooc.video.domain.VideoMother
+import tv.codely.mooc.video.infrastructure.repository.VideoRepositoryMock
+import tv.codely.shared.infrastructure.unit.UnitTestCase
 
 final class VideosSearcherShould extends UnitTestCase with VideoRepositoryMock {
   private val searcher = new VideosSearcher(repository)
 
   "search all existing videos" in {
-    val existingVideo        = VideoStub.random
-    val anotherExistingVideo = VideoStub.random
+    val existingVideo        = VideoMother.random
+    val anotherExistingVideo = VideoMother.random
     val existingVideos       = Seq(existingVideo, anotherExistingVideo)
 
     repositoryShouldFind(existingVideos)

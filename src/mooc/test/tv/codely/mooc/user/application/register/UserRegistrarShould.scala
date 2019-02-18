@@ -1,20 +1,21 @@
-package tv.codely.scala_http_api.module.user.application.register
+package tv.codely.mooc.user.application.register
 
-import tv.codely.scala_http_api.module.UnitTestCase
-import tv.codely.scala_http_api.module.shared.infrastructure.MessagePublisherMock
-import tv.codely.scala_http_api.module.user.domain.{UserRegisteredStub, UserStub}
-import tv.codely.scala_http_api.module.user.infrastructure.repository.UserRepositoryMock
+import tv.codely.mooc.shared.infrastructure.marshaller.DomainEventsMarshaller
+import tv.codely.mooc.user.domain.{UserMother, UserRegisteredMother}
+import tv.codely.mooc.user.infrastructure.repository.UserRepositoryMock
+import tv.codely.shared.infrastructure.rabbitmq.MessagePublisherMock
+import tv.codely.shared.infrastructure.unit.UnitTestCase
 
 final class UserRegistrarShould extends UnitTestCase with UserRepositoryMock with MessagePublisherMock {
   private val registrar = new UserRegistrar(repository, messagePublisher)
 
   "register a user" in {
-    val user           = UserStub.random
-    val userRegistered = UserRegisteredStub(user)
+    val user           = UserMother.random
+    val userRegistered = UserRegisteredMother(user)
 
     repositoryShouldSave(user)
 
-    publisherShouldPublish(userRegistered)
+    publisherShouldPublish(userRegistered)(new DomainEventsMarshaller)
 
     registrar.register(user.id, user.name).shouldBe(())
   }

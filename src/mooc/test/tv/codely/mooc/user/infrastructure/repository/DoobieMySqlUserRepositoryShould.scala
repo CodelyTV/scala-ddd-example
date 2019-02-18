@@ -1,7 +1,7 @@
-package tv.codely.scala_http_api.module.user.infrastructure.repository
+package tv.codely.mooc.user.infrastructure.repository
 
-import tv.codely.scala_http_api.module.user.UserIntegrationTestCase
-import tv.codely.scala_http_api.module.user.domain.UserStub
+import tv.codely.mooc.user.UserIntegrationTestCase
+import tv.codely.mooc.user.domain.UserMother
 import doobie.implicits._
 import org.scalatest.BeforeAndAfterEach
 
@@ -23,7 +23,7 @@ final class DoobieMySqlUserRepositoryShould extends UserIntegrationTestCase with
   }
 
   "search all existing users" in {
-    val users = UserStub.randomSeq
+    val users = UserMother.randomSeq
 
     users.foreach(u => repository.save(u).futureValue)
 

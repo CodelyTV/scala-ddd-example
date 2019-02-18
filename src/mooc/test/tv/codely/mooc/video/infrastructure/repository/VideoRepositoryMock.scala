@@ -1,10 +1,10 @@
-package tv.codely.scala_http_api.module.video.infrastructure.repository
+package tv.codely.mooc.video.infrastructure.repository
 
 import org.scalamock.scalatest.MockFactory
-import tv.codely.scala_http_api.module.UnitTestCase
-import tv.codely.scala_http_api.module.video.domain.{Video, VideoRepository}
-
+import tv.codely.mooc.video.domain.{Video, VideoRepository}
 import scala.concurrent.Future
+
+import tv.codely.shared.infrastructure.unit.UnitTestCase
 
 protected[video] trait VideoRepositoryMock extends MockFactory {
   this: UnitTestCase => // Make mandatory to also extend UnitTestCase in order to avoid using mocks in any other kind of test.
