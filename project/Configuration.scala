@@ -8,11 +8,11 @@ object Configuration {
     scalaVersion := "2.12.8",
     scalacOptions := {
       val default = Seq(
-        "-Xlint", // more warnings when compiling
-        "-Xfatal-warnings", // warnings became errors
-        "-unchecked", // more warnings. Strict
-        "-deprecation", // warnings deprecation
-        "-feature", // advise features
+        "-Xlint",
+        "-Xfatal-warnings",
+        "-unchecked",
+        "-deprecation",
+        "-feature",
         "-language:higherKinds",
         "-Ypartial-unification"
       )

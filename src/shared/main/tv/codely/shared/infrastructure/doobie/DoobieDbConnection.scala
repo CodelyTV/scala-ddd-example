@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie
+package tv.codely.shared.infrastructure.doobie
 
 import cats.effect.IO
 import doobie.Transactor

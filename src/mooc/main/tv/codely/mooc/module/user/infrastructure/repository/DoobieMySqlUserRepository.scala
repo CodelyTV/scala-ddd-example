@@ -3,7 +3,7 @@ package tv.codely.scala_http_api.module.user.infrastructure.repository
 import doobie.implicits._
 import tv.codely.scala_http_api.module.user.domain.{User, UserRepository}
 import tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie.TypesConversions._
-import tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie.DoobieDbConnection
+import tv.codely.shared.infrastructure.doobie.DoobieDbConnection
 
 import scala.concurrent.{ExecutionContext, Future}
 

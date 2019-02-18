@@ -6,7 +6,7 @@ import tv.codely.scala_http_api.module.shared.bus.domain.MessagePublisher
 import tv.codely.scala_http_api.module.shared.bus.infrastructure.rabbit_mq.{RabbitMqChannelFactory, RabbitMqConfig, RabbitMqMessagePublisher}
 import tv.codely.scala_http_api.module.shared.logger.domain.Logger
 import tv.codely.scala_http_api.module.shared.logger.infrastructure.scala_logging.ScalaLoggingLogger
-import tv.codely.scala_http_api.module.shared.persistence.infrastructure.doobie.{DoobieDbConnection, JdbcConfig}
+import tv.codely.shared.infrastructure.doobie.{DoobieDbConnection, JdbcConfig}
 
 import scala.concurrent.ExecutionContext
 
