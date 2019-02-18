@@ -25,7 +25,7 @@ before_install:
   - cp .env.dist .env
   - docker-compose up -d
   - cd ..
-  - sbt createDbTables
+  - sbt "shared/createDbTables"
 
 script:
   - sbt clean

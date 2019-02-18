@@ -1,12 +1,20 @@
 name := "CodelyTV Scala HTTP API"
 version := "1.0"
 
-Configuration.settings
+disablePlugins(AssemblyPlugin)
 
-libraryDependencies ++= Dependencies.production
-libraryDependencies ++= Dependencies.test
+lazy val root = (project in file(".")).aggregate(app, shared, mooc, backoffice)
 
-enablePlugins(JavaAppPackaging) // App packaging. More info: https://github.com/sbt/sbt-native-packager
+lazy val app = Project(id = "app", base = file("app/"))
+               .dependsOn(mooc % "compile->compile;test->test")
+               .dependsOn(backoffice % "compile->compile;test->test")
+               .dependsOn(shared % "compile->compile;test->test")
+
+lazy val shared = Project(id = "shared", base = file("src/shared"))
+
+lazy val mooc = Project(id = "mooc", base = file("src/mooc")).dependsOn(shared % "compile->compile;test->test")
+lazy val backoffice =
+  Project(id = "backoffice", base = file("src/backoffice")).dependsOn(shared % "compile->compile;test->test")
 
 addCommandAlias("t", "test")
 addCommandAlias("to", "testOnly")
@@ -24,6 +32,9 @@ addCommandAlias("tfc", "test:scalafmtCheck") // Check if test files are formatte
 // All the needed tasks before pushing to the repository (compile, compile test, format check in prod and test)
 addCommandAlias("prep", ";c;tc;fc;tfc")
 
-TaskKey[Unit]("createDbTables") := (runMain in Compile)
-  .toTask(" tv.codely.scala_http_api.entry_point.cli.DbTablesCreator")
-  .value
+lazy val pack = taskKey[Unit]("Packages application as a fat jar")
+pack := {
+  (assembly in app).toTask.value
+}
+
+test in assembly := {}

@@ -1,75 +1,38 @@
 import sbt.{Tests, _}
-import sbt.Keys._
+import Keys.{excludeFilter, exportJars, _}
+import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
 
 object Configuration {
-  val settings = Seq(
+  val commonSettings = Seq(
     organization := "tv.codely",
-    scalaVersion := "2.12.4",
-    // Custom folders path (/src/main/scala and /src/test/scala by default)
-    Compile / mainClass := Some("tv.codely.scala_http_api.entry_point.ScalaHttpApi"),
-    Compile / scalaSource := baseDirectory.value / "/src/main",
-    Test / scalaSource := baseDirectory.value / "/src/test",
-    Compile / resourceDirectory := baseDirectory.value / "conf",
-    // Compiler options. More information: https://tpolecat.github.io/2017/04/25/scalac-flags.html
+    scalaVersion := "2.12.8",
+    scalacOptions := {
+      val default = Seq(
+        "-Xlint",
+        "-Xfatal-warnings",
+        "-unchecked",
+        "-deprecation",
+        "-feature",
+        "-language:higherKinds",
+        "-Ypartial-unification"
+      )
+      if (version.value.endsWith("SNAPSHOT")) {
+        default :+ "-Xcheckinit"
+      } else { default } // check against early initialization
+    },
+    scalacOptions in (Test, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
+    scalacOptions in (Test, console) ++= Seq("-Ywarn-unused:-imports"),
     javaOptions += "-Duser.timezone=UTC",
-    scalacOptions ++= Seq(
-      "-deprecation", // Emit warning and location for usages of deprecated APIs.
-      "-encoding",
-      "utf-8", // Specify character encoding used by source files.
-      "-explaintypes", // Explain type errors in more detail.
-      "-feature", // Emit warning and location for usages of features that should be imported explicitly.
-      "-language:existentials", // Existential types (besides wildcard types) can be written and inferred
-      "-language:experimental.macros", // Allow macro definition (besides implementation and application)
-      "-language:higherKinds", // Allow higher-kinded types
-      "-language:implicitConversions", // Allow definition of implicit functions called views
-      "-unchecked", // Enable additional warnings where generated code depends on assumptions.
-      "-Xcheckinit", // Wrap field accessors to throw an exception on uninitialized access.
-      "-Xfatal-warnings", // Fail the compilation if there are any warnings.
-      "-Xfuture", // Turn on future language features.
-      "-Xlint:adapted-args", // Warn if an argument list is modified to match the receiver.
-      "-Xlint:by-name-right-associative", // By-name parameter of right associative operator.
-      "-Xlint:constant", // Evaluation of a constant arithmetic expression results in an error.
-      "-Xlint:delayedinit-select", // Selecting member of DelayedInit.
-      "-Xlint:doc-detached", // A Scaladoc comment appears to be detached from its element.
-      "-Xlint:inaccessible", // Warn about inaccessible types in method signatures.
-      "-Xlint:infer-any", // Warn when a type argument is inferred to be `Any`.
-      "-Xlint:missing-interpolator", // A string literal appears to be missing an interpolator id.
-      "-Xlint:nullary-override", // Warn when non-nullary `def f()' overrides nullary `def f'.
-      "-Xlint:nullary-unit", // Warn when nullary methods return Unit.
-      "-Xlint:option-implicit", // Option.apply used implicit view.
-      "-Xlint:package-object-classes", // Class or object defined in package object.
-      "-Xlint:poly-implicit-overload", // Parameterized overloaded implicit methods are not visible as view bounds.
-      "-Xlint:private-shadow", // A private field (or class parameter) shadows a superclass field.
-      "-Xlint:stars-align", // Pattern sequence wildcard must align with sequence component.
-      "-Xlint:type-parameter-shadow", // A local type parameter shadows a type already in scope.
-      "-Xlint:unsound-match", // Pattern match may not be typesafe.
-      "-Yno-adapted-args", // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver.
-      "-Ypartial-unification", // Enable partial unification in type constructor inference
-      "-Ywarn-dead-code", // Warn when dead code is identified.
-      "-Ywarn-extra-implicit", // Warn when more than one implicit parameter section is defined.
-      "-Ywarn-inaccessible", // Warn about inaccessible types in method signatures.
-      "-Ywarn-infer-any", // Warn when a type argument is inferred to be `Any`.
-      "-Ywarn-nullary-override", // Warn when non-nullary `def f()' overrides nullary `def f'.
-      "-Ywarn-nullary-unit", // Warn when nullary methods return Unit.
-      "-Ywarn-numeric-widen", // Warn when numerics are widened.
-      "-Ywarn-unused:implicits", // Warn if an implicit parameter is unused.
-      "-Ywarn-unused:imports", // Warn if an import selector is not referenced.
-      "-Ywarn-unused:locals", // Warn if a local definition is unused.
-      "-Ywarn-unused:params", // Warn if a value parameter is unused.
-      "-Ywarn-unused:patvars", // Warn if a variable bound in a pattern is unused.
-      "-Ywarn-unused:privates", // Warn if a private member is unused.
-      "-Ywarn-value-discard" // Warn when non-Unit expression results are unused.
+    fork in Test := false,
+    parallelExecution in Test := false,
+    testOptions in Test ++= Seq(
+      Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports"),
+      Tests.Argument("-oDF")
     ),
-    Compile / console / scalacOptions --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"), // Leave the console REPL usable :P
-    Compile / run / scalacOptions -= "-Xcheckinit",             // Expensive to run in prod
-    Test / compile / scalacOptions --= Seq("-Xfatal-warnings"), // Due to deprecated ETA expansion used with ScalaMock
-    // Test options
-    Test / parallelExecution := false,
-    Test / testForkedParallel := false,
-    Test / fork := true,
-    Test / testOptions ++= Seq(
-      Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports"), // Save test reports
-      Tests.Argument("-oDF") // Show full stack traces and time spent in each test
-    )
+    cancelable in Global := true,
+    // Scalafmt
+    scalafmtConfig := Some(file(".scalafmt.conf")),
+    // OneJar
+    exportJars := true
   )
 }

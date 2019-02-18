@@ -6,7 +6,7 @@ object Dependencies {
     val akkaHttp = "10.0.11"
   }
 
-  val production = Seq(
+  val shared = Seq(
     "com.github.nscala-time"     %% "nscala-time"             % "2.18.0",
     "com.lihaoyi"                %% "pprint"                  % "0.5.3",
     "com.typesafe.akka"          %% "akka-http"               % Versions.akkaHttp,
@@ -16,16 +16,18 @@ object Dependencies {
     "org.tpolecat"               %% "doobie-core"             % "0.5.0",
     "mysql"                      % "mysql-connector-java"     % "5.1.45",
     "com.github.scopt"           %% "scopt"                   % "3.7.0", // Command Line Commands such as de DbTablesCreator
-    "com.newmotion"              %% "akka-rabbitmq"           % "5.0.0",
     "ch.qos.logback"             % "logback-classic"          % "1.2.3", // Logging backend implementation
     "com.typesafe.scala-logging" %% "scala-logging"           % "3.7.2", // SLF4J Scala wrapper
-    "net.logstash.logback"       % "logstash-logback-encoder" % "4.11" // Log JSON encoder
-  )
-
-  val test = Seq(
+    "net.logstash.logback"       % "logstash-logback-encoder" % "4.11", // Log JSON encoder
+    "com.newmotion"              %% "akka-rabbitmq"           % "5.0.0",
+    // Test
     "org.scalatest"     %% "scalatest"         % "3.0.5"           % Test,
     "org.scalamock"     %% "scalamock"         % "4.0.0"           % Test,
     "com.typesafe.akka" %% "akka-testkit"      % Versions.akka     % Test,
     "com.typesafe.akka" %% "akka-http-testkit" % Versions.akkaHttp % Test
   )
+
+  val mooc = Seq()
+
+  val backoffice = Seq()
 }
