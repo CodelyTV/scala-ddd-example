@@ -1,0 +1,12 @@
+Configuration.commonSettings
+
+scalaSource in Compile := baseDirectory.value / "main/"
+scalaSource in Test := baseDirectory.value / "test/"
+
+fork in run := true
+
+// Assembly
+mainClass in assembly := Some("tv.codely.Launcher")
+assemblyJarName in assembly := "codelytv.jar"
+assemblyOutputPath in assembly := baseDirectory.value / ".." / "package" / (assemblyJarName in assembly).value
+test in assembly := {}

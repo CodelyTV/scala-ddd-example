@@ -1,4 +1,4 @@
-package tv.codely.scala_http_api.entry_point.cli
+package tv.codely.shared.infrastructure.environment
 
 import java.io.File
 import java.sql.{Connection, DriverManager}
