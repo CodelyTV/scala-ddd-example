@@ -6,12 +6,8 @@ import tv.codely.mooc.user.infrastructure.marshaller.UserRegisteredJsonFormatMar
 import tv.codely.mooc.video.domain.VideoCreated
 import tv.codely.mooc.video.infrastructure.marshaller.VideoCreatedJsonFormatMarshaller._
 import tv.codely.shared.domain.bus.Message
-import tv.codely.shared.infrastructure.marshaller.MessageJsonFormatMarshaller
 
-final class DomainEventsMarshaller extends MessageJsonFormatMarshaller {
-  override def write(m: Message): JsValue = MessageMarshaller.write(m)
-  override def read(jv: JsValue): Message = MessageMarshaller.read(jv)
-
+object DomainEventsMarshaller {
   implicit object MessageMarshaller extends RootJsonFormat[Message] {
     override def write(m: Message): JsValue = m match {
       case vc: VideoCreated   => vc.toJson

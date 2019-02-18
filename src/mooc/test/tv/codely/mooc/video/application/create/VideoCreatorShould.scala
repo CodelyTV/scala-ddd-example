@@ -1,6 +1,6 @@
 package tv.codely.mooc.video.application.create
 
-import tv.codely.mooc.shared.infrastructure.marshaller.DomainEventsMarshaller
+import tv.codely.mooc.shared.infrastructure.marshaller.DomainEventsMarshaller.MessageMarshaller
 import tv.codely.mooc.video.domain.{VideoCreatedMother, VideoMother}
 import tv.codely.mooc.video.infrastructure.repository.VideoRepositoryMock
 import tv.codely.shared.infrastructure.rabbitmq.MessagePublisherMock
@@ -15,7 +15,7 @@ final class VideoCreatorShould extends UnitTestCase with VideoRepositoryMock wit
 
     repositoryShouldSave(video)
 
-    publisherShouldPublish(videoCreated)(new DomainEventsMarshaller)
+    publisherShouldPublish(videoCreated)(MessageMarshaller)
 
     creator.create(video.id, video.title, video.duration, video.category, video.creatorId).shouldBe(())
   }

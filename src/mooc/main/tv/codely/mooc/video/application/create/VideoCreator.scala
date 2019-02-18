@@ -1,7 +1,7 @@
 package tv.codely.mooc.video.application.create
 
 import tv.codely.mooc.shared.domain.user.UserId
-import tv.codely.mooc.shared.infrastructure.marshaller.DomainEventsMarshaller
+import tv.codely.mooc.shared.infrastructure.marshaller.DomainEventsMarshaller.MessageMarshaller
 import tv.codely.mooc.video.domain._
 import tv.codely.shared.domain.bus.MessagePublisher
 
@@ -17,6 +17,6 @@ final class VideoCreator(repository: VideoRepository, publisher: MessagePublishe
 
     repository.save(video)
 
-    publisher.publish(VideoCreated(video))(new DomainEventsMarshaller)
+    publisher.publish(VideoCreated(video))(MessageMarshaller)
   }
 }

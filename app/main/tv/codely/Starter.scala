@@ -5,7 +5,7 @@ import tv.codely.backoffice.consumer.BackofficeConsumerApp
 import tv.codely.mooc.api.MoocApiApp
 import tv.codely.mooc.consumer.MoocConsumerApp
 
-object Launcher {
+object Starter {
   private val MoocApiArgument       = "mooc-api"
   private val MoocConsumersArgument = "mooc-consumers"
 

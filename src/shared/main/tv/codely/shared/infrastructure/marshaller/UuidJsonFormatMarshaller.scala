@@ -2,7 +2,7 @@ package tv.codely.shared.infrastructure.marshaller
 
 import java.util.UUID
 
-import spray.json.{DeserializationException, JsonFormat, JsString, JsValue}
+import spray.json.{DeserializationException, JsString, JsValue, JsonFormat}
 
 object UuidJsonFormatMarshaller {
   implicit object UuidMarshaller extends JsonFormat[UUID] {

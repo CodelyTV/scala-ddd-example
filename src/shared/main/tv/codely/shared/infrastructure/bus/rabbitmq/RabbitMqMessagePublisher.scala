@@ -1,8 +1,8 @@
 package tv.codely.shared.infrastructure.bus.rabbitmq
 
 import com.rabbitmq.client.MessageProperties
+import spray.json.RootJsonFormat
 import tv.codely.shared.domain.bus.{Message, MessagePublisher}
-import tv.codely.shared.infrastructure.marshaller.MessageJsonFormatMarshaller
 
 final class RabbitMqMessagePublisher(channelFactory: RabbitMqChannelFactory) extends MessagePublisher {
   private val channel = channelFactory.channel
@@ -22,7 +22,7 @@ final class RabbitMqMessagePublisher(channelFactory: RabbitMqChannelFactory) ext
     channel.queueDeclare(name, availableAfterRestart, exclusiveToConnection, deleteOnceMessageConsumed, arguments)
   }
 
-  override def publish[T <: Message](message: T)(implicit marshaller: MessageJsonFormatMarshaller): Unit = {
+  override def publish[T <: Message](message: T)(implicit marshaller: RootJsonFormat[Message]): Unit = {
     val routingKey    = message.`type`
     val messageJson   = marshaller.write(message)
     val messageBytes  = messageJson.toString.getBytes
