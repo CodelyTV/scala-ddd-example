@@ -3,9 +3,9 @@
 <img src="http://codely.tv/wp-content/uploads/2016/05/cropped-logo-codelyTV.png" align="left" width="192px" height="192px"/>
 <img align="left" width="0" height="192px" hspace="10"/>
 
-[![License](https://img.shields.io/github/license/CodelyTV/scala-http-api.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/CodelyTV/scala-http-api/master.svg?style=flat-square)](https://travis-ci.org/CodelyTV/scala-http-api)
-[![Coverage Status](https://img.shields.io/coveralls/github/CodelyTV/scala-http-api/master.svg?style=flat-square)](https://coveralls.io/github/CodelyTV/scala-http-api?branch=master)
+[![License](https://img.shields.io/github/license/CodelyTV/cqrs-ddd-scala-example.svg?style=flat-square)](LICENSE)
+[![Build Status](https://img.shields.io/travis/CodelyTV/cqrs-ddd-scala-example/master.svg?style=flat-square)](https://travis-ci.org/CodelyTV/cqrs-ddd-scala-example)
+[![Coverage Status](https://img.shields.io/coveralls/github/CodelyTV/cqrs-ddd-scala-example/master.svg?style=flat-square)](https://coveralls.io/github/CodelyTV/cqrs-ddd-scala-example?branch=master)
 
 Project showing up how you could implement a HTTP API with Scala.
  
