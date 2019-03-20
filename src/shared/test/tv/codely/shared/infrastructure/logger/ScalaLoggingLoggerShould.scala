@@ -100,7 +100,7 @@ final class ScalaLoggingLoggerShould extends IntegrationTestCase {
       "@timestamp"  -> JsString("We'll not be able to compare this value"),
       "@version"    -> JsNumber(1),
       "message"     -> JsString(message),
-      "logger_name" -> JsString("codelytv_scala_api"),
+      "logger_name" -> JsString("cqrs_ddd_scala_example"),
       "thread_name" -> JsString(currentThreadName),
       "level"       -> JsString(level),
       "level_value" -> JsNumber(levelValue)

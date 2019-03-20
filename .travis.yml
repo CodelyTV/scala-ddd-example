@@ -21,10 +21,8 @@ cache:
     - $HOME/.sbt/boot/
 
 before_install:
-  - cd docker/
   - cp .env.dist .env
   - docker-compose up -d
-  - cd ..
   - sbt "shared/createDbTables"
 
 script:

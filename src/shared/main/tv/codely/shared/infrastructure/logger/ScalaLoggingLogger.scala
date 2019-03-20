@@ -5,7 +5,7 @@ import org.slf4j.MDC
 import tv.codely.shared.domain.logger.Logger
 
 final class ScalaLoggingLogger extends Logger {
-  private val logger = ScalaLogging(name = "codelytv_scala_api")
+  private val logger = ScalaLogging(name = "cqrs_ddd_scala_example")
 
   override def info(message: String, context: Map[String, Any] = Map.empty): Unit =
     addContextParameters(context, log = logger.info(message))

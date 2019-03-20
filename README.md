@@ -44,7 +44,7 @@ One of the goals of this project is to serve as an example for the [course on Sc
 | JSON marshalling          | [Spray JSON](https://github.com/spray/spray-json)           | [User](src/main/tv/codely/scala_http_api/module/user/infrastructure/marshaller/UserJsonFormatMarshaller.scala) & [User attributes](src/main/tv/codely/scala_http_api/module/user/infrastructure/marshaller/UserNameJsonFormatMarshaller.scala) marshallers |
 | Database integration      | [Doobie](http://tpolecat.github.io/doobie/)                 | [Video repository](src/main/tv/codely/scala_http_api/module/video/infrastructure/repository/DoobieMySqlVideoRepository.scala) & [its corresponding integration test](src/test/tv/codely/scala_http_api/module/video/infrastructure/repository/DoobieMySqlVideoRepositoryShould.scala) |
 | Domain events publishing  | [Akka RabbitMQ](https://github.com/NewMotion/akka-rabbitmq) | [Publisher implementation](src/main/tv/codely/scala_http_api/module/shared/infrastructure/message_broker/rabbitmq/RabbitMqMessagePublisher.scala) & [its corresponding integration test](src/test/tv/codely/scala_http_api/module/shared/infrastructure/message_broker/rabbitmq/RabbitMqMessagePublisherShould.scala) |
-| Infrastructure management | [Docker](https://www.docker.com/)                           | [Docker Compose definition](docker/docker-compose.yml) |
+| Infrastructure management | [Docker](https://www.docker.com/)                           | [Docker Compose definition](docker-compose.yml) |
 | Logging                   | [ScalaLogging](https://github.com/typesafehub/scala-logging)<br> + [Logback](https://logback.qos.ch/)<br> + [Logstash encoder](https://github.com/logstash/logstash-logback-encoder) | [Logback configuration](conf/logback.xml), [logger implementation](src/main/tv/codely/scala_http_api/module/shared/infrastructure/logger/scala_logging/ScalaLoggingLogger.scala) & [its corresponding integration test](src/test/tv/codely/scala_http_api/module/shared/infrastructure/logger/scala_logging/ScalaLoggingLoggerShould.scala) |
 | Command line command      | [Scopt](https://github.com/scopt/scopt)                     | [Database tables creation script](src/main/tv/codely/scala_http_api/entry_point/cli/DbTablesCreator.scala) |
 | Distribution/deploy       | [SBT Native packager](http://sbt-native-packager.readthedocs.io/en/latest/) | [Build & deploy instructions](#Deploy) |
@@ -57,23 +57,29 @@ One of the goals of this project is to serve as an example for the [course on Sc
 ## Environment setup
 
 ### Install the needed tools
-1. Clone this repository: `git clone https://github.com/CodelyTV/scala-http-api.git scala-http-api`
+1. Clone this repository: `git clone https://github.com/CodelyTV/cqrs-ddd-scala-example.git cqrs-ddd-scala-example`
 2. Download and install [Docker compose](https://docs.docker.com/compose/install/). We'll need it in order to run all the project infrastructure.
 3. Download and install [SBT](http://www.scala-sbt.org/download.html)
 
 ### Prepare the application environment
-1. Copy [the Docker environment variables config file](docker/.env.dist) and tune it with your desired values: `cp docker/.env.dist docker/.env`
-2. Start Docker and bring up the project needed containers: `cd docker/; docker-compose up -d; cd ..`
+1. Copy [the Docker environment variables config file](.env.dist) and tune it with your desired values: `cp .env.dist .env`
+2. Start Docker and bring up the project needed containers: `docker-compose up -d`
 3. Create the database tables in your Docker MySQL container: `sbt createDbTables`
 
 ### Run the tests and start the HTTP server
 1. Enter into the SBT console: `sbt` 
 2. Run the tests: `t`
-3. Start the local server: `run`
+3. Start the local server: `app/run mooc-api` (if you run the app from outside SBT: `sbt "app/run mooc-api"`)
 4. Request for the server status: `curl http://localhost:8080/status`
 5. Take a look at the courses related to this repository (Spanish) just in case you're interested into them!
     * [Introducción a Scala](https://pro.codely.tv/library/introduccion-a-scala/63278/about/)
     * [API HTTP con Scala y Akka](https://pro.codely.tv/library/api-http-con-scala-y-akka/66747/about/)
+    * [Programación funcional: Refactorizando código orientado a objetos con TypeClasses](https://pro.codely.tv/library/programacion-funcional-refactorizando-codigo-orientado-a-objetos-con-typeclasses/about/)
+    * [Principios SOLID Aplicados](https://pro.codely.tv/library/principios-solid-aplicados/77070/about/)
+    * [Arquitectura Hexagonal](https://pro.codely.tv/library/arquitectura-hexagonal/66748/about/)
+    * [Command Query Responsibility Segregation](https://pro.codely.tv/library/cqrs-command-query-responsibility-segregation-3719e4aa/62554/about/)
+    * [Comunicación entre microservicios: Event-Driven Architecture](https://pro.codely.tv/library/comunicacion-entre-microservicios-event-driven-architecture/74823/about/)
+    * [Domain-Driven Design](https://pro.codely.tv/library/domain-driven-design-ddd/87157/about/)
 
 ### Pre-push Git hook
 
@@ -100,17 +106,17 @@ If you want more information on the logging policies and appenders, [take a look
 We use [SBT Native Packager](http://sbt-native-packager.readthedocs.io/en/latest/) in order to package the app in single Jar file that you can execute.
 
 1. Create the universal package: `sbt universal:packageBin`.
-2. Extract the generated zip: `unzip target/universal/codelytv-scala-http-api-1.0.zip -d ~/var/www/` which will contain:
+2. Extract the generated zip: `unzip target/universal/codelytv-cqrs-ddd-scala-example-1.0.zip -d ~/var/www/` which will contain:
     * `bin/`: All the executable binaries of our main classes in Unix and Windows (bat) format
     * `lib/`: All the project dependencies jar files.
 3. Run the main app binary:
-    * Without specifying any parameters (OK for this example app): `~/var/www/codelytv-scala-http-api-1.0/bin/codelytv-scala-http-api`
-    * Specifying parameters for the JVM: `~/var/www/codelytv-scala-http-api-1.0/bin/codelytv-scala-http-api -Dconfig.resource=application/$CONFIG_PATH`
-    * Specifying application parameters: `~/var/www/codelytv-scala-http-api-1.0/bin/codelytv-scala-http-api -Dconfig.resource=application/$CONFIG_PATH -- -appParam`
+    * Without specifying any parameters (OK for this example app): `~/var/www/codelytv-cqrs-ddd-scala-example-1.0/bin/codelytv-cqrs-ddd-scala-example`
+    * Specifying parameters for the JVM: `~/var/www/codelytv-cqrs-ddd-scala-example-1.0/bin/codelytv-cqrs-ddd-scala-example -Dconfig.resource=application/$CONFIG_PATH`
+    * Specifying application parameters: `~/var/www/codelytv-cqrs-ddd-scala-example-1.0/bin/codelytv-cqrs-ddd-scala-example -Dconfig.resource=application/$CONFIG_PATH -- -appParam`
 
 ## About
 
-This hopefully helpful utility has been developed by [CodelyTV](https://github.com/CodelyTV) and [contributors](https://github.com/CodelyTV/scala-http-api/graphs/contributors).
+This hopefully helpful utility has been developed by [CodelyTV](https://github.com/CodelyTV) and [contributors](https://github.com/CodelyTV/cqrs-ddd-scala-example/graphs/contributors).
 
 We'll try to maintain this project as simple as possible, but Pull Requests are welcome!
 

@@ -11,7 +11,7 @@ import tv.codely.shared.infrastructure.doobie.{DoobieDbConnection, JdbcConfig}
 import tv.codely.shared.infrastructure.unit.UnitTestCase
 
 trait IntegrationTestCase extends UnitTestCase {
-  private val actorSystemName = "scala-http-api-integration-test"
+  private val actorSystemName = "cqrs-ddd-scala-example-integration-test"
 
   private val appConfig       = ConfigFactory.load("application")
   private val dbConfig        = JdbcConfig(appConfig.getConfig("database"))

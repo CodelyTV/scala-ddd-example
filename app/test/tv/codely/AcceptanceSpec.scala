@@ -14,10 +14,10 @@ import tv.codely.shared.infrastructure.dependency_injection.SharedModuleDependen
 import tv.codely.shared.infrastructure.doobie.{DoobieDbConnection, JdbcConfig}
 
 abstract class AcceptanceSpec extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
-  private val actorSystemName = "scala-http-api-acceptance-test"
+  private val actorSystemName = "cqrs-ddd-scala-example-acceptance-test"
 
   private val appConfig       = ConfigFactory.load("application")
-  private val dbConfig        = JdbcConfig(appConfig.getConfig("database"))
+  private val dbConfig        = JdbcConfig(appConfig.getConfig("acceptance-tests-database"))
   private val publisherConfig = RabbitMqConfig(appConfig.getConfig("message-publisher"))
 
   private val sharedDependencies = new SharedModuleDependencyContainer(actorSystemName, dbConfig, publisherConfig)
