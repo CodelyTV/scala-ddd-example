@@ -9,10 +9,10 @@ services:
   - docker
 
 scala:
-  - 2.12.4
+  - 2.12.8
 
 jdk:
-  - oraclejdk8
+  - openjdk11
 
 # These directories are cached to S3 at the end of the build
 cache:
