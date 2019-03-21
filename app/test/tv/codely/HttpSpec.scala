@@ -13,7 +13,7 @@ import tv.codely.shared.infrastructure.bus.rabbitmq.RabbitMqConfig
 import tv.codely.shared.infrastructure.dependency_injection.SharedModuleDependencyContainer
 import tv.codely.shared.infrastructure.doobie.{DoobieDbConnection, JdbcConfig}
 
-abstract class AcceptanceSpec extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
+abstract class HttpSpec extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
   private val actorSystemName = "cqrs-ddd-scala-example-acceptance-test"
 
   private val appConfig       = ConfigFactory.load("application")
