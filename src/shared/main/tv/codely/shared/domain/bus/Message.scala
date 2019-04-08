@@ -3,7 +3,7 @@ package tv.codely.shared.domain.bus
 import tv.codely.shared.domain.bus.Message.application
 
 object Message {
-  val application: String = "codelytv_scala_api"
+  val application: String = "cqrs_ddd_scala_example"
 }
 
 abstract class Message {

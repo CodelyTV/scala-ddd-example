@@ -40,26 +40,33 @@ object DbTablesCreator {
     }
 
     parser.parse(args, CommandConfig()).fold(println("[ERROR] Invalid parameters")) { commandConfig =>
-      val dbConfig     = JdbcConfig(ConfigFactory.load("application").getConfig("database"))
-      val dbNameOption = for (grouped <- databaseNameFromUrlRegex findFirstMatchIn dbConfig.url) yield grouped group 1
-
-      dbNameOption.fold(
-        println(s"[ERROR] We couldn't extract the DB name from the DB URL configuration parameter: ${dbConfig.url}")
-      ) { dbName =>
-        Try(Class.forName(dbConfig.driver)).toOption.fold(
-          println(s"[ERROR] Invalid driver specified in the database config: ${dbConfig.driver}")
-        ) { _ =>
-          val connection = DriverManager.getConnection(dbConfig.url, dbConfig.user, dbConfig.password)
-
-          createTables(dbName, commandConfig.tablesFolder, connection)
-
-          connection.close()
-        }
-      }
+      connectAndExecute(databaseConfigKey = "database", createTables(commandConfig.tablesFolder))
+      connectAndExecute(databaseConfigKey = "acceptance-tests-database", createTables(commandConfig.tablesFolder))
     }
   }
 
-  private def createTables(dbName: String, tablesFolder: String, connection: Connection): Unit = {
+  private def connectAndExecute(
+      databaseConfigKey: String,
+      commandToExecute: (String, Connection) => Unit
+  ): Unit = {
+    val dbConfig     = JdbcConfig(ConfigFactory.load("application").getConfig(databaseConfigKey))
+    val dbNameOption = for (grouped <- databaseNameFromUrlRegex findFirstMatchIn dbConfig.url) yield grouped group 1
+
+    dbNameOption.fold(
+      println(s"[ERROR] We couldn't extract the DB name from the DB URL configuration parameter: ${dbConfig.url}")
+    ) { dbName =>
+      Try(Class.forName(dbConfig.driver)).toOption.fold(
+        println(s"[ERROR] Invalid driver specified in the database config: ${dbConfig.driver}")
+      ) { _ =>
+        val connection = DriverManager.getConnection(dbConfig.url, dbConfig.user, dbConfig.password)
+
+        commandToExecute(dbName, connection)
+
+        connection.close()
+      }
+    }
+  }
+  private def createTables(tablesFolder: String)(dbName: String, connection: Connection): Unit = {
     val tablesFolderFile = new File(tablesFolder)
     val tablesFiles      = tablesFolderFile.listFiles()
 

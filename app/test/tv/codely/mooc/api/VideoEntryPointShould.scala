@@ -6,9 +6,9 @@ import org.scalatest.BeforeAndAfterEach
 import spray.json._
 import tv.codely.mooc.video.domain.VideoMother
 import tv.codely.mooc.video.infrastructure.marshaller.VideoJsValueMarshaller
-import tv.codely.AcceptanceSpec
+import tv.codely.HttpSpec
 
-final class VideoEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach {
+final class VideoEntryPointShould extends HttpSpec with BeforeAndAfterEach {
   private def cleanVideosTable(): Unit =
     sql"TRUNCATE TABLE videos".update.run
       .transact(doobieDbConnection.transactor)

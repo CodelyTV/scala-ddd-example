@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: codelytv-cqrs_ddd_scala_example-mysql
+    image: mysql:8.0
+    restart: unless-stopped
+    ports:
+      - "3316:3306"
+    env_file:
+      - .env
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./etc/infrastructure/mysql/init:/docker-entrypoint-initdb.d
+
+  rabbitmq:
+    container_name: codelytv-cqrs_ddd_scala_example-rabbitmq
+    image: rabbitmq:3.7-management
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "8181:15672"
+    env_file:
+      - .env

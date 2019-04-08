@@ -6,9 +6,9 @@ import org.scalatest.BeforeAndAfterEach
 import spray.json._
 import tv.codely.mooc.user.domain.UserMother
 import tv.codely.mooc.user.infrastructure.marshaller.UserJsValueMarshaller
-import tv.codely.AcceptanceSpec
+import tv.codely.HttpSpec
 
-final class UserEntryPointShould extends AcceptanceSpec with BeforeAndAfterEach {
+final class UserEntryPointShould extends HttpSpec with BeforeAndAfterEach {
   private def cleanUsersTable(): Unit =
     sql"TRUNCATE TABLE users".update.run
       .transact(doobieDbConnection.transactor)

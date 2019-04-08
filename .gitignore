@@ -14,7 +14,7 @@ src/*/target
 app/target
 
 # Environment variables file intended for customize the Docker containers parameters letting each developer has its own values.
-docker/.env
+.env
 
 # Application log file and compressed previous logs (see conf/logback.xml)
 var/log/app_log.json

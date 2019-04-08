@@ -10,4 +10,5 @@ CREATE TABLE videos (
   UNIQUE KEY u_video_id (video_id)
 )
   ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE=utf8mb4_unicode_ci;

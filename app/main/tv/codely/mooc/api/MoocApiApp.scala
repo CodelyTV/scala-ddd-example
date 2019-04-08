@@ -47,10 +47,17 @@ object MoocApiApp {
 
     // let it run until user presses return
     println(s"Server online at http://$host:$port/\nPress RETURN to stop...")
+
     StdIn.readLine()
+
+    println("Stopping server...")
 
     bindingFuture
       .flatMap(_.unbind())
-      .onComplete(_ => sharedDependencies.actorSystem.terminate())
+      .onComplete(_ => {
+        sharedDependencies.actorSystem.terminate()
+
+        println("Server stopped!")
+      })
   }
 }

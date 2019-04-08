@@ -9,8 +9,8 @@ final class RabbitMqMessagePublisher(channelFactory: RabbitMqChannelFactory) ext
 
   // Use the default nameless exchange in order to route the published messages based on
   // the mapping between the message routing key and the queue names.
-  // Example: A message with routing key "codelytv_scala_api.video_created"
-  // will be routed to the "codelytv_scala_api.video_created" queue.
+  // Example: A message with routing key "cqrs_ddd_scala_example.video_created"
+  // will be routed to the "cqrs_ddd_scala_example.video_created" queue.
   private val exchange = ""
 
   private def createQueueIfNotExists(name: String) = {
