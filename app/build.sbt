@@ -7,6 +7,7 @@ resourceDirectory in Compile := baseDirectory.value / "conf"
 libraryDependencies ++= Dependencies.shared
 
 fork in run := true
+connectInput in run := true
 
 // Assembly
 mainClass in assembly := Some("tv.codely.Launcher")
