@@ -5,6 +5,8 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import spray.json.DefaultJsonProtocol
+import tv.codely.scala_http_api.course.domain.Course
+import tv.codely.scala_http_api.course.infrastructure.CourseMarshaller._
 import tv.codely.scala_http_api.user.domain.User
 import tv.codely.scala_http_api.user.infrastructure.UserMarshaller._
 import tv.codely.scala_http_api.video.domain.Video
@@ -16,35 +18,51 @@ object Routes extends SprayJsonSupport with DefaultJsonProtocol {
   private val systemUsers = Seq(
     User(id = "deacd129-d419-4552-9bfc-0723c3c4f56a", name = "Edufasio"),
     User(id = "b62f767f-7160-4405-a4af-39ebb3635c17", name = "Edonisio")
-  )
+    )
 
   private val systemVideos = Seq(
     Video(
       id = "3dfb19ee-260b-420a-b08c-ed58a7a07aee",
+      courseId = "3dfb19ee-260b-420a-b08c-ed58a7a07aea",
       title = "🎥 Scala FTW vol. 1",
       duration = 1.minute,
       category = "Screencast"
-    ),
+      ),
     Video(
       id = "7341b1fc-3d80-4f6a-bcde-4fef86b01f97",
+      courseId = "3dfb19ee-260b-420a-b08c-ed58a7a07aea",
       title = "🔝 Interview with Odersky",
       duration = 30.minutes,
       category = "Interview"
+      )
     )
-  )
+
+  private val systemCourses = Seq(
+    Course(
+      id = "3dfb19ee-260b-420a-b08c-ed58a7a07aeb",
+      title = "Introduction to Scala",
+      ),
+    Course(
+      id = "3dfb19ee-260b-420a-b08c-ed58a7a07aea",
+      title = "Scala avanzado",
+      )
+    )
 
   val all: Route = get {
     path("status") {
       complete(HttpEntity(ContentTypes.`application/json`, """{"status":"ok"}"""))
     } ~
-      path("ping") {
-        complete(HttpEntity(ContentTypes.`application/json`, """{"data":"pong"}"""))
-      } ~
-      path("users") {
-        complete(systemUsers)
-      } ~
-      path("videos") {
-        complete(systemVideos)
-      }
+    path("ping") {
+      complete(HttpEntity(ContentTypes.`application/json`, """{"data":"pong"}"""))
+    } ~
+    path("users") {
+      complete(systemUsers)
+    } ~
+    path("videos") {
+      complete(systemVideos)
+    } ~
+    path("courses") {
+      complete(systemCourses)
+    }
   }
 }

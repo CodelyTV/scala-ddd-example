@@ -9,11 +9,12 @@ object VideoMarshaller {
       .map(
         v =>
           JsObject(
-            "id"       -> JsString(v.id.value.toString),
-            "title"    -> JsString(v.title.value),
+            "id" -> JsString(v.id.value.toString),
+            "courseId" -> JsString(v.courseId.value.toString),
+            "title" -> JsString(v.title.value),
             "duration" -> JsNumber(v.duration.value.toSeconds),
             "category" -> JsString(v.category.toString),
-        ))
+            ))
       .toVector
-  )
+    )
 }

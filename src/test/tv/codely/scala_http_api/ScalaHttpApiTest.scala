@@ -5,6 +5,8 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 import spray.json._
+import tv.codely.scala_http_api.course.infrastructure.marshaller.CourseMarshaller
+import tv.codely.scala_http_api.course.infrastructure.stub.CourseStub
 import tv.codely.scala_http_api.user.infrastructure.marshaller.UserMarshaller
 import tv.codely.scala_http_api.user.infrastructure.stub.UserStub
 import tv.codely.scala_http_api.video.infrastructure.marshaller.VideoMarshaller
@@ -35,7 +37,7 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
         val expectedUsers = Seq(
           UserStub(id = "deacd129-d419-4552-9bfc-0723c3c4f56a", name = "Edufasio"),
           UserStub(id = "b62f767f-7160-4405-a4af-39ebb3635c17", name = "Edonisio")
-        )
+          )
 
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
@@ -48,21 +50,44 @@ final class ScalaHttpApiTest extends WordSpec with Matchers with ScalaFutures wi
         val expectedVideos = Seq(
           VideoStub(
             id = "3dfb19ee-260b-420a-b08c-ed58a7a07aee",
+            courseId = "3dfb19ee-260b-420a-b08c-ed58a7a07aea",
             title = "🎥 Scala FTW vol. 1",
             duration = 1.minute,
             category = "Screencast"
-          ),
+            ),
           VideoStub(
             id = "7341b1fc-3d80-4f6a-bcde-4fef86b01f97",
+            courseId = "3dfb19ee-260b-420a-b08c-ed58a7a07aea",
             title = "🔝 Interview with Odersky",
             duration = 30.minutes,
             category = "Interview"
+            )
           )
-        )
 
         status shouldBe StatusCodes.OK
         contentType shouldBe ContentTypes.`application/json`
-        entityAs[String].parseJson shouldBe VideoMarshaller.marshall(expectedVideos)
+        entityAs[String].parseJson shouldBe VideoMarshaller.marshall(
+          expectedVideos)
+      }
+    }
+
+    "return all the system courses" in {
+      Get("/courses") ~> Routes.all ~> check {
+        val expectedCourses = Seq(
+          CourseStub(
+            id = "3dfb19ee-260b-420a-b08c-ed58a7a07aeb",
+            title = "Introduction to Scala"
+            ),
+          CourseStub(
+            id = "3dfb19ee-260b-420a-b08c-ed58a7a07aea",
+            title = "Scala avanzado"
+            )
+          )
+
+        status shouldBe StatusCodes.OK
+        contentType shouldBe ContentTypes.`application/json`
+        entityAs[String].parseJson shouldBe CourseMarshaller.marshall(
+          expectedCourses)
       }
     }
   }

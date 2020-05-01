@@ -4,15 +4,17 @@ import java.util.UUID
 
 import spray.json.{DeserializationException, JsNumber, JsString, JsValue, JsonFormat, RootJsonFormat}
 import spray.json.DefaultJsonProtocol._
+import tv.codely.scala_http_api.course.domain.CourseId
 import tv.codely.scala_http_api.video.domain._
 
 object VideoMarshaller {
+
   implicit object UuidMarshaller extends JsonFormat[UUID] {
     def write(value: UUID): JsValue = JsString(value.toString)
 
     def read(value: JsValue): UUID = value match {
       case JsString(uuid) => UUID.fromString(uuid)
-      case _              => throw DeserializationException("Expected hexadecimal UUID string")
+      case _ => throw DeserializationException("Expected hexadecimal UUID string")
     }
   }
 
@@ -21,7 +23,16 @@ object VideoMarshaller {
 
     def read(value: JsValue): VideoId = value match {
       case JsString(id) => VideoId(id)
-      case _            => throw DeserializationException("Expected 1 string for VideoId")
+      case _ => throw DeserializationException("Expected 1 string for VideoId")
+    }
+  }
+
+  implicit object CourseIdMarshaller extends JsonFormat[CourseId] {
+    def write(value: CourseId): JsValue = JsString(value.value.toString)
+
+    def read(value: JsValue): CourseId = value match {
+      case JsString(id) => CourseId(id)
+      case _ => throw DeserializationException("Expected 1 string for CourseId")
     }
   }
 
@@ -30,7 +41,7 @@ object VideoMarshaller {
 
     def read(value: JsValue): VideoTitle = value match {
       case JsString(name) => VideoTitle(name)
-      case _              => throw DeserializationException("Expected 1 string for VideoTitle")
+      case _ => throw DeserializationException("Expected 1 string for VideoTitle")
     }
   }
 
@@ -39,7 +50,7 @@ object VideoMarshaller {
 
     def read(value: JsValue): VideoDuration = value match {
       case JsNumber(seconds) => VideoDuration(seconds)
-      case _                 => throw DeserializationException("Expected 1 string for VideoDuration")
+      case _ => throw DeserializationException("Expected 1 string for VideoDuration")
     }
   }
 
@@ -48,11 +59,11 @@ object VideoMarshaller {
 
     def read(value: JsValue): VideoCategory = value match {
       case JsString(name) => VideoCategory(name)
-      case _              => throw DeserializationException("Expected 1 string for VideoCategory")
+      case _ => throw DeserializationException("Expected 1 string for VideoCategory")
     }
   }
 
-  implicit val videoFormat: RootJsonFormat[Video] = jsonFormat4(
-    Video.apply(_: VideoId, _: VideoTitle, _: VideoDuration, _: VideoCategory)
-  )
+  implicit val videoFormat: RootJsonFormat[Video] = jsonFormat5(
+    Video.apply(_: VideoId, _: CourseId, _: VideoTitle, _: VideoDuration, _: VideoCategory)
+    )
 }
