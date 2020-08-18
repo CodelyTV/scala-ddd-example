@@ -29,4 +29,12 @@ final class DoobieMySqlVideoRepositoryShould extends VideoIntegrationTestCase wi
 
     repository.all().futureValue shouldBe videos
   }
+
+  "find an existing video" in {
+    val videos = VideoMother.randomSeq
+    val firstVideo = videos.head
+      videos.foreach(v => repository.save(v).futureValue)
+
+    repository.find(firstVideo.id).futureValue.get shouldBe firstVideo
+  }
 }
