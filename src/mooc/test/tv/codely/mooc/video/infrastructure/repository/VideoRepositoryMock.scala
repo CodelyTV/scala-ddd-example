@@ -2,9 +2,9 @@ package tv.codely.mooc.video.infrastructure.repository
 
 import org.scalamock.scalatest.MockFactory
 import tv.codely.mooc.video.domain.{Video, VideoRepository}
-import scala.concurrent.Future
-
 import tv.codely.shared.infrastructure.unit.UnitTestCase
+
+import scala.concurrent.Future
 
 protected[video] trait VideoRepositoryMock extends MockFactory {
   this: UnitTestCase => // Make mandatory to also extend UnitTestCase in order to avoid using mocks in any other kind of test.
@@ -20,4 +20,9 @@ protected[video] trait VideoRepositoryMock extends MockFactory {
     (repository.all _)
       .expects()
       .returning(Future.successful(videos))
+
+  protected def repositoryShouldFindVideo(video: Video): Unit =
+    (repository.find _)
+    .expects(video.id)
+    .returning(Future.successful(Some(video)))
 }
