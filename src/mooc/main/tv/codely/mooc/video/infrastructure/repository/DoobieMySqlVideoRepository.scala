@@ -20,7 +20,7 @@ final class DoobieMySqlVideoRepository(db: DoobieDbConnection)(implicit executio
 
   override def find(videoId: VideoId): Future[Option[Video]] =
     db.read(
-      sql"SELECT video_id, title, duration_in_seconds, category, creator_id FROM videos WHERE video_id='${videoId.value}'"
+      sql"SELECT video_id, title, duration_in_seconds, category, creator_id FROM videos WHERE video_id=${videoId.value}"
         .query[Video]
         .option)
 }
