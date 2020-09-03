@@ -8,7 +8,7 @@ import tv.codely.shared.domain.SeqMother
 object VideoMother {
   def apply(
       id: String = VideoIdMother.random.value.toString,
-      title: String = VideoTitleMother.random.value.toString,
+      title: String = VideoTitleMother.random.value,
       duration: Duration = VideoDurationMother.random.value,
       category: String = VideoCategoryMother.random.toString,
       creatorId: String = UserIdMother.random.value.toString

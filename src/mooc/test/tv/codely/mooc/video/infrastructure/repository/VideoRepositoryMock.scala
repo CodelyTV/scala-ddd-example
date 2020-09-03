@@ -20,4 +20,9 @@ protected[video] trait VideoRepositoryMock extends MockFactory {
     (repository.all _)
       .expects()
       .returning(Future.successful(videos))
+
+  protected def repositoryShouldFindLongest(maybeVideo: Option[Video]): Unit =
+    (repository.findLongest _)
+      .expects()
+      .returning(Future.successful(maybeVideo))
 }

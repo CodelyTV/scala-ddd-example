@@ -4,7 +4,7 @@ import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
 import doobie.implicits._
 import org.scalatest.BeforeAndAfterEach
 import spray.json._
-import tv.codely.mooc.video.domain.VideoMother
+import tv.codely.mooc.video.domain.{VideoDuration, VideoMother}
 import tv.codely.mooc.video.infrastructure.marshaller.VideoJsValueMarshaller
 import tv.codely.HttpSpec
 
@@ -45,6 +45,21 @@ final class VideoEntryPointShould extends HttpSpec with BeforeAndAfterEach {
       status shouldBe StatusCodes.OK
       contentType shouldBe ContentTypes.`application/json`
       entityAs[String].parseJson shouldBe VideoJsValueMarshaller.marshall(videos)
+    }
+  }
+
+  "return longest video" in {
+    val longestVideo  = VideoMother.random.copy(duration = VideoDuration(10))
+    val shorterVideo  = VideoMother.random.copy(duration = VideoDuration(5))
+    val shortestVideo = VideoMother.random.copy(duration = VideoDuration(1))
+    val videos        = Seq(longestVideo, shorterVideo, shortestVideo)
+
+    videos.foreach(v => videoDependencies.repository.save(v).futureValue)
+
+    getting("/longest_video") {
+      status shouldBe StatusCodes.OK
+      contentType shouldBe ContentTypes.`application/json`
+      entityAs[String].parseJson shouldBe VideoJsValueMarshaller.marshall(longestVideo)
     }
   }
 }

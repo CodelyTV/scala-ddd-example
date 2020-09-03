@@ -30,6 +30,9 @@ final class Routes(container: EntryPointDependencyContainer) {
   private val video = get {
     path("videos")(container.videoGetController.get())
   } ~
+    get {
+      path("longest_video")(container.longestVideoGetController.get())
+    } ~
     post {
       path("videos") {
         jsonBody { body =>
