@@ -28,7 +28,13 @@ final class Routes(container: EntryPointDependencyContainer) {
     }
 
   private val video = get {
-    path("videos")(container.videoGetController.get())
+    path("videos" / "shortest") {
+      (container.videoGetShortestController.get())
+    } ~
+    path("videos") { 
+      (container.videoGetController.get())
+    }
+
   } ~
     post {
       path("videos") {
@@ -43,6 +49,7 @@ final class Routes(container: EntryPointDependencyContainer) {
         }
       }
     }
+  
 
   val all: Route = status ~ user ~ video
 
