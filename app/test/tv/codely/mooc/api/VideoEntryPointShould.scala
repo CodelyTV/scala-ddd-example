@@ -5,6 +5,7 @@ import doobie.implicits._
 import org.scalatest.BeforeAndAfterEach
 import spray.json._
 import tv.codely.mooc.video.domain.VideoMother
+import tv.codely.mooc.video.domain.VideoDuration
 import tv.codely.mooc.video.infrastructure.marshaller.VideoJsValueMarshaller
 import tv.codely.HttpSpec
 
@@ -45,6 +46,20 @@ final class VideoEntryPointShould extends HttpSpec with BeforeAndAfterEach {
       status shouldBe StatusCodes.OK
       contentType shouldBe ContentTypes.`application/json`
       entityAs[String].parseJson shouldBe VideoJsValueMarshaller.marshall(videos)
+    }
+  }
+
+  "return the shortest video" in {
+    val fiveSecondsVideo     = VideoMother.random.copy(duration = VideoDuration(5))
+    val threeSecondsVideo    = VideoMother.random.copy(duration = VideoDuration(3))
+    val existingVideos       = Seq(fiveSecondsVideo, threeSecondsVideo) 
+
+    existingVideos.foreach(v => videoDependencies.repository.save(v).futureValue)
+
+    getting("/videos/shortest") {
+      status shouldBe StatusCodes.OK
+      contentType shouldBe ContentTypes.`application/json`
+      entityAs[String].parseJson shouldBe VideoJsValueMarshaller.marshall(threeSecondsVideo)
     }
   }
 }
