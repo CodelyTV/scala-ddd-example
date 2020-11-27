@@ -18,6 +18,6 @@ final class DoobieMySqlVideoRepository(db: DoobieDbConnection)(implicit executio
       .unsafeToFuture()
       .map(_ => ())
 
-  override def shortest(): Future[Optional[Video]] =
-    db.read(sql"SELECT video_id, title, duration_in_seconds, category, creator_id FROM videos ORDER BY duration_in_seconds ASC").query[Video].take(1).option
+  override def shortest(): Future[Option[Video]] =
+    db.read(sql"SELECT video_id, title, duration_in_seconds, category, creator_id FROM videos ORDER BY duration_in_seconds ASC LIMIT 1".query[Video].option)
 }
