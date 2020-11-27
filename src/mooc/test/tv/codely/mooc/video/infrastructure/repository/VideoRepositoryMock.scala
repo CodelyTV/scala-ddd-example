@@ -20,4 +20,14 @@ protected[video] trait VideoRepositoryMock extends MockFactory {
     (repository.all _)
       .expects()
       .returning(Future.successful(videos))
+
+  protected def repositoryShouldFindShortest(videos: Seq[Video]): Unit =
+    (repository.shortest _)
+      .expects()
+      .returning(Future.successful(Option(videos(1))))
+
+  protected def repositoryShouldFindShortestNone(): Unit =
+    (repository.shortest _)
+      .expects()
+      .returning(Future.successful(None))
 }
