@@ -6,4 +6,6 @@ trait VideoRepository {
   def all(): Future[Seq[Video]]
 
   def save(video: Video): Future[Unit]
+
+  def find(videoId: VideoId): Future[Option[Video]]
 }

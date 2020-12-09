@@ -16,4 +16,10 @@ final class VideosSearcherShould extends UnitTestCase with VideoRepositoryMock {
 
     searcher.all().futureValue shouldBe existingVideos
   }
+
+  "find an existing video" in {
+    val video = VideoMother.random
+    repositoryShouldFind(video)
+    repository.find(video.id).futureValue.get shouldBe video
+  }
 }
