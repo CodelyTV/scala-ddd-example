@@ -20,4 +20,9 @@ protected[video] trait VideoRepositoryMock extends MockFactory {
     (repository.all _)
       .expects()
       .returning(Future.successful(videos))
+
+  protected def repositoryShouldFind(video: Video): Unit =
+    (repository.find _)
+      .expects(video.id)
+      .returning(Future.successful(Some(video)))
 }
