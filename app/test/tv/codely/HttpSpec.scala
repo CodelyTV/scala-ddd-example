@@ -7,6 +7,7 @@ import com.typesafe.config.ConfigFactory
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.concurrent.ScalaFutures
 import tv.codely.mooc.api.{EntryPointDependencyContainer, Routes}
+import tv.codely.mooc.podcast.infrastructure.dependency_injection.PodcastModuleDependencyContainer
 import tv.codely.mooc.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.mooc.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
 import tv.codely.shared.infrastructure.bus.rabbitmq.RabbitMqConfig
@@ -31,7 +32,12 @@ abstract class HttpSpec extends WordSpec with Matchers with ScalaFutures with Sc
     sharedDependencies.messagePublisher
   )(sharedDependencies.executionContext)
 
-  private val routes = new Routes(new EntryPointDependencyContainer(userDependencies, videoDependencies))
+  protected val podcastDependencies = new PodcastModuleDependencyContainer(
+    sharedDependencies.doobieDbConnection,
+    sharedDependencies.messagePublisher
+  )(sharedDependencies.executionContext)
+
+  private val routes = new Routes(new EntryPointDependencyContainer(userDependencies, videoDependencies, podcastDependencies))
 
   protected val doobieDbConnection: DoobieDbConnection = sharedDependencies.doobieDbConnection
 

@@ -44,7 +44,59 @@ final class Routes(container: EntryPointDependencyContainer) {
       }
     }
 
-  val all: Route = status ~ user ~ video
+//  private val podcast = get {
+//    path("podcasts")(container.podcastGetController.get())
+//  }
+
+  private val podcast = get {
+    path("podcasts")(container.podcastGetController.get())
+  } ~
+    post {
+      concat(
+        path("podcasts") {
+          jsonBody { body =>
+            container.podcastPostController.post(
+              body("id").convertTo[String],
+              body("title").convertTo[String],
+              body("duration_in_seconds").convertTo[Int].seconds,
+              body("description").convertTo[String]
+            )
+          }
+        },
+        path("podcasts" / "rates") {
+          jsonBody { body =>
+            container.podcastPostRateController.post(
+              body("id").convertTo[String],
+              body("rate").convertTo[Int]
+            )
+          }
+        }
+      )
+    }
+//    post {
+//      path("podcasts") {
+//        jsonBody { body =>
+//          container.podcastPostController.post(
+//            body("id").convertTo[String],
+//            body("title").convertTo[String],
+//            body("duration_in_seconds").convertTo[Int].seconds,
+//            body("description").convertTo[String]
+//          )
+//        }
+//      }
+//    } ~
+//    post {
+//      path("podcasts/rate") {
+//        jsonBody { body =>
+//          container.podcastPostRateController.post(
+//            body("id").convertTo[String],
+//            body("rate").convertTo[Int]
+//          )
+//        }
+//      }
+//    }
+
+  val all: Route = status ~ user ~ video ~ podcast
 
   private def jsonBody(handler: Map[String, JsValue] => Route): Route =
     entity(as[JsValue])(json => handler(json.asJsObject.fields))

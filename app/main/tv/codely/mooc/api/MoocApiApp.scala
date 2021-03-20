@@ -2,11 +2,11 @@ package tv.codely.mooc.api
 
 import scala.concurrent.ExecutionContext
 import scala.io.StdIn
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
+import tv.codely.mooc.podcast.infrastructure.dependency_injection.PodcastModuleDependencyContainer
 import tv.codely.mooc.user.infrastructure.dependency_injection.UserModuleDependencyContainer
 import tv.codely.mooc.video.infrastructure.dependency_injection.VideoModuleDependencyContainer
 import tv.codely.shared.infrastructure.bus.rabbitmq.RabbitMqConfig
@@ -33,7 +33,8 @@ object MoocApiApp {
 
     val container = new EntryPointDependencyContainer(
       new UserModuleDependencyContainer(sharedDependencies.doobieDbConnection, sharedDependencies.messagePublisher),
-      new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection, sharedDependencies.messagePublisher)
+      new VideoModuleDependencyContainer(sharedDependencies.doobieDbConnection, sharedDependencies.messagePublisher),
+      new PodcastModuleDependencyContainer(sharedDependencies.doobieDbConnection, sharedDependencies.messagePublisher)
     )
 
     val routes = new Routes(container)
