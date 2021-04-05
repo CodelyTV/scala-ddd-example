@@ -5,5 +5,7 @@ import scala.concurrent.Future
 trait VideoRepository {
   def all(): Future[Seq[Video]]
 
+  def findByTermInTitle(term: String): Future[Seq[Video]]
+
   def save(video: Video): Future[Unit]
 }
