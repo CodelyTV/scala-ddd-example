@@ -4,10 +4,11 @@ import tv.codely.mooc.shared.infrastructure.marshaller.DomainEventsMarshaller.Me
 import tv.codely.mooc.video.domain.{VideoCreatedMother, VideoMother}
 import tv.codely.mooc.video.infrastructure.repository.VideoRepositoryMock
 import tv.codely.shared.infrastructure.rabbitmq.MessagePublisherMock
+import tv.codely.shared.infrastructure.logger.LoggerMock
 import tv.codely.shared.infrastructure.unit.UnitTestCase
 
-final class VideoCreatorShould extends UnitTestCase with VideoRepositoryMock with MessagePublisherMock {
-  private val creator = new VideoCreator(repository, messagePublisher)
+final class VideoCreatorShould extends UnitTestCase with VideoRepositoryMock with MessagePublisherMock with LoggerMock {
+  private val creator = new VideoCreator(repository, messagePublisher, logger)
 
   "save a video" in {
     val video        = VideoMother.random
@@ -16,6 +17,8 @@ final class VideoCreatorShould extends UnitTestCase with VideoRepositoryMock wit
     repositoryShouldSave(video)
 
     publisherShouldPublish(videoCreated)(MessageMarshaller)
+
+    loggerShouldInfo()
 
     creator.create(video.id, video.title, video.duration, video.category, video.creatorId).shouldBe(())
   }

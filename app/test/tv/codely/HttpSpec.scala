@@ -28,7 +28,8 @@ abstract class HttpSpec extends WordSpec with Matchers with ScalaFutures with Sc
   )
   protected val videoDependencies = new VideoModuleDependencyContainer(
     sharedDependencies.doobieDbConnection,
-    sharedDependencies.messagePublisher
+    sharedDependencies.messagePublisher,
+    sharedDependencies.logger
   )(sharedDependencies.executionContext)
 
   private val routes = new Routes(new EntryPointDependencyContainer(userDependencies, videoDependencies))
