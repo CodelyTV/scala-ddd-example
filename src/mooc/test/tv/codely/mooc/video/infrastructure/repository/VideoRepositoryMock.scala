@@ -20,4 +20,9 @@ protected[video] trait VideoRepositoryMock extends MockFactory {
     (repository.all _)
       .expects()
       .returning(Future.successful(videos))
+
+  protected def repositoryShouldFindByTermInTitle(term: String, videos: Seq[Video]): Unit =
+    (repository.findByTermInTitle _)
+      .expects(term)
+      .returning(Future.successful(videos))
 }

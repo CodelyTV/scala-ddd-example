@@ -6,4 +6,6 @@ import scala.concurrent.Future
 
 final class VideosSearcher(repository: VideoRepository) {
   def all(): Future[Seq[Video]] = repository.all()
+
+  def findByTermInTitle(term: String): Future[Seq[Video]] = repository.findByTermInTitle(term)
 }

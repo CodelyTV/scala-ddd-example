@@ -5,7 +5,7 @@ import tv.codely.mooc.video.infrastructure.dependency_injection.VideoModuleDepen
 import tv.codely.shared.infrastructure.integration.IntegrationTestCase
 
 protected[video] trait VideoIntegrationTestCase extends IntegrationTestCase {
-  private val container = new VideoModuleDependencyContainer(doobieDbConnection, messagePublisher)
+  private val container = new VideoModuleDependencyContainer(doobieDbConnection, messagePublisher, logger)
 
   protected val repository: VideoRepository = container.repository
 }

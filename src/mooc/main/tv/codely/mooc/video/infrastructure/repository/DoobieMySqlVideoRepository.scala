@@ -12,6 +12,12 @@ final class DoobieMySqlVideoRepository(db: DoobieDbConnection)(implicit executio
   override def all(): Future[Seq[Video]] =
     db.read(sql"SELECT video_id, title, duration_in_seconds, category, creator_id FROM videos".query[Video].to[Seq])
 
+  override def findByTermInTitle(term: String) =
+    db.read(
+      sql"SELECT video_id, title, duration_in_seconds, category, creator_id FROM videos WHERE title LIKE CONCAT('%', $term, '%')"
+        .query[Video]
+        .to[Seq])
+
   override def save(video: Video): Future[Unit] =
     sql"INSERT INTO videos(video_id, title, duration_in_seconds, category, creator_id) VALUES (${video.id}, ${video.title}, ${video.duration}, ${video.category}, ${video.creatorId})".update.run
       .transact(db.transactor)
