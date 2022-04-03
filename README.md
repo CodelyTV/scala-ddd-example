@@ -85,7 +85,7 @@ One of the goals of this project is to serve as an example for the [course on Sc
 
 There's one Git hook included. It's inside the `doc/hooks` folder and it will run the `prep` SBT task before pushing to any remote.
 
-This `prep` task is intended to run all the checks you consider before pushing. At this very moment, it try to compile and check the code style rules with ScalaFmt.
+This `prep` task is intended to run all the checks you consider before pushing. At this very moment, it tries to compile and check the code style rules with ScalaFmt.
  
 You can define what this task does modifying the `prep` task in the `build.sbt` file. We like the approach of just running 1 single SBT task as the hook instead of multiple tasks because it's more efficient (the hook doesn't have to run SBT multiple times), and also because this way we can control the pre push tasks with the SBT alias defined at the `build.sbt` without altering the hooks.
  
